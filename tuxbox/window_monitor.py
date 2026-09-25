@@ -11,6 +11,7 @@ import signal
 import subprocess
 import json
 import os
+import re
 from typing import Optional, Dict
 from dataclasses import dataclass
 
@@ -621,7 +622,64 @@ class WindowMonitor:
         Requires: xdotool (available in most distro repositories)
         """
         try:
-            return self._query_window_tool(['xdotool'])
+            active_result = subprocess.run(
+                ['xdotool', 'getactivewindow'],
+                capture_output=True,
+                text=True,
+                timeout=1,
+                check=False,
+            )
+
+            if active_result.returncode != 0:
+                return None
+
+            window_id = active_result.stdout.strip()
+
+            if not window_id:
+                return None
+
+            class_result = subprocess.run(
+                ['xprop', '-id', window_id, 'WM_CLASS'],
+                capture_output=True,
+                text=True,
+                timeout=1,
+                check=False,
+            )
+
+            title_result = subprocess.run(
+                ['xdotool', 'getwindowname', window_id],
+                capture_output=True,
+                text=True,
+                timeout=1,
+                check=False,
+            )
+
+            window_class = ''
+            window_instance = ''
+
+            match = re.search(
+                r'WM_CLASS\(STRING\)\s*=\s*"([^"]*)",\s*"([^"]*)"',
+                class_result.stdout,
+            )
+
+            if match:
+                window_instance, window_class = match.groups()
+
+            window_title = (
+                title_result.stdout.strip()
+                if title_result.returncode == 0
+                else ''
+            )
+
+            if not window_class and not window_title:
+                return None
+
+            return WindowInfo(
+                app_id=window_instance,
+                title=window_title,
+                wm_class=window_class,
+            )
+
         except Exception as e:
             logger.debug(f"X11 window detection error: {e}")
 
