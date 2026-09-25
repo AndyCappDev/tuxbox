@@ -197,13 +197,16 @@ Verify installation:
 xdotool --version
 ```
 
-> **Linux Mint users:** The version of `xdotool` in the Mint repositories may be too old (v3.20160805.1 doesn't support the commands this driver needs). If profile switching doesn't work, you may need to build xdotool from source:
+> **Older xdotool versions:** Some distributions, including Linux Mint, ship an old `xdotool` (v3.20160805.1) that can't report the window class. TuxBox detects this and reads the class with `xprop` instead, which is usually already installed. If it isn't, profiles can only match on window title until you install it:
 > ```bash
-> sudo apt install libxtst-dev libxinerama-dev libxkbcommon-x11-dev
-> git clone https://github.com/jordansissel/xdotool.git
-> cd xdotool
-> make
-> sudo make install
+> # Debian/Ubuntu/Mint
+> sudo apt install x11-utils
+>
+> # Fedora/RHEL
+> sudo dnf install xprop
+>
+> # Arch
+> sudo pacman -S xorg-xprop
 > ```
 
 ## Updating
