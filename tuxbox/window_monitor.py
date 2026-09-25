@@ -11,6 +11,8 @@ import signal
 import subprocess
 import json
 import os
+import re
+import shutil
 from typing import Optional, Dict
 from dataclasses import dataclass
 
@@ -36,6 +38,10 @@ DEFAULT_POLL_INTERVAL = 0.2
 # Guard rails for the user-configurable interval
 MIN_POLL_INTERVAL = 0.2
 MAX_POLL_INTERVAL = 60.0
+
+# xprop prints one property per line, e.g. WM_CLASS(STRING) = "Navigator", "firefox"
+XPROP_LINE = re.compile(r'^(\w+)\(\w+\) = (.*)$')
+XPROP_STRING = re.compile(r'"((?:[^"\\]|\\.)*)"')
 
 # --- KDE event-driven monitoring -------------------------------------------
 # Instead of polling kdotool, a small script is loaded into KWin once. It calls
@@ -125,6 +131,9 @@ class WindowMonitor:
         # None until the first query verifies the tool's chained output, then
         # True/False for the rest of the session
         self._supports_chaining = None
+        # How X11 windows are queried, decided on the first query: 'xdotool',
+        # 'xprop' (xdotool too old for getwindowclassname) or 'title' (neither)
+        self._x11_mode = None
         self._kdotool_path = self._find_kdotool()
         self._detect_compositor()
 
@@ -618,14 +627,116 @@ class WindowMonitor:
     def _get_x11_window(self) -> Optional[WindowInfo]:
         """Get active window on X11 using xdotool
 
-        Requires: xdotool (available in most distro repositories)
+        Old xdotool builds (e.g. 3.20160805.1, still shipped by Linux Mint) have
+        no getwindowclassname, which leaves the class empty. Those read WM_CLASS
+        with xprop instead; without xprop only the title is available.
+
+        Requires: xdotool (available in most distro repositories), plus xprop
+        when xdotool is too old
         """
         try:
+            if self._x11_mode is None:
+                self._x11_mode = self._detect_x11_mode()
+
+            if self._x11_mode == 'xprop':
+                return self._query_x11_xprop()
+            if self._x11_mode == 'title':
+                return self._query_x11_title()
             return self._query_window_tool(['xdotool'])
         except Exception as e:
             logger.debug(f"X11 window detection error: {e}")
 
         return None
+
+    def _detect_x11_mode(self) -> str:
+        """Decide once how to query X11 windows, based on xdotool's command list"""
+        try:
+            result = subprocess.run(
+                ['xdotool', 'help'],
+                capture_output=True, text=True, timeout=1
+            )
+            commands = result.stdout + result.stderr
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            commands = ''
+
+        # Only act on something that looks like a command list, otherwise keep
+        # the normal path
+        if 'getactivewindow' not in commands or 'getwindowclassname' in commands:
+            return 'xdotool'
+
+        if shutil.which('xprop'):
+            logger.info("xdotool has no getwindowclassname - reading window class with xprop")
+            return 'xprop'
+
+        logger.warning(
+            "xdotool has no getwindowclassname and xprop is not installed - "
+            "profiles can only match on window title. Install xprop "
+            "(x11-utils on Debian/Ubuntu/Mint, xorg-xprop on Arch) to match on "
+            "window class"
+        )
+        return 'title'
+
+    def _query_x11_xprop(self) -> Optional[WindowInfo]:
+        """Fetch class and title with xprop, for xdotool without getwindowclassname"""
+        result = subprocess.run(
+            ['xdotool', 'getactivewindow'],
+            capture_output=True, text=True, timeout=1
+        )
+        window_id = result.stdout.strip()
+        if result.returncode != 0 or not window_id:
+            return None
+
+        result = subprocess.run(
+            ['xprop', '-id', window_id, 'WM_CLASS', '_NET_WM_NAME', 'WM_NAME'],
+            capture_output=True, text=True, timeout=1
+        )
+        if result.returncode != 0:
+            return None
+        return self._parse_xprop_output(result.stdout)
+
+    @staticmethod
+    def _parse_xprop_output(stdout: str) -> Optional[WindowInfo]:
+        """Parse xprop's WM_CLASS / _NET_WM_NAME / WM_NAME output
+
+        WM_CLASS holds "instance", "class". xdotool's getwindowclassname reports
+        the class, so that is used for both app_id and wm_class to keep profiles
+        matching the same way whichever tool supplied them.
+        """
+        props = {}
+        for line in stdout.splitlines():
+            match = XPROP_LINE.match(line)
+            if match:
+                props[match.group(1)] = [
+                    re.sub(r'\\(.)', r'\1', value)
+                    for value in XPROP_STRING.findall(match.group(2))
+                ]
+
+        wm_class = props.get('WM_CLASS')
+        window_class = wm_class[-1] if wm_class else ''
+        # Same preference as xdotool's getwindowname
+        titles = props.get('_NET_WM_NAME') or props.get('WM_NAME')
+        window_title = titles[0] if titles else ''
+
+        if not window_class and not window_title:
+            return None
+
+        return WindowInfo(
+            app_id=window_class,
+            title=window_title,
+            wm_class=window_class
+        )
+
+    def _query_x11_title(self) -> Optional[WindowInfo]:
+        """Fetch only the title, for xdotool without getwindowclassname or xprop"""
+        result = subprocess.run(
+            ['xdotool', 'getactivewindow', 'getwindowname'],
+            capture_output=True, text=True, timeout=1
+        )
+        window_title = result.stdout.strip()
+        if result.returncode != 0 or not window_title:
+            return None
+
+        return WindowInfo(app_id='', title=window_title, wm_class='')
 
     # --- KDE event-driven monitoring ---------------------------------------
 
