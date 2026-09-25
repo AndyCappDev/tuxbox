@@ -1,6 +1,6 @@
 # TuxBox — Linux Driver for TourBox Controllers
 
-[![Version](https://img.shields.io/badge/version-3.4.0-green.svg)](https://github.com/AndyCappDev/tuxbox/releases)
+[![Version](https://img.shields.io/badge/version-3.5.0-green.svg)](https://github.com/AndyCappDev/tuxbox/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: Linux](https://img.shields.io/badge/platform-linux-lightgrey.svg)](https://www.linux.org/)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)

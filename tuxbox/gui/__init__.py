@@ -3,4 +3,4 @@
 Graphical interface for configuring TourBox button mappings and profiles.
 """
 
-__version__ = "3.4.0"
+__version__ = "3.5.0"
