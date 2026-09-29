@@ -938,12 +938,6 @@ The Lite SVG is an original vector drawing based on this supplied reference:
 https://cdn.tourboxtech.com/prod/uploads/lite-bluetooth-bk-1_260907171449.webp
 The reference photograph is not bundled with the package.
 
-Run the focused GUI checks with:
-
-```bash
-QT_QPA_PLATFORM=offscreen ./venv/bin/python -m unittest discover -s tests -v
-```
-
 Also check model switching, individual and combination highlights, resizing,
 and light/dark themes in the GUI. Record desktop and hardware testing
 separately from the offscreen checks in the PR.
