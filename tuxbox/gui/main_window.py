@@ -23,7 +23,9 @@ from .config_writer import (save_profile, save_profile_metadata, create_new_prof
 from .keymap_util import get_system_display_hints
 
 # Import from existing driver code
-from tuxbox.config_loader import load_profiles
+from tuxbox.config_loader import (
+    load_profiles, load_device_config, DEFAULT_CONTROLLER_MODEL
+)
 from evdev import ecodes as e
 
 logger = logging.getLogger(__name__)
@@ -81,7 +83,8 @@ class TuxBoxConfigWindow(QMainWindow):
         left_layout = QVBoxLayout(left_widget)
 
         # Top left: Controller image
-        self.controller_view = ControllerView()
+        model = load_device_config().get('controller_model', DEFAULT_CONTROLLER_MODEL)
+        self.controller_view = ControllerView(model=model)
         self.controller_view.setMinimumSize(300, 220)
         self.controller_view.setMaximumHeight(410)  # Preferred height, but allowed to shrink
         left_layout.addWidget(self.controller_view, stretch=0)
@@ -101,13 +104,14 @@ class TuxBoxConfigWindow(QMainWindow):
         right_layout = QVBoxLayout(right_widget)
 
         # Top right: Controls list (expands to fill available space)
-        self.controls_list = ControlsList()
+        self.controls_list = ControlsList(model=model)
         self.controls_list.setMinimumWidth(400)  # Minimum width only, height set in ControlsList
         self.controls_list.control_selected.connect(self._on_control_selected)
         right_layout.addWidget(self.controls_list, stretch=1)  # Stretch - table benefits from extra space
 
         # Bottom right: Control editor
         self.control_editor = ControlEditor()
+        self.control_editor.set_model(model)
         self.control_editor.setMinimumWidth(400)
         self.control_editor.action_changed.connect(self._on_action_changed)
         self.control_editor.comment_changed.connect(self._on_comment_changed)
@@ -1292,7 +1296,15 @@ class TuxBoxConfigWindow(QMainWindow):
         cleanup_old_backups()
         self.statusBar().showMessage("Settings saved")
 
-        # None of these settings are re-read while the driver runs, so an
+        if 'controller_model' in changes:
+            model = changes['controller_model'] or DEFAULT_CONTROLLER_MODEL
+            self.controller_view.set_model(model)
+            self.control_editor.set_model(model)
+            self.controls_list.set_model(model)
+        if not (set(changes) - {'controller_model'}):
+            return
+
+        # Driver settings are not re-read while the driver runs, so an
         # unrestarted driver would keep using the old ones with no sign of it.
         answer = QMessageBox.question(
             self,

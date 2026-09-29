@@ -332,6 +332,10 @@ def get_config_path(config_path: str = None) -> str:
     return None
 
 
+DEFAULT_CONTROLLER_MODEL = 'elite'
+VALID_CONTROLLER_MODELS = ('elite', 'lite')
+
+
 def load_device_config(config_path: str = None) -> Dict[str, str]:
     """Load device settings from config file
 
@@ -355,6 +359,13 @@ def load_device_config(config_path: str = None) -> Dict[str, str]:
     device_config = {}
 
     if 'device' in config:
+        if 'controller_model' in config['device']:
+            model = config['device']['controller_model'].strip().lower()
+            if model in VALID_CONTROLLER_MODELS:
+                device_config['controller_model'] = model
+            else:
+                logger.warning("Unknown controller_model '%s'; using %s",
+                               model, DEFAULT_CONTROLLER_MODEL)
         if 'connection' in config['device']:
             # Which transports the driver is allowed to use. 'usb' keeps the
             # Bluetooth radio out of it entirely, which matters on a laptop:

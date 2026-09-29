@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="480"
+   height="455"
+   viewBox="0 0 480 455"
+   version="1.1"
+   id="svg56"
+   sodipodi:docname="tourbox_lite.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview56"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.5032967"
+     inkscape:cx="138.72647"
+     inkscape:cy="98.050502"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="controls" />
+  <title
+     id="title1">TourBox Lite controller</title>
+  <desc
+     id="desc1">Original vector line drawing based on the supplied TourBox Lite Bluetooth product reference. Hidden controls and modifiers layers are used by TuxBox to highlight selections.</desc>
+  <defs
+     id="defs6">
+    <g
+       id="shape_top">
+      <rect
+         x="150"
+         y="57"
+         width="128"
+         height="53"
+         rx="26"
+         id="rect1" />
+    </g>
+    <g
+       id="shape_scroll">
+      <rect
+         x="80"
+         y="104"
+         width="31"
+         height="76"
+         rx="14"
+         id="rect2" />
+    </g>
+    <g
+       id="shape_knob">
+      <circle
+         cx="237"
+         cy="227"
+         r="45"
+         id="circle2" />
+    </g>
+    <g
+       id="shape_c1">
+      <circle
+         cx="341"
+         cy="151"
+         r="21"
+         id="circle3" />
+    </g>
+    <g
+       id="shape_c2">
+      <circle
+         cx="395"
+         cy="188"
+         r="21"
+         id="circle4" />
+    </g>
+    <g
+       id="shape_tour">
+      <path
+         d="m 126.3942,330.3324 c 7.0041,7.3627 16.6115,11.226 29.0427,3.8876 3.1643,-1.672 6.1231,-4.577 9.1473,-7.0892 2.6542,-2.8342 1.0918,-4.7781 -0.7432,-6.7461 -4.3177,-2.5945 -8.3549,-6.6296 -12.063,-11.2055 -3.7892,-4.1074 -6.6856,-9.7773 -9.2617,-16.0078 -1.3443,-3.2325 -3.6487,-4.028 -6.9748,-2.2297 -3.1755,2.5312 -6.5118,4.848 -9.2617,7.9467 -9.9173,12.9701 -6.7049,23.2868 0.1143,31.4439 z"
+         id="path4" />
+    </g>
+    <g
+       id="shape_tall">
+      <path
+         d="M319 286 Q312 292 312 312 L311 365 Q310 379 305 385 Q301 396 323 398 L348 398 Q365 397 366 377 L366 321 Q365 288 355 284 Q337 278 319 286 Z"
+         id="path5" />
+    </g>
+    <g
+       id="shape_short"
+       transform="translate(-12 -5)">
+      <path
+         d="M397 315 C418 310 434 330 435 355 L435 381 Q434 396 415 397 L393 397 Q382 397 382 380 L382 341 Q382 321 397 315 Z"
+         id="path6" />
+    </g>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="controls"
+     id="controls">
+    <g
+       id="top"
+       style="display:none">
+      <use
+         xlink:href="#shape_top"
+         style="fill:#fff6d5;stroke:none"
+         id="use6" />
+      <text
+         x="214"
+         y="42"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text6">Top</text>
+    </g>
+    <g
+       id="tall"
+       style="display:none">
+      <use
+         xlink:href="#shape_tall"
+         style="fill:#fff6d5;stroke:none"
+         id="use7" />
+      <text
+         x="340"
+         y="271"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text7">Tall</text>
+    </g>
+    <g
+       id="short"
+       style="display:none">
+      <use
+         xlink:href="#shape_short"
+         style="fill:#fff6d5;stroke:none"
+         id="use8" />
+      <text
+         x="402"
+         y="301"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text8">Short</text>
+    </g>
+    <g
+       id="c1"
+       style="display:none">
+      <use
+         xlink:href="#shape_c1"
+         style="fill:#fff6d5;stroke:none"
+         id="use9" />
+      <text
+         x="341"
+         y="117"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text9">C1</text>
+    </g>
+    <g
+       id="c2"
+       style="display:none">
+      <use
+         xlink:href="#shape_c2"
+         style="fill:#fff6d5;stroke:none"
+         id="use10" />
+      <text
+         x="411"
+         y="157"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text10">C2</text>
+    </g>
+    <g
+       id="tour"
+       style="display:none">
+      <use
+         xlink:href="#shape_tour"
+         style="fill:#fff6d5;stroke:none"
+         id="use11" />
+      <text
+         x="135"
+         y="280"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text11">Tour</text>
+    </g>
+    <g
+       id="scroll_up"
+       style="display:none">
+      <use
+         xlink:href="#shape_scroll"
+         style="fill:#fff6d5;stroke:none"
+         id="use12" />
+      <text
+         x="81.112343"
+         y="88"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14px"
+         id="text12">Scroll ↑</text>
+    </g>
+    <g
+       id="scroll_down"
+       style="display:none">
+      <use
+         xlink:href="#shape_scroll"
+         style="fill:#fff6d5;stroke:none"
+         id="use13" />
+      <text
+         x="81.112343"
+         y="88"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14px"
+         id="text13">Scroll ↓</text>
+    </g>
+    <g
+       id="scroll_click"
+       style="display:none">
+      <use
+         xlink:href="#shape_scroll"
+         style="fill:#fff6d5;stroke:none"
+         id="use14" />
+      <text
+         x="93.000008"
+         y="88"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14px"
+         id="text14">Scroll click</text>
+    </g>
+    <g
+       id="knob_cw"
+       style="display:none">
+      <use
+         xlink:href="#shape_knob"
+         style="fill:#fff6d5;stroke:none"
+         id="use15" />
+      <text
+         x="237"
+         y="147.20018"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text15">Knob ↻</text>
+    </g>
+    <g
+       id="knob_ccw"
+       style="display:none">
+      <use
+         xlink:href="#shape_knob"
+         style="fill:#fff6d5;stroke:none"
+         id="use16" />
+      <text
+         x="237"
+         y="147.20018"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text16">Knob ↺</text>
+    </g>
+    <g
+       id="knob_click"
+       style="display:none">
+      <use
+         xlink:href="#shape_knob"
+         style="fill:#fff6d5;stroke:none"
+         id="use17" />
+      <text
+         x="237"
+         y="147.20018"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text17">Knob click</text>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="modifiers"
+     id="modifiers">
+    <g
+       id="m_top"
+       style="display:none">
+      <use
+         xlink:href="#shape_top"
+         style="fill:#00ffff;stroke:none"
+         id="use18" />
+      <text
+         x="214"
+         y="42"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text18">Top</text>
+    </g>
+    <g
+       id="m_tall"
+       style="display:none">
+      <use
+         xlink:href="#shape_tall"
+         style="fill:#00ffff;stroke:none"
+         id="use19" />
+      <text
+         x="340"
+         y="271"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text19">Tall</text>
+    </g>
+    <g
+       id="m_short"
+       style="display:none">
+      <use
+         xlink:href="#shape_short"
+         style="fill:#00ffff;stroke:none"
+         id="use20" />
+      <text
+         x="402"
+         y="301"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text20">Short</text>
+    </g>
+    <g
+       id="m_c1"
+       style="display:none">
+      <use
+         xlink:href="#shape_c1"
+         style="fill:#00ffff;stroke:none"
+         id="use21" />
+      <text
+         x="341"
+         y="117"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text21">C1</text>
+    </g>
+    <g
+       id="m_c2"
+       style="display:none">
+      <use
+         xlink:href="#shape_c2"
+         style="fill:#00ffff;stroke:none"
+         id="use22" />
+      <text
+         x="411"
+         y="157"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text22">C2</text>
+    </g>
+    <g
+       id="m_tour"
+       style="display:none">
+      <use
+         xlink:href="#shape_tour"
+         style="fill:#00ffff;stroke:none"
+         id="use23" />
+      <text
+         x="135"
+         y="280"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text23">Tour</text>
+    </g>
+    <g
+       id="m_scroll_click"
+       style="display:none">
+      <use
+         xlink:href="#shape_scroll"
+         style="fill:#00ffff;stroke:none"
+         id="use24" />
+      <text
+         x="73"
+         y="88"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text24">Scroll click</text>
+    </g>
+    <g
+       id="m_knob_click"
+       style="display:none">
+      <use
+         xlink:href="#shape_knob"
+         style="fill:#00ffff;stroke:none"
+         id="use25" />
+      <text
+         x="237"
+         y="157"
+         text-anchor="middle"
+         font-family="sans-serif"
+         font-weight="bold"
+         font-size="14"
+         id="text25">Knob click</text>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="outline"
+     id="outline"
+     style="fill:none;stroke:#000000;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round">
+    <path
+       d="M147 7 C98 7 63 23 40 52 C12 87 10 119 10 180 L10 309 C10 359 13 390 39 416 C62 439 94 449 130 447 C168 444 190 432 237 433 C281 433 308 445 342 443 C384 442 417 425 439 398 C461 371 467 342 467 294 L467 162 C467 109 460 78 441 49 C420 18 385 7 345 7 Z"
+       id="path25" />
+    <path
+       d="M147 23 C99 23 72 35 51 64 C29 94 27 123 27 177 L27 310 C27 351 31 381 51 402 C72 424 99 432 131 430 C170 427 191 416 237 417 C282 417 309 431 341 428 C377 426 407 411 426 387 C445 363 449 335 449 292 L449 163 C449 115 443 86 425 61 C406 34 379 23 345 23 Z"
+       style="stroke-width:0.7"
+       id="path26" />
+    <circle
+       cx="237"
+       cy="227"
+       r="70"
+       id="circle26" />
+    <circle
+       cx="237"
+       cy="227"
+       r="32"
+       id="circle27" />
+    <use
+       xlink:href="#shape_top"
+       id="use27" />
+    <use
+       xlink:href="#shape_scroll"
+       id="use28" />
+    <use
+       xlink:href="#shape_knob"
+       id="use29" />
+    <use
+       xlink:href="#shape_c1"
+       id="use30" />
+    <use
+       xlink:href="#shape_c2"
+       id="use31" />
+    <use
+       xlink:href="#shape_tour"
+       id="use32" />
+    <use
+       xlink:href="#shape_tall"
+       id="use33" />
+    <use
+       xlink:href="#shape_short"
+       id="use34" />
+    <path
+       d="M176 83 H252"
+       style="stroke-width:3"
+       id="path34" />
+    <path
+       d="M84 114 Q95 111 107 114"
+       id="path35" />
+    <path
+       d="M84 126 Q95 123 107 126"
+       id="path36" />
+    <path
+       d="M84 138 Q95 135 107 138"
+       id="path37" />
+    <path
+       d="M84 150 Q95 147 107 150"
+       id="path38" />
+    <path
+       d="M84 162 Q95 159 107 162"
+       id="path39" />
+    <path
+       d="M84 174 Q95 171 107 174"
+       id="path40" />
+    <circle
+       cx="339"
+       cy="322"
+       r="2"
+       id="circle40" />
+    <circle
+       cx="339"
+       cy="342"
+       r="2"
+       id="circle41" />
+    <circle
+       cx="339"
+       cy="362"
+       r="2"
+       id="circle42" />
+    <circle
+       cx="341"
+       cy="151"
+       r="2"
+       id="circle43" />
+    <circle
+       cx="395"
+       cy="188"
+       r="2"
+       id="circle44" />
+    <circle
+       cx="237.00"
+       cy="187.00"
+       r="2.2"
+       id="circle45" />
+    <circle
+       cx="257.00"
+       cy="192.36"
+       r="2.2"
+       id="circle46" />
+    <circle
+       cx="271.64"
+       cy="207.00"
+       r="2.2"
+       id="circle47" />
+    <circle
+       cx="277.00"
+       cy="227.00"
+       r="2.2"
+       id="circle48" />
+    <circle
+       cx="271.64"
+       cy="247.00"
+       r="2.2"
+       id="circle49" />
+    <circle
+       cx="257.00"
+       cy="261.64"
+       r="2.2"
+       id="circle50" />
+    <circle
+       cx="237.00"
+       cy="267.00"
+       r="2.2"
+       id="circle51" />
+    <circle
+       cx="217.00"
+       cy="261.64"
+       r="2.2"
+       id="circle52" />
+    <circle
+       cx="202.36"
+       cy="247.00"
+       r="2.2"
+       id="circle53" />
+    <circle
+       cx="197.00"
+       cy="227.00"
+       r="2.2"
+       id="circle54" />
+    <circle
+       cx="202.36"
+       cy="207.00"
+       r="2.2"
+       id="circle55" />
+    <circle
+       cx="217.00"
+       cy="192.36"
+       r="2.2"
+       id="circle56" />
+  </g>
+</svg>

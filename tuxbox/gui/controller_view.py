@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Controller visualization widget
 
-Displays TourBox Elite image with highlighting for selected controls.
+Displays the selected TourBox model with highlighting for selected controls.
 """
 
 import logging
@@ -15,6 +15,7 @@ from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtSvg import QSvgRenderer
 
 from .theme import is_dark_theme, foreground_hex
+from tuxbox.config_loader import DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS
 
 logger = logging.getLogger(__name__)
 
@@ -58,8 +59,11 @@ class ControllerView(QWidget):
     # Signal emitted when user clicks on a control
     control_clicked = Signal(str)  # control name
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, model: str = DEFAULT_CONTROLLER_MODEL):
         super().__init__(parent)
+        self._model = (
+            model if model in VALID_CONTROLLER_MODELS else DEFAULT_CONTROLLER_MODEL
+        )
         self._current_control = None
         self._current_is_modifier = False
         self._combo_control = None  # Additional control to highlight for modifier combos
@@ -84,7 +88,7 @@ class ControllerView(QWidget):
         self._svg_path = os.path.join(
             os.path.dirname(__file__),
             'assets',
-            'tourbox_elite.svg'
+            f'tourbox_{self._model}.svg'
         )
 
         if not os.path.exists(self._svg_path):
@@ -105,6 +109,16 @@ class ControllerView(QWidget):
         # Pass renderer and data to the widget
         self.svg_widget.set_svg_data(self._svg_renderer, self._svg_data)
         logger.info(f"Loaded SVG from: {self._svg_path}")
+
+    def set_model(self, model: str):
+        """Switch artwork and restore the current selection on the new model."""
+        self._model = (
+            model if model in VALID_CONTROLLER_MODELS else DEFAULT_CONTROLLER_MODEL
+        )
+        self._load_svg()
+        self.svg_widget.set_highlighted_control(
+            self._current_control, self._current_is_modifier, self._combo_control
+        )
 
     def changeEvent(self, event):
         """Re-theme the artwork when the application palette changes"""
@@ -203,6 +217,8 @@ class SVGControllerWidget(QWidget):
         try:
             # Register namespaces to preserve them
             ET.register_namespace('', 'http://www.w3.org/2000/svg')
+            # Qt needs the xlink prefix preserved when highlight SVGs use <use>.
+            ET.register_namespace('xlink', 'http://www.w3.org/1999/xlink')
             ET.register_namespace('inkscape', 'http://www.inkscape.org/namespaces/inkscape')
             ET.register_namespace('sodipodi', 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd')
 
@@ -236,6 +252,7 @@ class SVGControllerWidget(QWidget):
                         break
 
                 if control_elem is None:
+                    # Shared profiles can refer to controls absent from a model.
                     logger.warning(f"Control element '{search_id}' not found in layer '{layer_name}'")
                     continue
 
@@ -271,6 +288,7 @@ class SVGControllerWidget(QWidget):
         try:
             # Register namespaces to preserve them
             ET.register_namespace('', 'http://www.w3.org/2000/svg')
+            ET.register_namespace('xlink', 'http://www.w3.org/1999/xlink')
             ET.register_namespace('inkscape', 'http://www.inkscape.org/namespaces/inkscape')
             ET.register_namespace('sodipodi', 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd')
 
@@ -336,7 +354,7 @@ class SVGControllerWidget(QWidget):
             painter.drawText(
                 self.rect(),
                 Qt.AlignCenter,
-                "TourBox Elite\n(SVG not found)"
+                "TourBox\n(SVG not found)"
             )
             return
 

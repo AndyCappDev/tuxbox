@@ -17,7 +17,8 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import QSize
 
 from tuxbox.config_loader import (
-    load_device_config, DEFAULT_CONNECTION_MODE, VALID_CONNECTION_MODES
+    load_device_config, DEFAULT_CONNECTION_MODE, VALID_CONNECTION_MODES,
+    DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS
 )
 from tuxbox.window_monitor import (
     DEFAULT_POLL_INTERVAL, MIN_POLL_INTERVAL, MAX_POLL_INTERVAL
@@ -129,17 +130,35 @@ class DeviceSettingsDialog(QDialog):
         self.setWindowTitle("Global Settings")
         layout = QVBoxLayout(self)
 
+        layout.addWidget(self._build_controller_group())
         layout.addWidget(self._build_connection_group())
         layout.addWidget(self._build_usb_group())
         layout.addWidget(self._build_behaviour_group())
 
         note = HelpLabel(
-            "These settings apply to the driver as a whole. To change settings "
+            "These settings apply across profiles. To change settings "
             "for one profile, use the gear button in the profile list."
         )
         layout.addWidget(note)
 
         layout.addLayout(self._build_buttons())
+
+    def _build_controller_group(self) -> QGroupBox:
+        group = QGroupBox("Controller view")
+        form = QFormLayout(group)
+        self.model_combo = QComboBox()
+        for model in VALID_CONTROLLER_MODELS:
+            self.model_combo.addItem(f"TourBox {model.title()}", model)
+        current = self._original.get('controller_model', DEFAULT_CONTROLLER_MODEL)
+        index = self.model_combo.findData(current)
+        self.model_combo.setCurrentIndex(index if index >= 0 else 0)
+        form.addRow("Model:", _keep_full_height(self.model_combo))
+        form.addRow(HelpLabel("Choose the controller artwork and available controls.\n"
+            "On Lite, combinations using unavailable controls are hidden but remain "
+               "saved in the profile. A modifier can therefore still be active even "
+               "when its visible combinations table is empty. Switch to Elite to edit "
+               "those combinations."))
+        return group
 
     def _build_connection_group(self) -> QGroupBox:
         group = QGroupBox("Connection")
@@ -276,6 +295,12 @@ class DeviceSettingsDialog(QDialog):
         the setting should be removed and the default restored.
         """
         changes = {}
+
+        model = self.model_combo.currentData()
+        if model != self._original.get('controller_model', DEFAULT_CONTROLLER_MODEL):
+            changes['controller_model'] = (
+                None if model == DEFAULT_CONTROLLER_MODEL else model
+            )
 
         connection = self.connection_combo.currentData()
         if connection != self._original.get('connection', DEFAULT_CONNECTION_MODE):

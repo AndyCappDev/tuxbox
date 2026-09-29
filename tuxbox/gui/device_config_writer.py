@@ -25,6 +25,7 @@ DEVICE_SECTION = 'device'
 # Settings this dialog owns, in the order they are written into a section that
 # does not have them yet. Anything else in [device] is left untouched.
 DEVICE_KEYS = (
+    'controller_model',
     'connection',
     'usb_port',
     'force_haptics',

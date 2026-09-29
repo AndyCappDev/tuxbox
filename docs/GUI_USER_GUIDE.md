@@ -1318,6 +1318,20 @@ When omitted (not present in the file), the profile uses the global setting. Thi
 whole, rather than to a single profile. These are stored in the `[device]`
 section of `~/.config/tuxbox/config.conf`.
 
+### Controller view
+
+Choose **TourBox Lite** or **TourBox Elite** to match the artwork and controls to your
+controller. Elite is the default. Saving changes the picture immediately
+and remembers the choice for the next launch; a driver restart is not needed.
+
+Lite shows only its Top, Tall, Short, C1, C2, Tour, Scroll and Knob controls.
+Side, D-Pad and Dial controls and combinations are hidden. Switching back
+to Elite restores them, including their existing mappings. New combinations
+can only use controls on the selected model.
+
+This is a GUI setting. It does not detect hardware, change the connection
+protocol, or remove mappings from your profiles.
+
 ### Connection
 
 Which transports the driver may use:
@@ -1344,9 +1358,9 @@ port. The driver probes all `/dev/ttyACM*` devices regardless.
 
 ### Applying changes
 
-None of these settings are re-read while the driver is running, so the GUI
-offers to restart the driver after saving. Answer **Yes** for the change to
-take effect.
+Connection, USB and behaviour settings require a driver restart, so the GUI
+offers to restart the driver after saving those changes. Answer **Yes** for
+them to take effect. Changing only the controller artwork applies immediately.
 
 Your existing comments in `config.conf` are preserved, and a timestamped
 backup is written before each save.
