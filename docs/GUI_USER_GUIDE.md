@@ -1,7 +1,7 @@
 # TuxBox Configuration GUI - User Guide
 
-**Version:** 3.5.0
-**Last Updated:** 2026-09-24
+**Version:** 3.6.0
+**Last Updated:** 2026-09-29
 
 ## Table of Contents
 
