@@ -18,19 +18,13 @@ from tuxbox.config_loader import Profile, BUTTON_CODES
 
 from tuxbox.gui.ui_constants import TABLE_ROW_HEIGHT_MULTIPLIER
 from tuxbox.gui.keymap_util import get_system_display_hints
+from .controller_models import ELITE_CONTROLS, get_model_controls
 
 logger = logging.getLogger(__name__)
 
 
 # All control names in display order
-CONTROL_NAMES = [
-    'side', 'top', 'tall', 'short',
-    'c1', 'c2', 'tour',
-    'dpad_up', 'dpad_down', 'dpad_left', 'dpad_right',
-    'scroll_up', 'scroll_down', 'scroll_click',
-    'knob_cw', 'knob_ccw', 'knob_click',
-    'dial_cw', 'dial_ccw', 'dial_click',
-]
+CONTROL_NAMES = ELITE_CONTROLS
 
 # Friendly names for display
 CONTROL_DISPLAY_NAMES = {
@@ -63,10 +57,28 @@ class ControlsList(QWidget):
     # Signal emitted when user clicks a control to edit it
     control_selected = Signal(str)  # control name
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, model: str = 'elite'):
         super().__init__(parent)
+        self._model = model
         self.current_profile: Optional[Profile] = None
         self._init_ui()
+
+    def set_model(self, model: str):
+        """Filter rows without discarding displayed edits or profile mappings."""
+        self._model = model
+        available = get_model_controls(model)
+        for row in range(self.table.rowCount()):
+            item = self.table.item(row, 0)
+            if item:
+                self.table.setRowHidden(row, item.data(Qt.UserRole) not in available)
+
+        current = self.table.currentRow()
+        if current < 0 or self.table.isRowHidden(current):
+            self.table.clearSelection()
+            for row in range(self.table.rowCount()):
+                if not self.table.isRowHidden(row):
+                    self.table.selectRow(row)
+                    break
 
     def _init_ui(self):
         """Initialize the UI"""
@@ -168,11 +180,10 @@ class ControlsList(QWidget):
         # Scroll to top of the list
         self.table.scrollToTop()
 
-        # Select the first control
-        if self.table.rowCount() > 0:
-            self.table.selectRow(0)
+        # Filter before selecting so Lite never opens on an absent Side button.
+        self.set_model(self._model)
 
-        logger.info(f"Loaded {len(CONTROL_NAMES)} controls for profile: {profile.name}")
+        logger.info(f"Loaded {len(get_model_controls(self._model))} controls for profile: {profile.name}")
 
     def _get_action_text(self, profile: Profile, control_name: str) -> str:
         """Get human-readable action text for a control
@@ -481,6 +492,8 @@ class ControlsList(QWidget):
         for row in range(self.table.rowCount()):
             item = self.table.item(row, 0)
             if item and item.data(Qt.UserRole) == control_name:
+                if self.table.isRowHidden(row):
+                    return
                 self.table.selectRow(row)
                 self.table.scrollToItem(item)
                 break

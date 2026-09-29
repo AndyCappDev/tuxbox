@@ -20,6 +20,7 @@ from tuxbox.gui.ui_constants import TABLE_ROW_HEIGHT_MULTIPLIER, TEXT_EDIT_HEIGH
 from tuxbox.gui.keymap_util import get_system_display_hints
 from tuxbox.gui.theme import muted_label_style
 from tuxbox.haptic import HapticStrength, HapticSpeed
+from .controller_models import ELITE_CONTROLS, get_model_controls
 
 logger = logging.getLogger(__name__)
 
@@ -148,14 +149,7 @@ SPECIAL_KEYS = {
 }
 
 # All available controls
-ALL_CONTROLS = [
-    'side', 'top', 'tall', 'short',
-    'c1', 'c2', 'tour',
-    'dpad_up', 'dpad_down', 'dpad_left', 'dpad_right',
-    'scroll_up', 'scroll_down', 'scroll_click',
-    'knob_cw', 'knob_ccw', 'knob_click',
-    'dial_cw', 'dial_ccw', 'dial_click',
-]
+ALL_CONTROLS = ELITE_CONTROLS
 
 # Rotary controls that have haptic feedback - maps control name to dial name
 ROTARY_TO_DIAL = {
@@ -270,7 +264,8 @@ class ComboConfigDialog(QDialog):
 
     def __init__(self, parent=None, modifier_name: str = "", control_name: str = "",
                  action: str = "", comment: str = "", exclude_controls: set = None,
-                 haptic_strength: HapticStrength = None, haptic_speed: HapticSpeed = None):
+                 haptic_strength: HapticStrength = None, haptic_speed: HapticSpeed = None,
+                 available_controls: tuple = ALL_CONTROLS):
         super().__init__(parent)
         self.setWindowTitle("Configure Modifier Combination")
         self.setMinimumWidth(500)
@@ -298,7 +293,7 @@ class ComboConfigDialog(QDialog):
             exclude_controls = set()
         exclude_set = exclude_controls | {modifier_name}
 
-        for control in ALL_CONTROLS:
+        for control in available_controls:
             # Don't allow the modifier itself or already-used controls
             if control not in exclude_set:
                 self.control_combo.addItem(control)
@@ -950,7 +945,20 @@ class ControlEditor(QWidget):
         self.combo_haptics = {}  # Track haptic strength for combos: (modifier, dial) -> HapticStrength
         self.combo_haptic_speeds = {}  # Track haptic speed for combos: (modifier, dial) -> HapticSpeed
         self.current_double_click_timeout = 300  # Track current profile's timeout for display
+        self._model = 'elite'
         self._init_ui()
+
+    def set_model(self, model: str):
+        """Hide unavailable combinations while retaining their saved actions."""
+        self._model = model
+        available = get_model_controls(model)
+        for row in range(self.combos_table.rowCount()):
+            item = self.combos_table.item(row, 0)
+            if item:
+                self.combos_table.setRowHidden(row, item.text() not in available)
+        current = self.combos_table.currentRow()
+        if current >= 0 and self.combos_table.isRowHidden(current):
+            self.combos_table.clearSelection()
 
     def _init_ui(self):
         """Initialize the UI"""
@@ -1364,7 +1372,10 @@ class ControlEditor(QWidget):
 
                 # Select the first combo after loading all of them
                 if self.combos_table.rowCount() > 0:
-                    self.combos_table.selectRow(0)
+                    for row in range(self.combos_table.rowCount()):
+                        if not self.combos_table.isRowHidden(row):
+                            self.combos_table.selectRow(row)
+                            break
         else:
             # Not a physical button - hide modifier combinations section entirely
             # (rotary controls can't be modifiers, so no need to show this)
@@ -1748,7 +1759,10 @@ class ControlEditor(QWidget):
                 used_controls.add(control_item.text().strip())
 
         # Open dialog to configure combination
-        dialog = ComboConfigDialog(self, modifier_name=self.current_control, exclude_controls=used_controls)
+        dialog = ComboConfigDialog(
+            self, modifier_name=self.current_control, exclude_controls=used_controls,
+            available_controls=get_model_controls(self._model)
+        )
         if dialog.exec() == QDialog.Accepted:
             control = dialog.get_control()
             action = dialog.get_action()
@@ -1797,7 +1811,8 @@ class ControlEditor(QWidget):
         dialog = ComboConfigDialog(self, modifier_name=self.current_control,
                                    control_name=control, action=action, comment=comment,
                                    exclude_controls=used_controls, haptic_strength=current_haptic,
-                                   haptic_speed=current_haptic_speed)
+                                   haptic_speed=current_haptic_speed,
+                                   available_controls=get_model_controls(self._model))
         if dialog.exec() == QDialog.Accepted:
             new_control = dialog.get_control()
             new_action = dialog.get_action()
@@ -1838,6 +1853,9 @@ class ControlEditor(QWidget):
         # Control name
         control_item = QTableWidgetItem(control_name)
         self.combos_table.setItem(row, 0, control_item)
+        self.combos_table.setRowHidden(
+            row, control_name not in get_model_controls(self._model)
+        )
 
         # Action (display readable, store raw)
         readable_action = self._action_to_readable(action, get_system_display_hints())
@@ -1873,7 +1891,7 @@ class ControlEditor(QWidget):
         self.combos_table.setCellWidget(row, 3, button_widget)
 
         # Select the newly added row if requested
-        if select:
+        if select and not self.combos_table.isRowHidden(row):
             self.combos_table.selectRow(row)
 
     def _delete_combo_row(self, row: int):

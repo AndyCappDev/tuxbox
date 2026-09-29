@@ -23,6 +23,7 @@ Linux driver for the TourBox Lite, Neo, Elite and Elite Plus by TourBox Tech Inc
 ## Features
 
 - ✅ **Graphical Configuration** - Full-featured GUI for visual configuration with live preview
+- ✅ **Controller Models** - Select Lite or Elite in File → Global Settings, with matching SVG artwork, control lists and modifier highlighting
 - ✅ **USB and Bluetooth LE** - Connect via USB cable or wirelessly via Bluetooth
 - ✅ **Haptic Feedback** - Configurable vibration feedback for rotary controls (Elite series only)
 - ✅ **Application Profiles** - Different button mappings per application (Wayland and X11)

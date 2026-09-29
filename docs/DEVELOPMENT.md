@@ -741,7 +741,7 @@ self.widget.blockSignals(False)
 - [ ] Profile editing (name, window matching) works
 - [ ] Profile deletion works (with confirmation)
 - [ ] Cannot delete or edit default profile
-- [ ] Controls list displays all 20 controls
+- [ ] Controls list displays 20 controls for Elite and 12 for Lite
 - [ ] Control mappings display correctly (readable names)
 - [ ] Control editor captures key presses
 - [ ] Multi-key combinations work (Ctrl+Alt+X)
@@ -915,6 +915,38 @@ async def handle_button_event(self, sender: int, data: bytearray):
 ```
 
 ## Contributing
+
+### Controller artwork
+
+The controller view loads `tuxbox/gui/assets/tourbox_<model>.svg` according
+to the saved `controller_model` display preference. Elite remains the default.
+The SVGs are included in distributions by the existing `assets/*.svg` rule.
+
+Artwork must contain layers labelled `controls` and `modifiers` using the
+same Inkscape namespace as the Elite asset. Each selectable control has a
+hidden group with its internal control name as the ID; modifier groups use
+the `m_` prefix. The view reveals these groups to highlight a selection.
+Lite has no Side, D-Pad or Dial overlays. Outline ink uses `#000000` in
+style attributes so the existing dark-theme recolouring applies.
+
+`gui/controller_models.py` defines the controls for each model. The controls
+and combination tables hide unavailable rows rather than deleting them, so
+switching models preserves both saved mappings and pending edits. Combination
+dialogs use the same model inventory.
+
+The Lite SVG is an original vector drawing based on this supplied reference:
+https://cdn.tourboxtech.com/prod/uploads/lite-bluetooth-bk-1_260907171449.webp
+The reference photograph is not bundled with the package.
+
+Run the focused GUI checks with:
+
+```bash
+QT_QPA_PLATFORM=offscreen ./venv/bin/python -m unittest discover -s tests -v
+```
+
+Also check model switching, individual and combination highlights, resizing,
+and light/dark themes in the GUI. Record desktop and hardware testing
+separately from the offscreen checks in the PR.
 
 ### Before Submitting
 

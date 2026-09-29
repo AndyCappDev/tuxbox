@@ -119,6 +119,7 @@ which preserves your comments and backs the file up before saving.
 **Format:** `setting = value`
 
 **Available settings:**
+- `controller_model` - GUI artwork and available controls: `elite` (default) or `lite`. Applies immediately when saved through Global Settings. Unavailable controls and combinations are hidden, with existing mappings preserved. This preference does not change driver behaviour; unknown values fall back to Elite.
 - `connection` - Which transports the driver may use: `auto` (default), `usb`, or `ble`. See [Choosing a connection](#choosing-a-connection) below.
 - `mac_address` - Your TourBox's Bluetooth MAC address (XX:XX:XX:XX:XX:XX) - Elite/Elite Plus only
 - `modifier_delay` - Milliseconds to wait between modifier keys (Ctrl/Shift/Alt/Meta) and other **keyboard** keys when sending key combinations. Default: `0` (disabled). Set to `20`-`50` if apps like GIMP don't recognize keyboard combos. Can be overridden per-profile in `.profile` files (see below). **Note:** modifier+mouse combos (e.g. Alt+scroll, Ctrl+click) get a small built-in delay automatically and do not require this setting.
