@@ -926,21 +926,12 @@ Artwork must contain layers labelled `controls` and `modifiers` using the
 same Inkscape namespace as the Elite asset. Each selectable control has a
 hidden group with its internal control name as the ID; modifier groups use
 the `m_` prefix. The view reveals these groups to highlight a selection.
-Lite has no Side, D-Pad or Dial overlays. Outline ink uses `#000000` in
-style attributes so the existing dark-theme recolouring applies.
+Lite has no Side, D-Pad or Dial overlays.
 
 `gui/controller_models.py` defines the controls for each model. The controls
 and combination tables hide unavailable rows rather than deleting them, so
 switching models preserves both saved mappings and pending edits. Combination
 dialogs use the same model inventory.
-
-The Lite SVG is an original vector drawing based on this supplied reference:
-https://cdn.tourboxtech.com/prod/uploads/lite-bluetooth-bk-1_260907171449.webp
-The reference photograph is not bundled with the package.
-
-Also check model switching, individual and combination highlights, resizing,
-and light/dark themes in the GUI. Record desktop and hardware testing
-separately from the offscreen checks in the PR.
 
 ### Before Submitting
 
