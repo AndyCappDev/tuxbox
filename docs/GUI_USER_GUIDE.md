@@ -1329,6 +1329,11 @@ Side, D-Pad and Dial controls and combinations are hidden. Switching back
 to Elite restores them, including their existing mappings. New combinations
 can only use controls on the selected model.
 
+Because hidden combinations are still saved, a button can remain a modifier
+on Lite even when its combinations table looks empty (for example, a shared
+profile with a Tall + Side combination). Switch to Elite to see and edit
+those combinations.
+
 This is a GUI setting. It does not detect hardware, change the connection
 protocol, or remove mappings from your profiles.
 

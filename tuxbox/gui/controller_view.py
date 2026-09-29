@@ -15,6 +15,7 @@ from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtSvg import QSvgRenderer
 
 from .theme import is_dark_theme, foreground_hex
+from .controller_models import get_model_controls
 from tuxbox.config_loader import DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS
 
 logger = logging.getLogger(__name__)
@@ -116,6 +117,15 @@ class ControllerView(QWidget):
             model if model in VALID_CONTROLLER_MODELS else DEFAULT_CONTROLLER_MODEL
         )
         self._load_svg()
+
+        # Drop any selection the new model doesn't have (e.g. Side when
+        # switching to Lite) so it isn't looked up in artwork that lacks it
+        available = get_model_controls(self._model)
+        if self._combo_control not in available:
+            self._combo_control = None
+        if self._current_control not in available:
+            self.clear_highlight()
+            return
         self.svg_widget.set_highlighted_control(
             self._current_control, self._current_is_modifier, self._combo_control
         )
@@ -252,7 +262,8 @@ class SVGControllerWidget(QWidget):
                         break
 
                 if control_elem is None:
-                    # Shared profiles can refer to controls absent from a model.
+                    # Callers only pass controls the current model has, so a
+                    # miss here means the artwork is missing a group
                     logger.warning(f"Control element '{search_id}' not found in layer '{layer_name}'")
                     continue
 
