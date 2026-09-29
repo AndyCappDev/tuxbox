@@ -153,7 +153,11 @@ class DeviceSettingsDialog(QDialog):
         index = self.model_combo.findData(current)
         self.model_combo.setCurrentIndex(index if index >= 0 else 0)
         form.addRow("Model:", _keep_full_height(self.model_combo))
-        form.addRow(HelpLabel("Choose the controller artwork and available controls."))
+        form.addRow(HelpLabel("Choose the controller artwork and available controls.\n"
+            "On Lite, combinations using unavailable controls are hidden but remain "
+               "saved in the profile. A modifier can therefore still be active even "
+               "when its visible combinations table is empty. Switch to Elite to edit "
+               "those combinations."))
         return group
 
     def _build_connection_group(self) -> QGroupBox:
