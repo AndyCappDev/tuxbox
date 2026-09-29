@@ -253,7 +253,7 @@ class SVGControllerWidget(QWidget):
 
                 if control_elem is None:
                     # Shared profiles can refer to controls absent from a model.
-                    logger.debug(f"Control element '{search_id}' not found in layer '{layer_name}'")
+                    logger.warning(f"Control element '{search_id}' not found in layer '{layer_name}'")
                     continue
 
                 # Change the control's style from hidden to visible
