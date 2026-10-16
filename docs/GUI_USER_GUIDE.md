@@ -1607,7 +1607,7 @@ To check if a new version of TuxBox is available:
    echo $XDG_CURRENT_DESKTOP  # Shows your desktop
    ```
 3. For GNOME: Install the Focused Window D-Bus extension
-4. For KDE: Install `kdotool`
+4. For KDE: Check the driver log for "KDE event-driven window monitoring active"; if it fell back to polling, install `kdotool`
 5. Check driver logs to see profile switching:
    ```bash
    journalctl --user -u tuxbox -f

@@ -265,9 +265,11 @@ class WindowMonitor:
 
     def _test_kde(self) -> bool:
         """Test if KDE Plasma (KWin) is running"""
-        # Check if kdotool is available (required for KDE window detection)
+        # Without kdotool, still recognize KDE from the session environment:
+        # the event-driven KWin script monitor only needs D-Bus. kdotool is
+        # then only missing for one-shot queries and the polling fallback.
         if not self._kdotool_path:
-            return False
+            return 'kde' in os.environ.get('XDG_CURRENT_DESKTOP', '').lower()
 
         try:
             result = subprocess.run(
@@ -960,6 +962,10 @@ class WindowMonitor:
         if self.compositor == 'kde':
             if await self._run_kde_event_monitor(callback):
                 return  # Ran event-driven until cancelled
+            if not self._kdotool_path:
+                logger.warning("KDE event monitoring unavailable and kdotool not installed - "
+                               "profile switching disabled (install kdotool for the polling fallback)")
+                return
             logger.warning("KDE event monitoring unavailable - falling back to polling")
 
         logger.info(f"Starting window monitor (compositor: {self.compositor}, interval: {interval}s)")

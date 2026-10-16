@@ -61,7 +61,7 @@ Linux driver for the TourBox Lite, Neo, Elite and Elite Plus by TourBox Tech Inc
 ### Additional Requirements for Profile Mode
 
 - **For profile mode (app-specific mappings):**
-  - **KDE Plasma (Wayland):** `kdotool` required (see installation instructions below)
+  - **KDE Plasma (Wayland):** No additional requirements; `kdotool` is optional (see below)
   - **GNOME (Wayland):** [Focused Window D-Bus extension](https://extensions.gnome.org/extension/5592/focused-window-d-bus/) required (see installation instructions below)
   - **Sway/Hyprland/Niri/Mango:** No additional requirements
   - **X11 (all desktops):** `xdotool` required (see installation instructions below)
@@ -117,7 +117,7 @@ Log out and log back in or reboot to activate the driver.
 
 ### Additional Step for KDE Plasma Users
 
-If you're using KDE Plasma on Wayland and want profile mode (app-specific mappings), you need to install `kdotool`.
+Profile switching on KDE Plasma works without extra software: TuxBox loads a small KWin script and KWin pushes focus changes to it. Installing `kdotool` is optional but recommended - the GUI's **Capture Active Window** button uses it, and the driver falls back to polling with it if the KWin script can't be loaded.
 
 **From your package manager (preferred)**
 

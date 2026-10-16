@@ -544,7 +544,7 @@ Starting window monitor (compositor: kde, interval: 0.2s)
 
 That fallback happens if KWin refuses to load or start the script, no events arrive within a few seconds, or another TuxBox instance already holds the driver's D-Bus name. Profile switching keeps working either way.
 
-> **`kdotool` is still required on KDE**, even though the event-driven path doesn't use it to read windows: TuxBox uses it to detect that you're running KWin in the first place. Without it, KDE isn't recognized and app-specific profiles won't switch at all.
+> **`kdotool` is optional on KDE.** Without it, TuxBox recognizes KDE from `XDG_CURRENT_DESKTOP` and uses the event-driven path above. It's still used for the GUI's *Capture Active Window* button and for the polling fallback - if the KWin script can't be loaded and `kdotool` isn't installed, profile switching is disabled and the driver logs a warning saying so.
 
 ### Other desktops: polling
 

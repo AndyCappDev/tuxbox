@@ -753,10 +753,11 @@ if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
             echo ""
             echo -e "${YELLOW}╔════════════════════════════════════════════════════════════════╗${NC}"
             echo -e "${YELLOW}║  ATTENTION KDE PLASMA USERS:                                   ║${NC}"
-            echo -e "${YELLOW}║  kdotool is NOT installed - Profile mode will NOT work!        ║${NC}"
+            echo -e "${YELLOW}║  kdotool is NOT installed (optional, recommended)              ║${NC}"
             echo -e "${YELLOW}╚════════════════════════════════════════════════════════════════╝${NC}"
             echo ""
-            echo -e "${BLUE}To enable profile mode (app-specific button mappings), install kdotool:${NC}"
+            echo -e "${BLUE}Profile mode works without it via a KWin script. kdotool enables the${NC}"
+            echo -e "${BLUE}GUI's Capture Active Window button and the polling fallback:${NC}"
             echo ""
             echo -e "${GREEN}1. Install build dependencies:${NC}"
             echo "   sudo apt install build-essential pkg-config libdbus-1-dev libxcb1-dev"
@@ -772,7 +773,7 @@ if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
             echo -e "${GREEN}4. Verify installation:${NC}"
             echo "   kdotool --version"
             echo ""
-            echo -e "${YELLOW}Note: Simple mode (single mapping) works without kdotool.${NC}"
+            echo -e "${YELLOW}Note: Profile switching on KDE works without kdotool.${NC}"
             echo ""
         else
             KDOTOOL_VERSION=$(kdotool --version 2>&1 | head -1)
