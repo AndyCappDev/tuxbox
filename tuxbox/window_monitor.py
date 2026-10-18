@@ -265,22 +265,25 @@ class WindowMonitor:
 
     def _test_kde(self) -> bool:
         """Test if KDE Plasma (KWin) is running"""
-        # Without kdotool, still recognize KDE from the session environment:
-        # the event-driven KWin script monitor only needs D-Bus. kdotool is
-        # then only missing for one-shot queries and the polling fallback.
-        if not self._kdotool_path:
-            return 'kde' in os.environ.get('XDG_CURRENT_DESKTOP', '').lower()
+        if self._kdotool_path:
+            try:
+                result = subprocess.run(
+                    [self._kdotool_path, 'getactivewindow'],
+                    capture_output=True,
+                    timeout=1
+                )
+                # If kdotool works, KDE is running
+                if result.returncode == 0:
+                    return True
+            except (FileNotFoundError, subprocess.TimeoutExpired):
+                pass
 
-        try:
-            result = subprocess.run(
-                [self._kdotool_path, 'getactivewindow'],
-                capture_output=True,
-                timeout=1
-            )
-            # If kdotool works, KDE is running
-            return result.returncode == 0
-        except (FileNotFoundError, subprocess.TimeoutExpired):
+        # Without a working kdotool, still recognize KDE from the session
+        # environment: the event-driven KWin script monitor only needs D-Bus.
+        # On X11, leave it to _test_x11 so xdotool keeps handling it.
+        if os.environ.get('XDG_SESSION_TYPE', '').lower() == 'x11':
             return False
+        return 'kde' in os.environ.get('XDG_CURRENT_DESKTOP', '').lower()
 
     def _test_x11(self) -> bool:
         """Test if running on X11 with xdotool available"""
