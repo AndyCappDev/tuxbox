@@ -291,6 +291,7 @@ echo "uinput" | sudo tee /etc/modules-load.d/uinput.conf
 sudo tee /etc/udev/rules.d/99-tourbox.rules > /dev/null <<'EOF'
 SUBSYSTEM=="tty", ATTRS{idVendor}=="c251", ATTRS{idProduct}=="2005", ENV{ID_MM_DEVICE_IGNORE}="1"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="2e3c", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="cafe", ATTRS{idProduct}=="4001", ENV{ID_MM_DEVICE_IGNORE}="1"
 EOF
 sudo udevadm control --reload-rules
 

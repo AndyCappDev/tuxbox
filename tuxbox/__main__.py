@@ -58,8 +58,6 @@ TOURBOX_USB_IDS = frozenset([
     (0x2e3c, 0x5740),  # TourBox Neo (Artery AT32 generic CDC ID, shared with
                        # AT32 hobbyist boards; the negative-probe cache below
                        # stops repeat probing of false matches).
-    (0xcafe, 0x4001),  # TourBox Neo, newer firmware (TinyUSB example VID,
-                       # also shared with hobbyist boards; same cache applies).
 ])
 
 # Substring (case-insensitive) checked against the device's iManufacturer
