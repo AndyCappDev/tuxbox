@@ -254,26 +254,29 @@ echo "Configuring ModemManager to ignore the TourBox..."
 
 TOURBOX_UDEV_RULE="/etc/udev/rules.d/99-tourbox.rules"
 
-if [ ! -f "$TOURBOX_UDEV_RULE" ]; then
-    # c251:2005 = Elite / Elite Plus. 2e3c:5740 = Neo (a generic ArteryTek
-    # AT32 CDC ID, so this also tells ModemManager to skip other AT32 boards
-    # — harmless, as those are not modems either).
+# Rewrite the rule when it's missing or predates the newest ID below, so
+# existing installs pick up added IDs too.
+if [ ! -f "$TOURBOX_UDEV_RULE" ] || ! grep -q 'idVendor}=="cafe", ATTRS{idProduct}=="4001"' "$TOURBOX_UDEV_RULE"; then
+    # c251:2005 = Elite / Elite Plus. 2e3c:5740 and cafe:4001 = Neo (generic
+    # ArteryTek AT32 and TinyUSB CDC IDs, so this also tells ModemManager to
+    # skip other boards on them — harmless, as those are not modems either).
     sudo tee "$TOURBOX_UDEV_RULE" > /dev/null <<'UDEV_EOF'
 # TourBox controllers - keep ModemManager off the serial port
 SUBSYSTEM=="tty", ATTRS{idVendor}=="c251", ATTRS{idProduct}=="2005", ENV{ID_MM_DEVICE_IGNORE}="1"
 SUBSYSTEM=="tty", ATTRS{idVendor}=="2e3c", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="cafe", ATTRS{idProduct}=="4001", ENV{ID_MM_DEVICE_IGNORE}="1"
 UDEV_EOF
 
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✓${NC} Created udev rule to keep ModemManager off the TourBox"
+        echo -e "${GREEN}✓${NC} Wrote udev rule to keep ModemManager off the TourBox"
         sudo udevadm control --reload-rules
         echo -e "${YELLOW}!${NC} Replug the USB cable for this to take effect"
     else
-        echo -e "${RED}Error: Failed to create TourBox udev rule${NC}"
+        echo -e "${RED}Error: Failed to write TourBox udev rule${NC}"
         exit 1
     fi
 else
-    echo -e "${GREEN}✓${NC} TourBox udev rule already exists"
+    echo -e "${GREEN}✓${NC} TourBox udev rule already up to date"
 fi
 
 # Create and activate virtual environment
