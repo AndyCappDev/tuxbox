@@ -142,6 +142,7 @@ KEY_NAMES = {
     'KEY_RIGHTALT': e.KEY_RIGHTALT,
     'KEY_RIGHTCTRL': e.KEY_RIGHTCTRL,
     'KEY_RIGHTSHIFT': e.KEY_RIGHTSHIFT,
+    'KEY_CAPSLOCK': e.KEY_CAPSLOCK,
     'KEY_SPACE': e.KEY_SPACE,
     'KEY_ENTER': e.KEY_ENTER,
     'KEY_TAB': e.KEY_TAB,
@@ -212,6 +213,29 @@ REL_NAMES = {
 }
 
 
+# Which key TuxBox sends for Ctrl (KEY_LEFTCTRL in mappings). A layout option
+# such as ctrl:swapcaps applies to TuxBox's virtual keyboard too, turning its
+# Left Ctrl into Caps Lock, so users with that swap can pick the key their
+# system treats as Ctrl. Set from [device] ctrl_key via set_ctrl_key().
+CTRL_KEY_CHOICES = {
+    'left': e.KEY_LEFTCTRL,
+    'right': e.KEY_RIGHTCTRL,
+    'capslock': e.KEY_CAPSLOCK,
+}
+DEFAULT_CTRL_KEY = 'left'
+_ctrl_keycode = CTRL_KEY_CHOICES[DEFAULT_CTRL_KEY]
+
+
+def set_ctrl_key(choice: str = DEFAULT_CTRL_KEY):
+    """Set which key parse_action() sends in place of KEY_LEFTCTRL
+
+    Args:
+        choice: One of CTRL_KEY_CHOICES; anything else restores the default
+    """
+    global _ctrl_keycode
+    _ctrl_keycode = CTRL_KEY_CHOICES.get(choice, CTRL_KEY_CHOICES[DEFAULT_CTRL_KEY])
+
+
 def parse_action(action_str: str) -> List[Tuple[int, int, int]]:
     """Parse an action string into evdev events
 
@@ -251,7 +275,10 @@ def parse_action(action_str: str) -> List[Tuple[int, int, int]]:
 
         # Check if this part is a key (includes BTN_LEFT/RIGHT/MIDDLE)
         if part in KEY_NAMES:
-            events.append((e.EV_KEY, KEY_NAMES[part], 1))  # Press
+            code = KEY_NAMES[part]
+            if code == e.KEY_LEFTCTRL:
+                code = _ctrl_keycode
+            events.append((e.EV_KEY, code, 1))  # Press
         else:
             logger.warning(f"Unknown key/button name: {part}")
 
@@ -366,6 +393,16 @@ def load_device_config(config_path: str = None) -> Dict[str, str]:
             else:
                 logger.warning("Unknown controller_model '%s'; using %s",
                                model, DEFAULT_CONTROLLER_MODEL)
+        if 'ctrl_key' in config['device']:
+            raw = config['device']['ctrl_key'].strip().lower()
+            if raw in CTRL_KEY_CHOICES:
+                device_config['ctrl_key'] = raw
+            else:
+                logger.warning(
+                    f"Invalid ctrl_key '{raw}' "
+                    f"(expected one of {', '.join(CTRL_KEY_CHOICES)}), "
+                    f"using default '{DEFAULT_CTRL_KEY}'"
+                )
         if 'connection' in config['device']:
             # Which transports the driver is allowed to use. 'usb' keeps the
             # Bluetooth radio out of it entirely, which matters on a laptop:

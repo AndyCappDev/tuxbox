@@ -16,7 +16,10 @@ from abc import ABC, abstractmethod
 from typing import Optional, Dict, Set, List, Tuple
 
 from evdev import UInput, ecodes as e
-from .config_loader import load_profiles, load_device_config, BUTTON_CODES, parse_action
+from .config_loader import (
+    load_profiles, load_device_config, BUTTON_CODES, parse_action, set_ctrl_key,
+    DEFAULT_CTRL_KEY
+)
 from .window_monitor import WindowMonitor, DEFAULT_POLL_INTERVAL
 
 # Keyboard modifier keys - these need to be sent before main keys for proper combo recognition
@@ -25,6 +28,8 @@ KEYBOARD_MODIFIER_KEYS = {
     e.KEY_LEFTSHIFT, e.KEY_RIGHTSHIFT,
     e.KEY_LEFTALT, e.KEY_RIGHTALT,
     e.KEY_LEFTMETA, e.KEY_RIGHTMETA,
+    # Sent for Ctrl when [device] ctrl_key = capslock (Ctrl/Caps Lock swapped)
+    e.KEY_CAPSLOCK,
 }
 
 # Mouse button keys - paired with KEYBOARD_MODIFIER_KEYS to detect modifier+mouse
@@ -135,8 +140,13 @@ class TuxBoxBase(ABC):
         # On-release modifier tracking - modifier buttons with on_release that need base action on release
         self._on_release_modifier_pending: Dict[str, List[Tuple[int, int, int]]] = {}  # control -> base action events
 
-        # Load device config for modifier_delay setting
+        # Load device config for modifier_delay and ctrl_key settings
         device_config = load_device_config(config_path)
+        # Must be set before profiles are parsed into key events
+        ctrl_key = device_config.get('ctrl_key', DEFAULT_CTRL_KEY)
+        set_ctrl_key(ctrl_key)
+        if ctrl_key != DEFAULT_CTRL_KEY:
+            logger.info(f"Ctrl in mappings is sent as: {ctrl_key}")
         # Global modifier delay in milliseconds - time between modifier keys and main keys
         # Default 0 (disabled). Set to 20-50 if apps don't recognize key combos.
         # Per-profile values override this when set.
@@ -920,6 +930,10 @@ class TuxBoxBase(ABC):
             # Remember current profile name
             current_profile_name = self.current_profile.name if self.current_profile else 'default'
 
+            # Reload device config first: ctrl_key affects how profiles parse
+            device_config = load_device_config(self.config_path)
+            set_ctrl_key(device_config.get('ctrl_key', DEFAULT_CTRL_KEY))
+
             # Reload profiles from config
             new_profiles = load_profiles(self.config_path)
 
@@ -932,7 +946,6 @@ class TuxBoxBase(ABC):
             logger.info(f"Reloaded {len(self.profiles)} profiles")
 
             # Reload global modifier_delay from device config
-            device_config = load_device_config(self.config_path)
             self._global_modifier_delay = device_config.get('modifier_delay', 0)
 
             # Find the current profile in the new profiles

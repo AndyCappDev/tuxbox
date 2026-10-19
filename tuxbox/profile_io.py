@@ -959,6 +959,9 @@ def _write_device_config(filepath: Path, device_config: Dict) -> bool:
         if 'window_poll_interval' in device_config:
             lines.append(f"window_poll_interval = {device_config['window_poll_interval']}")
 
+        if 'ctrl_key' in device_config:
+            lines.append(f"ctrl_key = {device_config['ctrl_key']}")
+
         lines.append("")
 
         # Write atomically

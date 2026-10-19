@@ -1359,6 +1359,7 @@ port. The driver probes all `/dev/ttyACM*` devices regardless.
 
 - **Haptics** - send haptic settings even when a profile leaves them at their defaults
 - **Modifier delay** - the global default for [Modifier Key Delay](#configuring-modifier-key-delay); individual profiles can override it
+- **Send Ctrl as** - which key the TourBox sends for Ctrl: **Left Ctrl** (default), **Right Ctrl** or **Caps Lock**. If you swapped Ctrl and Caps Lock in your keyboard settings, that swap applies to the TourBox too and its Ctrl shortcuts type Caps Lock instead. Choose **Right Ctrl** (for the standard swap option, which only swaps Left Ctrl) or **Caps Lock** (for any swap). Your profiles still show Ctrl and don't need editing
 - **Window check** - how often the focused window is checked for automatic profile switching. Not used on KDE Plasma, which reports window changes as they happen
 
 ### Applying changes

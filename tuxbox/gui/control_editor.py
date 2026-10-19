@@ -119,6 +119,7 @@ SPECIAL_KEYS = {
     'Backspace': e.KEY_BACKSPACE,
     'Delete': e.KEY_DELETE,
     'Insert': e.KEY_INSERT,
+    'Caps Lock': e.KEY_CAPSLOCK,
     'Context Menu': e.KEY_CONTEXT_MENU,
     '--- Arrow Keys ---': None,
     'Up': e.KEY_UP,
@@ -1981,6 +1982,8 @@ class ControlEditor(QWidget):
                     readable_parts.append("Enter")
                 elif key_name == "ESC":
                     readable_parts.append("Esc")
+                elif key_name == "CAPSLOCK":
+                    readable_parts.append("Caps Lock")
                 # Check display hints first (locale-aware), then fall back to SYMBOL_MAP
                 elif display_hints and part in display_hints:
                     readable_parts.append(display_hints[part])

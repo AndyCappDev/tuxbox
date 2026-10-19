@@ -18,7 +18,7 @@ from PySide6.QtCore import QSize
 
 from tuxbox.config_loader import (
     load_device_config, DEFAULT_CONNECTION_MODE, VALID_CONNECTION_MODES,
-    DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS
+    DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS, DEFAULT_CTRL_KEY
 )
 from tuxbox.window_monitor import (
     DEFAULT_POLL_INTERVAL, MIN_POLL_INTERVAL, MAX_POLL_INTERVAL
@@ -48,6 +48,14 @@ CONNECTION_HELP = {
     'ble': "The USB ports are never checked. Choose this if you only ever "
            "connect over Bluetooth.",
 }
+
+# Which key the driver sends for Ctrl. Kept short for the same reason as
+# CONNECTION_CHOICES.
+CTRL_KEY_CHOICES = (
+    ('left', "Left Ctrl"),
+    ('right', "Right Ctrl"),
+    ('capslock', "Caps Lock"),
+)
 
 
 DIALOG_WIDTH = 560
@@ -230,6 +238,23 @@ class DeviceSettingsDialog(QDialog):
         )
         form.addRow(delay_info)
 
+        # Which key is sent for Ctrl
+        self.ctrl_key_combo = QComboBox()
+        for choice, label in CTRL_KEY_CHOICES:
+            self.ctrl_key_combo.addItem(label, choice)
+        index = self.ctrl_key_combo.findData(
+            self._original.get('ctrl_key', DEFAULT_CTRL_KEY)
+        )
+        self.ctrl_key_combo.setCurrentIndex(index if index >= 0 else 0)
+        form.addRow("Send Ctrl as:", _keep_full_height(self.ctrl_key_combo))
+
+        ctrl_key_info = HelpLabel(
+            "If you swapped Ctrl and Caps Lock in your keyboard settings, the swap "
+            "applies to the TourBox too and its Ctrl shortcuts type Caps Lock. "
+            "Choose Right Ctrl or Caps Lock so they work again."
+        )
+        form.addRow(ctrl_key_info)
+
         # Window poll interval
         self.poll_interval_spin = QDoubleSpinBox()
         self.poll_interval_spin.setRange(MIN_POLL_INTERVAL, MAX_POLL_INTERVAL)
@@ -318,6 +343,10 @@ class DeviceSettingsDialog(QDialog):
         delay = self.modifier_delay_spin.value()
         if delay != int(self._original.get('modifier_delay', 0)):
             changes['modifier_delay'] = delay if delay else None
+
+        ctrl_key = self.ctrl_key_combo.currentData()
+        if ctrl_key != self._original.get('ctrl_key', DEFAULT_CTRL_KEY):
+            changes['ctrl_key'] = None if ctrl_key == DEFAULT_CTRL_KEY else ctrl_key
 
         interval = round(self.poll_interval_spin.value(), 1)
         original_interval = float(self._original.get('window_poll_interval', DEFAULT_POLL_INTERVAL))

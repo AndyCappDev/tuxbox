@@ -31,6 +31,7 @@ DEVICE_KEYS = (
     'force_haptics',
     'modifier_delay',
     'window_poll_interval',
+    'ctrl_key',
 )
 
 

@@ -364,7 +364,7 @@ class ControlsList(QWidget):
                     'LEFTSHIFT': 'Shift', 'RIGHTSHIFT': 'Shift',
                     'LEFTMETA': 'Super', 'RIGHTMETA': 'Super',
                     'SPACE': 'Space', 'ENTER': 'Enter', 'ESC': 'Esc',
-                    'TAB': 'Tab', 'BACKSPACE': 'Backspace',
+                    'TAB': 'Tab', 'BACKSPACE': 'Backspace', 'CAPSLOCK': 'Caps Lock',
                 }
 
                 if key_name in key_map:

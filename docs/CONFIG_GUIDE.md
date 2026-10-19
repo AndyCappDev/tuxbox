@@ -123,6 +123,7 @@ which preserves your comments and backs the file up before saving.
 - `connection` - Which transports the driver may use: `auto` (default), `usb`, or `ble`. See [Choosing a connection](#choosing-a-connection) below.
 - `mac_address` - Your TourBox's Bluetooth MAC address (XX:XX:XX:XX:XX:XX) - Elite/Elite Plus only
 - `modifier_delay` - Milliseconds to wait between modifier keys (Ctrl/Shift/Alt/Meta) and other **keyboard** keys when sending key combinations. Default: `0` (disabled). Set to `20`-`50` if apps like GIMP don't recognize keyboard combos. Can be overridden per-profile in `.profile` files (see below). **Note:** modifier+mouse combos (e.g. Alt+scroll, Ctrl+click) get a small built-in delay automatically and do not require this setting.
+- `ctrl_key` - Which key TuxBox sends for Ctrl (`KEY_LEFTCTRL` in your mappings): `left` (default), `right` (Right Ctrl), or `capslock`. Use this if you swapped Ctrl and Caps Lock in your keyboard settings (for example the `ctrl:swapcaps` option): the swap applies to TuxBox's virtual keyboard too, so its Ctrl shortcuts come out as Caps Lock. `right` works with `ctrl:swapcaps`, which only swaps Left Ctrl; `capslock` works with any swap. Your profiles don't need to change. `KEY_RIGHTCTRL` in a mapping is always sent as Right Ctrl.
 - `window_poll_interval` - Seconds between active-window checks for app-specific profile switching. Default: `0.2`. Range: `0.2`-`60`. **Not used on KDE Plasma**, which receives window changes as they happen. See [Window Detection](#window-detection) below.
 
 **How to find your MAC address:**
@@ -573,6 +574,7 @@ KEY_LEFTCTRL, KEY_RIGHTCTRL
 KEY_LEFTSHIFT, KEY_RIGHTSHIFT
 KEY_LEFTALT, KEY_RIGHTALT
 KEY_LEFTMETA (Super/Windows key)
+KEY_CAPSLOCK
 ```
 
 ### Letter Keys
