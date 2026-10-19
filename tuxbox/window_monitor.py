@@ -265,20 +265,25 @@ class WindowMonitor:
 
     def _test_kde(self) -> bool:
         """Test if KDE Plasma (KWin) is running"""
-        # Check if kdotool is available (required for KDE window detection)
-        if not self._kdotool_path:
-            return False
+        if self._kdotool_path:
+            try:
+                result = subprocess.run(
+                    [self._kdotool_path, 'getactivewindow'],
+                    capture_output=True,
+                    timeout=1
+                )
+                # If kdotool works, KDE is running
+                if result.returncode == 0:
+                    return True
+            except (FileNotFoundError, subprocess.TimeoutExpired):
+                pass
 
-        try:
-            result = subprocess.run(
-                [self._kdotool_path, 'getactivewindow'],
-                capture_output=True,
-                timeout=1
-            )
-            # If kdotool works, KDE is running
-            return result.returncode == 0
-        except (FileNotFoundError, subprocess.TimeoutExpired):
+        # Without a working kdotool, still recognize KDE from the session
+        # environment: the event-driven KWin script monitor only needs D-Bus.
+        # On X11, leave it to _test_x11 so xdotool keeps handling it.
+        if os.environ.get('XDG_SESSION_TYPE', '').lower() == 'x11':
             return False
+        return 'kde' in os.environ.get('XDG_CURRENT_DESKTOP', '').lower()
 
     def _test_x11(self) -> bool:
         """Test if running on X11 with xdotool available"""
@@ -960,6 +965,10 @@ class WindowMonitor:
         if self.compositor == 'kde':
             if await self._run_kde_event_monitor(callback):
                 return  # Ran event-driven until cancelled
+            if not self._kdotool_path:
+                logger.warning("KDE event monitoring unavailable and kdotool not installed - "
+                               "profile switching disabled (install kdotool for the polling fallback)")
+                return
             logger.warning("KDE event monitoring unavailable - falling back to polling")
 
         logger.info(f"Starting window monitor (compositor: {self.compositor}, interval: {interval}s)")
