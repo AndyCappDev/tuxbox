@@ -190,6 +190,7 @@ class WindowMonitor:
             ('kde', self._test_kde),
             ('niri', self._test_niri),
             ('mango', self._test_mango),
+            ('umbriel', self._test_umbriel),
             ('x11', self._test_x11),
         ]
 
@@ -225,7 +226,7 @@ class WindowMonitor:
             return result.returncode == 0
         except (FileNotFoundError, subprocess.TimeoutExpired):
             return False
-            
+
     def _test_mango(self) -> bool:
         """Test if Mango is running"""
         try:
@@ -301,6 +302,18 @@ class WindowMonitor:
         except (FileNotFoundError, subprocess.TimeoutExpired):
             return False
 
+    def _test_umbriel(self) -> bool:
+        """Test if Umbriel is running"""
+        try:
+            result = subprocess.run(
+                ['umbriel', '--version'],
+                capture_output=True,
+                timeout=1
+            )
+            return result.returncode == 0
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return False
+
     def get_active_window(self) -> Optional[WindowInfo]:
         """Get information about the currently active window"""
 
@@ -320,6 +333,8 @@ class WindowMonitor:
                 return self._get_niri_window()
             elif self.compositor == 'mango':
                 return self._get_mango_window()
+            elif self.compositor == 'umbriel':
+                return self._get_umbriel_window()
             elif self.compositor == 'x11':
                 return self._get_x11_window()
         except Exception as e:
@@ -416,7 +431,7 @@ class WindowMonitor:
             logger.debug(f"Niri window detection error: {e}")
 
         return None
-    
+
     def _get_mango_window(self) -> Optional[WindowInfo]:
         """Get active window from Mango"""
         try:
@@ -441,7 +456,7 @@ class WindowMonitor:
             logger.debug(f"Mango window detection error: {e}")
 
         return None
- 
+
     def _get_gnome_window(self) -> Optional[WindowInfo]:
         """Get active window from GNOME Shell
 
@@ -509,6 +524,34 @@ class WindowMonitor:
             return self._query_window_tool([self._kdotool_path])
         except Exception as e:
             logger.debug(f"KDE window detection error: {e}")
+
+        return None
+
+    def _get_umbriel_window(self) -> Optional[WindowInfo]:
+        """Get active window from Umbriel"""
+        try:
+            result = subprocess.run(
+                ['umbriel', 'windows', '--json'],
+                capture_output=True,
+                text=True,
+                timeout=1
+            )
+
+            if result.returncode != 0:
+                return None
+
+            windows = json.loads(result.stdout)
+
+            for window in windows:
+                if window.get("focused", False):
+                    return WindowInfo(
+                        app_id=window.get('app_id', ''),
+                        title=window.get('title', ''),
+                        wm_class=window.get('app_id', '')
+                    )
+
+        except Exception as e:
+            logger.debug(f"Umbriel window detection error: {e}")
 
         return None
 
