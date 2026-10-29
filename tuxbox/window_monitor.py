@@ -251,6 +251,18 @@ class WindowMonitor:
         except (FileNotFoundError, subprocess.TimeoutExpired):
             return False
 
+    def _test_umbriel(self) -> bool:
+        """Test if Umbriel is running"""
+        try:
+            result = subprocess.run(
+                ['umbriel', 'windows', '--json'],
+                capture_output=True,
+                timeout=1
+            )
+            return result.returncode == 0
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return False
+
     def _test_gnome(self) -> bool:
         """Test if GNOME Shell is running"""
         try:
@@ -295,18 +307,6 @@ class WindowMonitor:
         try:
             result = subprocess.run(
                 ['xdotool', 'getactivewindow'],
-                capture_output=True,
-                timeout=1
-            )
-            return result.returncode == 0
-        except (FileNotFoundError, subprocess.TimeoutExpired):
-            return False
-
-    def _test_umbriel(self) -> bool:
-        """Test if Umbriel is running"""
-        try:
-            result = subprocess.run(
-                ['umbriel', '--version'],
                 capture_output=True,
                 timeout=1
             )

@@ -63,7 +63,7 @@ Linux driver for the TourBox Lite, Neo, Elite and Elite Plus by TourBox Tech Inc
 - **For profile mode (app-specific mappings):**
   - **KDE Plasma (Wayland):** No additional requirements; `kdotool` is optional (see below)
   - **GNOME (Wayland):** [Focused Window D-Bus extension](https://extensions.gnome.org/extension/5592/focused-window-d-bus/) required (see installation instructions below)
-  - **Sway/Hyprland/Niri/Mango:** No additional requirements
+  - **Sway/Hyprland/Niri/Mango/Umbriel:** No additional requirements
   - **X11 (all desktops):** `xdotool` required (see installation instructions below)
 
 ## Quick Install
@@ -173,7 +173,7 @@ If you're using GNOME on Wayland and want profile mode (app-specific mappings), 
 
 Without this extension, profile mode will not work on GNOME (the driver will use the default profile for all apps).
 
-### Additional Step for Sway/Hyprland/Niri/Mango Users
+### Additional Step for Sway/Hyprland/Niri/Mango/Umbriel Users
 
 No additional software required - profile mode works out of the box using the compositor's built-in IPC.
 

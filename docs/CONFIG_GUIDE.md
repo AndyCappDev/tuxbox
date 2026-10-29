@@ -549,7 +549,7 @@ That fallback happens if KWin refuses to load or start the script, no events arr
 
 ### Other desktops: polling
 
-On GNOME, Sway, Hyprland, Niri, Mango and X11, TuxBox checks the focused window on a timer using a helper tool (`xdotool` on X11, `swaymsg` on Sway, and so on).
+On GNOME, Sway, Hyprland, Niri, Mango, Umbriel and X11, TuxBox checks the focused window on a timer using a helper tool (`xdotool` on X11, `swaymsg` on Sway, and so on).
 
 `window_poll_interval` is the time between checks, and therefore the **worst-case delay** before a profile switch takes effect:
 
