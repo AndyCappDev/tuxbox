@@ -531,7 +531,7 @@ class WindowMonitor:
         """Get active window from Umbriel"""
         try:
             result = subprocess.run(
-                ['umbriel', 'windows', '--json'],
+                ['umbriel', 'focused-window', '--json'],
                 capture_output=True,
                 text=True,
                 timeout=1
@@ -540,15 +540,13 @@ class WindowMonitor:
             if result.returncode != 0:
                 return None
 
-            windows = json.loads(result.stdout)
+            window = json.loads(result.stdout)
 
-            for window in windows:
-                if window.get("focused", False):
-                    return WindowInfo(
-                        app_id=window.get('app_id', ''),
-                        title=window.get('title', ''),
-                        wm_class=window.get('app_id', '')
-                    )
+            return WindowInfo(
+                app_id=window.get('app_id', ''),
+                title=window.get('title', ''),
+                wm_class=window.get('app_id', '')
+            )
 
         except Exception as e:
             logger.debug(f"Umbriel window detection error: {e}")
