@@ -396,6 +396,8 @@ class WindowMonitor:
                 return None
 
             window = json.loads(result.stdout)
+            if not isinstance(window, dict):
+                return None
 
             return WindowInfo(
                 app_id=window.get('class', ''),
@@ -421,6 +423,8 @@ class WindowMonitor:
                 return None
 
             window = json.loads(result.stdout)
+            if not isinstance(window, dict):
+                return None
 
             return WindowInfo(
                 app_id=window.get('app_id', ''),
@@ -446,6 +450,8 @@ class WindowMonitor:
                 return None
 
             window = json.loads(result.stdout)
+            if not isinstance(window, dict):
+                return None
 
             return WindowInfo(
                 app_id=window.get('appid', ''),
@@ -541,6 +547,8 @@ class WindowMonitor:
                 return None
 
             window = json.loads(result.stdout)
+            if not isinstance(window, dict):
+                return None
 
             return WindowInfo(
                 app_id=window.get('app_id', ''),
