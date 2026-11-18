@@ -10,6 +10,8 @@ import urllib.error
 
 from PySide6.QtCore import QThread, Signal
 
+from tuxbox.i18n import _
+
 try:
     from tuxbox import VERSION
 except ImportError:
@@ -54,7 +56,8 @@ class UpdateChecker(QThread):
             tag_name = data.get('tag_name', '')
             latest_version = tag_name.lstrip('v')
             if not latest_version:
-                self.check_failed.emit("Could not parse version from GitHub release")
+                logger.error("Could not parse version from GitHub release")
+                self.check_failed.emit(_("Could not parse version from GitHub release"))
                 return
 
             release_notes = data.get('body', '') or ''
@@ -70,23 +73,20 @@ class UpdateChecker(QThread):
 
         except urllib.error.HTTPError as e:
             if e.code == 404:
-                error_msg = "No releases found on GitHub"
+                logger.error("No releases found on GitHub")
+                self.check_failed.emit(_("No releases found on GitHub"))
             else:
-                error_msg = f"GitHub API error: {e.code}"
-            logger.error(error_msg)
-            self.check_failed.emit(error_msg)
+                logger.error(f"GitHub API error: {e.code}")
+                self.check_failed.emit(_("GitHub API error: %s") % (e.code,))
         except urllib.error.URLError as e:
-            error_msg = f"Network error: {e.reason}"
-            logger.error(error_msg)
-            self.check_failed.emit(error_msg)
+            logger.error(f"Network error: {e.reason}")
+            self.check_failed.emit(_("Network error: %s") % (e.reason,))
         except TimeoutError:
-            error_msg = "Request timed out"
-            logger.error(error_msg)
-            self.check_failed.emit(error_msg)
+            logger.error("Request timed out")
+            self.check_failed.emit(_("Request timed out"))
         except Exception as e:
-            error_msg = f"Error checking for updates: {e}"
-            logger.error(error_msg, exc_info=True)
-            self.check_failed.emit(error_msg)
+            logger.error(f"Error checking for updates: {e}", exc_info=True)
+            self.check_failed.emit(_("Error checking for updates: %s") % (e,))
 
     def _is_newer(self, latest: str, current: str) -> bool:
         """Compare semantic versions

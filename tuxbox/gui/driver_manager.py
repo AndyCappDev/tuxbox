@@ -12,6 +12,8 @@ import os
 from pathlib import Path
 from typing import Tuple, Optional
 
+from tuxbox.i18n import _
+
 logger = logging.getLogger(__name__)
 
 
@@ -142,33 +144,30 @@ class DriverManager:
 
                 if result.returncode == 0:
                     logger.info("Driver stopped successfully via systemctl")
-                    return True, "Driver stopped successfully"
+                    return True, _("Driver stopped successfully")
                 else:
-                    error_msg = f"Failed to stop driver: {result.stderr}"
-                    logger.error(error_msg)
-                    return False, error_msg
+                    logger.error(f"Failed to stop driver: {result.stderr}")
+                    return False, _("Failed to stop driver: %s") % (result.stderr,)
 
             except subprocess.TimeoutExpired:
-                error_msg = "Timeout stopping driver"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error("Timeout stopping driver")
+                return False, _("Timeout stopping driver")
             except Exception as e:
-                error_msg = f"Error stopping driver: {e}"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error(f"Error stopping driver: {e}")
+                return False, _("Error stopping driver: %s") % (e,)
         else:
             # No systemctl - try to kill the process directly
             pids = DriverManager._get_driver_pids()
             if not pids:
-                return True, "Driver is not running"
+                return True, _("Driver is not running")
 
             try:
                 for pid in pids:
                     subprocess.run(['kill', pid], timeout=5)
                 logger.info("Driver stopped via kill signal")
-                return True, "Driver stopped successfully"
+                return True, _("Driver stopped successfully")
             except Exception as e:
-                return False, f"Failed to stop driver: {e}"
+                return False, _("Failed to stop driver: %s") % (e,)
 
     @staticmethod
     def start_driver() -> Tuple[bool, str]:
@@ -188,20 +187,17 @@ class DriverManager:
 
                 if result.returncode == 0:
                     logger.info("Driver started successfully")
-                    return True, "Driver started successfully"
+                    return True, _("Driver started successfully")
                 else:
-                    error_msg = f"Failed to start driver: {result.stderr}"
-                    logger.error(error_msg)
-                    return False, error_msg
+                    logger.error(f"Failed to start driver: {result.stderr}")
+                    return False, _("Failed to start driver: %s") % (result.stderr,)
 
             except subprocess.TimeoutExpired:
-                error_msg = "Timeout starting driver"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error("Timeout starting driver")
+                return False, _("Timeout starting driver")
             except Exception as e:
-                error_msg = f"Error starting driver: {e}"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error(f"Error starting driver: {e}")
+                return False, _("Error starting driver: %s") % (e,)
         else:
             return False, (
                 "Cannot start driver: systemctl not available.\n"
@@ -225,7 +221,7 @@ class DriverManager:
 
             if not pids:
                 logger.warning("No driver process found to reload")
-                return False, "Driver is not running"
+                return False, _("Driver is not running")
 
             # Send SIGHUP to each driver process
             for pid in pids:
@@ -241,12 +237,11 @@ class DriverManager:
                     logger.warning(f"Failed to send SIGHUP to {pid}: {e}")
 
             logger.info("Configuration reload signal sent successfully")
-            return True, "Configuration applied"
+            return True, _("Configuration applied")
 
         except Exception as e:
-            error_msg = f"Error applying configuration: {e}"
-            logger.error(error_msg)
-            return False, error_msg
+            logger.error(f"Error applying configuration: {e}")
+            return False, _("Error applying configuration: %s") % (e,)
 
     @staticmethod
     def restart_driver() -> Tuple[bool, str]:
@@ -274,20 +269,17 @@ class DriverManager:
 
                 if result.returncode == 0:
                     logger.info("Driver restarted successfully via custom command")
-                    return True, "Driver restarted successfully"
+                    return True, _("Driver restarted successfully")
                 else:
-                    error_msg = f"Failed to restart driver: {result.stderr or result.stdout}"
-                    logger.error(error_msg)
-                    return False, error_msg
+                    logger.error(f"Failed to restart driver: {result.stderr or result.stdout}")
+                    return False, _("Failed to restart driver: %s") % (result.stderr or result.stdout,)
 
             except subprocess.TimeoutExpired:
-                error_msg = "Timeout restarting driver"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error("Timeout restarting driver")
+                return False, _("Timeout restarting driver")
             except Exception as e:
-                error_msg = f"Error restarting driver: {e}"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error(f"Error restarting driver: {e}")
+                return False, _("Error restarting driver: %s") % (e,)
 
         # Fall back to systemctl if available
         if DriverManager._is_systemctl_available():
@@ -301,20 +293,17 @@ class DriverManager:
 
                 if result.returncode == 0:
                     logger.info("Driver restarted successfully via systemctl")
-                    return True, "Driver restarted successfully"
+                    return True, _("Driver restarted successfully")
                 else:
-                    error_msg = f"Failed to restart driver: {result.stderr}"
-                    logger.error(error_msg)
-                    return False, error_msg
+                    logger.error(f"Failed to restart driver: {result.stderr}")
+                    return False, _("Failed to restart driver: %s") % (result.stderr,)
 
             except subprocess.TimeoutExpired:
-                error_msg = "Timeout restarting driver"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error("Timeout restarting driver")
+                return False, _("Timeout restarting driver")
             except Exception as e:
-                error_msg = f"Error restarting driver: {e}"
-                logger.error(error_msg)
-                return False, error_msg
+                logger.error(f"Error restarting driver: {e}")
+                return False, _("Error restarting driver: %s") % (e,)
 
         # Neither custom command nor systemctl available
         return False, (
@@ -361,7 +350,6 @@ class DriverManager:
             return "  systemctl --user restart tuxbox"
         else:
             return (
-                "Configure a restart command in ~/.config/tuxbox/config.conf:\n"
-                "  [service]\n"
-                "  restart_command = your-restart-command-here"
+                _("Configure a restart command in ~/.config/tuxbox/config.conf:")
+                + "\n  [service]\n  restart_command = your-restart-command-here"
             )

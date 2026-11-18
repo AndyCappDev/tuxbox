@@ -17,6 +17,7 @@ from PySide6.QtGui import QFont
 # Import from existing driver code
 from tuxbox.config_loader import Profile
 from tuxbox.haptic import HapticConfig
+from tuxbox.i18n import _
 
 # Import GUI dialog
 from .profile_settings_dialog import ProfileSettingsDialog
@@ -59,14 +60,16 @@ class ProfileManager(QWidget):
         layout = QVBoxLayout(self)
 
         # Header
-        header = QLabel("Profiles")
+        header = QLabel(_("Profiles"))
         header.setStyleSheet("font-weight: bold; font-size: 14px;")
         layout.addWidget(header)
 
         # Profile table (3 columns: Name, Window, Active)
         self.profile_table = QTableWidget()
         self.profile_table.setColumnCount(3)
-        self.profile_table.setHorizontalHeaderLabels(["Name", "Window", "Active"])
+        self.profile_table.setHorizontalHeaderLabels(
+            [_("Name"), _("Window"), _("Active")]
+        )
         self.profile_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         self.profile_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
         self.profile_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
@@ -86,17 +89,17 @@ class ProfileManager(QWidget):
         button_layout = QHBoxLayout()
 
         self.new_button = QPushButton("+")
-        self.new_button.setToolTip("Create new profile")
+        self.new_button.setToolTip(_("Create new profile"))
         self.new_button.clicked.connect(self._on_new_profile)
         button_layout.addWidget(self.new_button)
 
         self.edit_button = QPushButton("⚙")
-        self.edit_button.setToolTip("Edit profile settings (window matching)")
+        self.edit_button.setToolTip(_("Edit profile settings (window matching)"))
         self.edit_button.clicked.connect(self._on_edit_profile)
         button_layout.addWidget(self.edit_button)
 
         self.delete_button = QPushButton("-")
-        self.delete_button.setToolTip("Delete selected profile")
+        self.delete_button.setToolTip(_("Delete selected profile"))
         self.delete_button.clicked.connect(self._on_delete_profile)
         button_layout.addWidget(self.delete_button)
 
@@ -104,13 +107,13 @@ class ProfileManager(QWidget):
         button_layout.addStretch()
 
         # Import/Export buttons
-        self.import_button = QPushButton("Import")
-        self.import_button.setToolTip("Import a profile from file")
+        self.import_button = QPushButton(_("Import"))
+        self.import_button.setToolTip(_("Import a profile from file"))
         self.import_button.clicked.connect(self._on_import_profile)
         button_layout.addWidget(self.import_button)
 
-        self.export_button = QPushButton("Export")
-        self.export_button.setToolTip("Export selected profile to file")
+        self.export_button = QPushButton(_("Export"))
+        self.export_button.setToolTip(_("Export selected profile to file"))
         self.export_button.clicked.connect(self._on_export_profile)
         button_layout.addWidget(self.export_button)
 
@@ -136,9 +139,11 @@ class ProfileManager(QWidget):
             conflicts = self._get_conflicting_profiles(profile)
             if conflicts:
                 conflict_names = ", ".join(c.name for c in conflicts)
-                tooltip = f"Conflict: Multiple active profiles match the same application.\nConflicts with: {conflict_names}\nOnly the first alphabetically will be used."
+                tooltip = _("Conflict: Multiple active profiles match the same "
+                            "application.\nConflicts with: %s\nOnly the first "
+                            "alphabetically will be used.") % (conflict_names,)
                 # Use a QLabel with HTML to color only the warning icon
-                label = QLabel(f'<span style="color: #ffaa00;">⚠</span> {profile.name}')
+                label = QLabel(_('<span style="color: #ffaa00;">⚠</span> %s') % (profile.name,))
                 label.setToolTip(tooltip)
                 label.setContentsMargins(4, 0, 0, 0)  # Left padding to match other cells
                 # Store profile in a hidden item for data retrieval
@@ -215,9 +220,11 @@ class ProfileManager(QWidget):
             conflicts = self._get_conflicting_profiles(profile)
             if conflicts:
                 conflict_names = ", ".join(c.name for c in conflicts)
-                tooltip = f"Conflict: Multiple active profiles match the same application.\nConflicts with: {conflict_names}\nOnly the first alphabetically will be used."
+                tooltip = _("Conflict: Multiple active profiles match the same "
+                            "application.\nConflicts with: %s\nOnly the first "
+                            "alphabetically will be used.") % (conflict_names,)
                 # Use a QLabel with HTML to color only the warning icon
-                label = QLabel(f'<span style="color: #ffaa00;">⚠</span> {profile.name}')
+                label = QLabel(_('<span style="color: #ffaa00;">⚠</span> %s') % (profile.name,))
                 label.setToolTip(tooltip)
                 label.setContentsMargins(4, 0, 0, 0)  # Left padding to match other cells
                 # Store profile in a hidden item for data retrieval
@@ -308,9 +315,9 @@ class ProfileManager(QWidget):
             if name != old_name:
                 QMessageBox.information(
                     self,
-                    "Profile Updated",
-                    f"Profile renamed from '{old_name}' to '{name}'.\n\n"
-                    f"Remember to save to apply changes."
+                    _("Profile Updated"),
+                    _("Profile renamed from '%(old)s' to '%(new)s'.\n\n"
+                      "Remember to save to apply changes.") % {'old': old_name, 'new': name}
                 )
 
     def _on_new_profile(self):
@@ -320,9 +327,10 @@ class ProfileManager(QWidget):
         # Ask for profile name
         name, ok = QInputDialog.getText(
             self,
-            "New Profile",
-            "Enter a name for the new profile:",
-            text="new_profile"
+            _("New Profile"),
+            _("Enter a name for the new profile:"),
+            # Translators: default name offered for a new profile; the user can edit it.
+            text=_("new_profile")
         )
 
         if not ok or not name.strip():
@@ -334,8 +342,8 @@ class ProfileManager(QWidget):
         if ':' in name or '[' in name or ']' in name:
             QMessageBox.warning(
                 self,
-                "Invalid Name",
-                "Profile name cannot contain ':', '[', or ']' characters."
+                _("Invalid Name"),
+                _("Profile name cannot contain ':', '[', or ']' characters.")
             )
             return
 
@@ -344,18 +352,16 @@ class ProfileManager(QWidget):
             if profile.name == name:
                 QMessageBox.warning(
                     self,
-                    "Name Exists",
-                    f"A profile named '{name}' already exists.\nPlease choose a different name."
+                    _("Name Exists"),
+                    _("A profile named '%s' already exists.\nPlease choose a different name.") % (name,)
                 )
                 return
 
         # Ask if they want to copy current profile or start empty
         reply = QMessageBox.question(
             self,
-            "Copy Profile?",
-            f"Do you want to copy settings from the current profile ('{self.current_profile.name}')?\n\n"
-            "Click 'Yes' to copy all button mappings.\n"
-            "Click 'No' to start with empty mappings.",
+            _("Copy Profile?"),
+            _("Do you want to copy settings from the current profile ('%s')?\n\nClick 'Yes' to copy all button mappings.\nClick 'No' to start with empty mappings.") % (self.current_profile.name,),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.Yes
         )
@@ -404,9 +410,8 @@ class ProfileManager(QWidget):
         # Ask if they want to set window matching now
         reply = QMessageBox.question(
             self,
-            "Window Matching",
-            f"Profile '{name}' created successfully!\n\n"
-            "Would you like to set up window matching rules now?",
+            _("Window Matching"),
+            _("Profile '%s' created successfully!\n\nWould you like to set up window matching rules now?") % (name,),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
@@ -423,16 +428,16 @@ class ProfileManager(QWidget):
         if self.current_profile.name == 'default':
             QMessageBox.warning(
                 self,
-                "Cannot Delete",
-                "The default profile cannot be deleted."
+                _("Cannot Delete"),
+                _("The default profile cannot be deleted.")
             )
             return
 
         # Confirm deletion
         reply = QMessageBox.question(
             self,
-            "Delete Profile",
-            f"Are you sure you want to delete profile '{self.current_profile.name}'?",
+            _("Delete Profile"),
+            _("Are you sure you want to delete profile '%s'?") % (self.current_profile.name,),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
@@ -495,17 +500,16 @@ class ProfileManager(QWidget):
                 # Show success message
                 QMessageBox.information(
                     self,
-                    "Profile Deleted",
-                    f"Profile '{profile_to_delete.name}' has been deleted successfully."
+                    _("Profile Deleted"),
+                    _("Profile '%s' has been deleted successfully.") % (profile_to_delete.name,)
                 )
 
                 logger.info(f"Profile deleted: {profile_to_delete.name}")
             else:
                 QMessageBox.critical(
                     self,
-                    "Deletion Failed",
-                    f"Failed to delete profile '{profile_to_delete.name}'.\n\n"
-                    "Check the logs for details."
+                    _("Deletion Failed"),
+                    _("Failed to delete profile '%s'.\n\nCheck the logs for details.") % (profile_to_delete.name,)
                 )
 
     def _get_window_match_text(self, profile: Profile) -> str:
@@ -583,9 +587,9 @@ class ProfileManager(QWidget):
         # Default profile is always enabled - disable the checkbox
         if profile.name == 'default':
             checkbox.setEnabled(False)
-            checkbox.setToolTip("Default profile is always active")
+            checkbox.setToolTip(_("Default profile is always active"))
         else:
-            checkbox.setToolTip("Enable/disable this profile for automatic window matching")
+            checkbox.setToolTip(_("Enable/disable this profile for automatic window matching"))
             checkbox.stateChanged.connect(self._on_active_toggled)
 
         layout.addWidget(checkbox)
@@ -641,8 +645,8 @@ class ProfileManager(QWidget):
             checkbox.blockSignals(False)
             QMessageBox.critical(
                 self,
-                "Save Failed",
-                f"Failed to save profile '{profile_name}'."
+                _("Save Failed"),
+                _("Failed to save profile '%s'.") % (profile_name,)
             )
 
     def _update_button_states(self):
@@ -662,11 +666,11 @@ class ProfileManager(QWidget):
     def _on_import_profile(self):
         """Handle Import button click"""
         # Open file dialog
-        file_path, _ = QFileDialog.getOpenFileName(
+        file_path, _unused = QFileDialog.getOpenFileName(
             self,
-            "Import Profile",
+            _("Import Profile"),
             "",
-            "Profile Files (*.profile);;All Files (*)"
+            _("Profile Files (*.profile);;All Files (*)")
         )
 
         if not file_path:
@@ -678,8 +682,8 @@ class ProfileManager(QWidget):
         if profile is None:
             QMessageBox.critical(
                 self,
-                "Import Failed",
-                f"Failed to import profile:\n\n{error}"
+                _("Import Failed"),
+                _('Failed to import profile:\n\n%s') % (error,)
             )
             return
 
@@ -700,8 +704,8 @@ class ProfileManager(QWidget):
                 if profile_exists_in_config(new_name):
                     QMessageBox.critical(
                         self,
-                        "Import Failed",
-                        f"A profile named '{new_name}' also already exists."
+                        _("Import Failed"),
+                        _("A profile named '%s' also already exists.") % (new_name,)
                     )
                     return
 
@@ -713,8 +717,8 @@ class ProfileManager(QWidget):
                 if not delete_profile(profile.name):
                     QMessageBox.critical(
                         self,
-                        "Import Failed",
-                        f"Failed to replace existing profile '{profile.name}'."
+                        _("Import Failed"),
+                        _("Failed to replace existing profile '%s'.") % (profile.name,)
                     )
                     return
 
@@ -734,8 +738,8 @@ class ProfileManager(QWidget):
 
             QMessageBox.information(
                 self,
-                "Import Successful",
-                f"Profile '{profile.name}' has been imported successfully."
+                _("Import Successful"),
+                _("Profile '%s' has been imported successfully.") % (profile.name,)
             )
 
             # Emit signal to notify of changes
@@ -743,8 +747,8 @@ class ProfileManager(QWidget):
         else:
             QMessageBox.critical(
                 self,
-                "Import Failed",
-                "Failed to save imported profile."
+                _("Import Failed"),
+                _("Failed to save imported profile.")
             )
 
     def _on_export_profile(self):
@@ -757,11 +761,11 @@ class ProfileManager(QWidget):
         suggested_name = f"{sanitize_profile_filename(self.current_profile.name)}.profile"
 
         # Open file dialog
-        file_path, _ = QFileDialog.getSaveFileName(
+        file_path, _unused = QFileDialog.getSaveFileName(
             self,
-            "Export Profile",
+            _("Export Profile"),
             suggested_name,
-            "Profile Files (*.profile);;All Files (*)"
+            _("Profile Files (*.profile);;All Files (*)")
         )
 
         if not file_path:
@@ -775,12 +779,14 @@ class ProfileManager(QWidget):
         if export_profile(self.current_profile, file_path):
             QMessageBox.information(
                 self,
-                "Export Successful",
-                f"Profile '{self.current_profile.name}' has been exported to:\n\n{file_path}"
+                _("Export Successful"),
+                _("Profile '%(profile)s' has been exported to:\n\n%(path)s") % {
+                    'profile': self.current_profile.name, 'path': file_path,
+                }
             )
         else:
             QMessageBox.critical(
                 self,
-                "Export Failed",
-                f"Failed to export profile '{self.current_profile.name}'."
+                _("Export Failed"),
+                _("Failed to export profile '%s'.") % (self.current_profile.name,)
             )

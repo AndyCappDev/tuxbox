@@ -9,6 +9,7 @@ import logging
 from typing import Optional
 from PySide6.QtCore import QObject, Signal
 from bleak import BleakClient
+from tuxbox.i18n import _
 
 logger = logging.getLogger(__name__)
 
@@ -67,9 +68,8 @@ class BLEListener(QObject):
             self._running = True
 
         except Exception as e:
-            error_msg = f"Failed to connect: {e}"
-            logger.error(error_msg)
-            self.error_occurred.emit(error_msg)
+            logger.error(f"Failed to connect: {e}")
+            self.error_occurred.emit(_("Failed to connect: %s") % (e,))
             raise
 
     async def disconnect(self):

@@ -455,6 +455,38 @@ def load_device_config(config_path: str = None) -> Dict[str, str]:
     return device_config
 
 
+def load_gui_config(config_path: str = None) -> Dict[str, str]:
+    """Load interface settings from the [gui] section
+
+    These only affect the configuration window (currently its language), so the
+    driver never reads them.
+
+    Args:
+        config_path: Path to config file. If None, searches default locations.
+
+    Returns:
+        Dictionary of the [gui] settings that are set
+    """
+    config_path = get_config_path(config_path)
+
+    if not config_path:
+        return {}
+
+    config = configparser.ConfigParser(inline_comment_prefixes=('#',), interpolation=None)
+    try:
+        config.read(config_path)
+    except configparser.Error as ex:
+        logger.warning("Could not read [gui] settings from %s: %s", config_path, ex)
+        return {}
+
+    gui_config = {}
+    if 'gui' in config:
+        language = config['gui'].get('language', '').strip()
+        if language:
+            gui_config['language'] = language
+    return gui_config
+
+
 def parse_profile_mappings(config: configparser.ConfigParser, section_name: str) -> Tuple[Dict, Dict]:
     """Parse button/rotary mappings from a profile section
 
