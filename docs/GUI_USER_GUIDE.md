@@ -1320,8 +1320,9 @@ section of `~/.config/tuxbox/config.conf`.
 
 ### Controller view
 
-Choose **TourBox Lite** or **TourBox Elite** to match the artwork and controls to your
-controller. Elite is the default. Saving changes the picture immediately
+Choose **TourBox Lite** or **TourBox Elite / Neo** to match the artwork and controls to
+your controller. The Neo and the Elite Plus have the same controls as the Elite, so
+they use the same choice. Elite is the default. Saving changes the picture immediately
 and remembers the choice for the next launch; a driver restart is not needed.
 
 Lite shows only its Top, Tall, Short, C1, C2, Tour, Scroll and Knob controls.

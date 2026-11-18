@@ -29,6 +29,13 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_USB_PORT = "/dev/ttyACM0"
 
+# Shown in the Model picker. The Elite artwork also fits the Elite Plus and the
+# Neo, which have the same controls, so they are named rather than implied.
+MODEL_LABELS = {
+    'elite': "TourBox Elite / Neo",
+    'lite': "TourBox Lite",
+}
+
 # Each mode with the text shown to the user. Deliberately short: a long item
 # makes the combo demand more width than the dialog has at large font sizes,
 # which elides the text and squeezes out the "Connect via:" label. The help
@@ -156,7 +163,7 @@ class DeviceSettingsDialog(QDialog):
         form = QFormLayout(group)
         self.model_combo = QComboBox()
         for model in VALID_CONTROLLER_MODELS:
-            self.model_combo.addItem(f"TourBox {model.title()}", model)
+            self.model_combo.addItem(MODEL_LABELS.get(model, f"TourBox {model.title()}"), model)
         current = self._original.get('controller_model', DEFAULT_CONTROLLER_MODEL)
         index = self.model_combo.findData(current)
         self.model_combo.setCurrentIndex(index if index >= 0 else 0)
