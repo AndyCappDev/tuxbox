@@ -18,6 +18,7 @@ from PySide6.QtGui import QFont
 from tuxbox.config_loader import Profile
 from tuxbox.window_monitor import WindowMonitor, WindowInfo
 from tuxbox.gui.theme import muted_label_style
+from tuxbox.i18n import _
 from tuxbox.haptic import HapticStrength, HapticSpeed
 
 logger = logging.getLogger(__name__)
@@ -46,65 +47,67 @@ class ProfileSettingsDialog(QDialog):
 
     def _init_ui(self):
         """Initialize the UI"""
-        title = "New Profile" if self.is_new else f"Edit Profile: {self.profile.name}"
-        self.setWindowTitle(title)
+        if self.is_new:
+            self.setWindowTitle(_("New Profile"))
+        else:
+            self.setWindowTitle(_("Edit Profile: %s") % (self.profile.name,))
 
         layout = QVBoxLayout(self)
 
         # Profile name section
-        name_group = QGroupBox("Profile Name")
+        name_group = QGroupBox(_("Profile Name"))
         name_layout = QFormLayout(name_group)
 
         self.name_edit = QLineEdit(self.profile.name)
         if not self.is_new and self.profile.name == 'default':
             # Don't allow renaming default profile
             self.name_edit.setEnabled(False)
-            name_layout.addRow("Name:", self.name_edit)
-            info_label = QLabel("(default profile cannot be renamed)")
+            name_layout.addRow(_("Name:"), self.name_edit)
+            info_label = QLabel(_("(default profile cannot be renamed)"))
             info_label.setStyleSheet(muted_label_style(10))
             name_layout.addRow("", info_label)
         else:
-            name_layout.addRow("Name:", self.name_edit)
+            name_layout.addRow(_("Name:"), self.name_edit)
 
         layout.addWidget(name_group)
 
         # Window matching section
-        matching_group = QGroupBox("Window Matching Rules")
+        matching_group = QGroupBox(_("Window Matching Rules"))
         matching_layout = QFormLayout(matching_group)
 
         # Info text
         info_label = QLabel(
-            "This profile will activate when the focused window matches either of these identifiers.\n"
-            "Leave both empty to disable auto-activation (default profile will be used instead)."
+            _("This profile will activate when the focused window matches either of these identifiers.\n"
+            "Leave both empty to disable auto-activation (default profile will be used instead).")
         )
         info_label.setWordWrap(True)
         info_label.setStyleSheet(muted_label_style(10))
         matching_layout.addRow(info_label)
 
         self.app_id_edit = QLineEdit(self.profile.app_id or "")
-        self.app_id_edit.setPlaceholderText("e.g., firefox, code, org.kde.kate")
-        matching_layout.addRow("App ID:", self.app_id_edit)
+        self.app_id_edit.setPlaceholderText(_("e.g., firefox, code, org.kde.kate"))
+        matching_layout.addRow(_("App ID:"), self.app_id_edit)
 
         self.window_class_edit = QLineEdit(self.profile.window_class or "")
-        self.window_class_edit.setPlaceholderText("e.g., Firefox, Code")
-        matching_layout.addRow("Window Class:", self.window_class_edit)
+        self.window_class_edit.setPlaceholderText(_("e.g., Firefox, Code"))
+        matching_layout.addRow(_("Window Class:"), self.window_class_edit)
 
         # Capture button
-        capture_button = QPushButton("📷 Capture Active Window")
-        capture_button.setToolTip("Click to capture window info from the currently focused window")
+        capture_button = QPushButton(_("📷 Capture Active Window"))
+        capture_button.setToolTip(_("Click to capture window info from the currently focused window"))
         capture_button.clicked.connect(self._on_capture_window)
         matching_layout.addRow(capture_button)
 
         layout.addWidget(matching_group)
 
         # Haptic feedback section
-        haptic_group = QGroupBox("Haptic Feedback")
+        haptic_group = QGroupBox(_("Haptic Feedback"))
         haptic_layout = QFormLayout(haptic_group)
 
         self.haptic_combo = QComboBox()
-        self.haptic_combo.addItem("Off", HapticStrength.OFF)
-        self.haptic_combo.addItem("Weak", HapticStrength.WEAK)
-        self.haptic_combo.addItem("Strong", HapticStrength.STRONG)
+        self.haptic_combo.addItem(_("Off"), HapticStrength.OFF)
+        self.haptic_combo.addItem(_("Weak"), HapticStrength.WEAK)
+        self.haptic_combo.addItem(_("Strong"), HapticStrength.STRONG)
 
         # Set current value from profile
         current_haptic = self.result_haptic_strength
@@ -112,13 +115,13 @@ class ProfileSettingsDialog(QDialog):
         if index >= 0:
             self.haptic_combo.setCurrentIndex(index)
 
-        haptic_layout.addRow("Strength:", self.haptic_combo)
+        haptic_layout.addRow(_("Strength:"), self.haptic_combo)
 
         # Speed dropdown
         self.haptic_speed_combo = QComboBox()
-        self.haptic_speed_combo.addItem("Fast (more detents)", HapticSpeed.FAST)
-        self.haptic_speed_combo.addItem("Medium", HapticSpeed.MEDIUM)
-        self.haptic_speed_combo.addItem("Slow (fewer detents)", HapticSpeed.SLOW)
+        self.haptic_speed_combo.addItem(_("Fast (more detents)"), HapticSpeed.FAST)
+        self.haptic_speed_combo.addItem(_("Medium"), HapticSpeed.MEDIUM)
+        self.haptic_speed_combo.addItem(_("Slow (fewer detents)"), HapticSpeed.SLOW)
 
         # Set current speed value from profile
         current_speed = self.result_haptic_speed
@@ -126,12 +129,12 @@ class ProfileSettingsDialog(QDialog):
         if speed_index >= 0:
             self.haptic_speed_combo.setCurrentIndex(speed_index)
 
-        haptic_layout.addRow("Speed:", self.haptic_speed_combo)
+        haptic_layout.addRow(_("Speed:"), self.haptic_speed_combo)
 
         haptic_info = QLabel(
-            "Strength controls vibration intensity. Speed controls how spaced out\n"
+            _("Strength controls vibration intensity. Speed controls how spaced out\n"
             "the detents feel when rotating dials (slower = fewer clicks per turn).\n"
-            "Only available on TourBox Elite. Neo models do not have haptic motors."
+            "Only available on TourBox Elite. Neo models do not have haptic motors.")
         )
         haptic_info.setWordWrap(True)
         haptic_info.setStyleSheet(muted_label_style(10))
@@ -140,7 +143,7 @@ class ProfileSettingsDialog(QDialog):
         layout.addWidget(haptic_group)
 
         # Double-click section
-        double_click_group = QGroupBox("Double-Click")
+        double_click_group = QGroupBox(_("Double-Click"))
         double_click_layout = QFormLayout(double_click_group)
 
         # Slider + SpinBox combo (synced) for precise control
@@ -171,12 +174,12 @@ class ProfileSettingsDialog(QDialog):
         timeout_widget_layout.addWidget(self.double_click_timeout_slider, 1)
         timeout_widget_layout.addWidget(self.double_click_timeout_spin)
 
-        double_click_layout.addRow("Timeout:", timeout_widget_layout)
+        double_click_layout.addRow(_("Timeout:"), timeout_widget_layout)
 
         double_click_info = QLabel(
-            "Time window for detecting double-press actions.\n"
+            _("Time window for detecting double-press actions.\n"
             "Shorter = tighter timing, less accidental triggers.\n"
-            "Longer = more forgiving, easier to hit."
+            "Longer = more forgiving, easier to hit.")
         )
         double_click_info.setWordWrap(True)
         double_click_info.setStyleSheet(muted_label_style(10))
@@ -185,14 +188,14 @@ class ProfileSettingsDialog(QDialog):
         layout.addWidget(double_click_group)
 
         # Modifier delay section
-        modifier_delay_group = QGroupBox("Modifier Key Delay")
+        modifier_delay_group = QGroupBox(_("Modifier Key Delay"))
         modifier_delay_layout = QFormLayout(modifier_delay_group)
 
         # Override checkbox + spinbox
         override_layout = QHBoxLayout()
         override_layout.setContentsMargins(0, 0, 0, 0)
 
-        self.modifier_delay_override_checkbox = QCheckBox("Override global setting")
+        self.modifier_delay_override_checkbox = QCheckBox(_("Override global setting"))
         self.modifier_delay_override_checkbox.stateChanged.connect(self._on_modifier_delay_override_changed)
         override_layout.addWidget(self.modifier_delay_override_checkbox)
 
@@ -217,9 +220,9 @@ class ProfileSettingsDialog(QDialog):
         modifier_delay_layout.addRow(override_layout)
 
         modifier_delay_info = QLabel(
-            "Delay between modifier keys (Ctrl/Shift/Alt) and other keys in combos.\n"
+            _("Delay between modifier keys (Ctrl/Shift/Alt) and other keys in combos.\n"
             "Some apps (e.g. GIMP) need 20-50ms to recognize key combinations.\n"
-            "When unchecked, uses the global setting from config.conf [device] section."
+            "When unchecked, uses the global setting from config.conf [device] section.")
         )
         modifier_delay_info.setWordWrap(True)
         modifier_delay_info.setStyleSheet(muted_label_style(10))
@@ -231,12 +234,12 @@ class ProfileSettingsDialog(QDialog):
         button_layout = QHBoxLayout()
         button_layout.addStretch()
 
-        apply_button = QPushButton("Apply")
+        apply_button = QPushButton(_("Apply"))
         apply_button.setDefault(True)
         apply_button.clicked.connect(self._on_apply)
         button_layout.addWidget(apply_button)
 
-        cancel_button = QPushButton("Cancel")
+        cancel_button = QPushButton(_("Cancel"))
         cancel_button.clicked.connect(self.reject)
         button_layout.addWidget(cancel_button)
 
@@ -246,12 +249,12 @@ class ProfileSettingsDialog(QDialog):
         """Handle capture window button click"""
         # Create countdown dialog
         countdown_dialog = QProgressDialog(
-            "Switch to the window you want to capture...\n\nCapturing in 5 seconds",
-            "Cancel",
+            _("Switch to the window you want to capture...\n\nCapturing in 5 seconds"),
+            _("Cancel"),
             0, 5,
             self
         )
-        countdown_dialog.setWindowTitle("Capture Window")
+        countdown_dialog.setWindowTitle(_("Capture Window"))
         countdown_dialog.setWindowModality(Qt.WindowModal)
         countdown_dialog.setMinimumDuration(0)
         countdown_dialog.setAutoClose(False)
@@ -266,9 +269,8 @@ class ProfileSettingsDialog(QDialog):
                 countdown_dialog.close()
                 QMessageBox.critical(
                     self,
-                    "Window Capture Failed",
-                    f"Failed to initialize window monitor:\n{e}\n\n"
-                    "Window capture may not be supported on your system."
+                    _("Window Capture Failed"),
+                    _('Failed to initialize window monitor:\n%s\n\nWindow capture may not be supported on your system.') % (e,)
                 )
                 logger.error(f"Failed to initialize window monitor: {e}")
                 return
@@ -290,7 +292,8 @@ class ProfileSettingsDialog(QDialog):
 
         if self.countdown_value > 0:
             dialog.setLabelText(
-                f"Switch to the window you want to capture...\n\nCapturing in {self.countdown_value} seconds"
+                _("Switch to the window you want to capture...\n\nCapturing in %s seconds")
+                % (self.countdown_value,)
             )
             dialog.setValue(5 - self.countdown_value)
         else:
@@ -316,21 +319,21 @@ class ProfileSettingsDialog(QDialog):
                 # Show success message
                 QMessageBox.information(
                     self,
-                    "Window Captured",
-                    f"Captured window information:\n\n"
-                    f"App ID: {window_info.app_id or '(none)'}\n"
-                    f"Window Class: {window_info.wm_class or '(none)'}\n\n"
-                    f"You can edit these values before saving."
+                    _("Window Captured"),
+                    _('Captured window information:\n\nApp ID: %(app_id)s\nWindow Class: %(wm_class)s\n\nYou can edit these values before saving.') % {
+                        'app_id': window_info.app_id or _('(none)'),
+                        'wm_class': window_info.wm_class or _('(none)'),
+                    }
                 )
             else:
                 QMessageBox.warning(
                     self,
-                    "No Window Detected",
-                    "Could not detect active window information.\n\n"
+                    _("No Window Detected"),
+                    _("Could not detect active window information.\n\n"
                     "This may happen if:\n"
                     "• You're not running a supported compositor\n"
                     "• Required tools are not installed\n"
-                    "• No window was focused"
+                    "• No window was focused")
                 )
                 logger.warning("Window capture returned no information")
 
@@ -338,8 +341,8 @@ class ProfileSettingsDialog(QDialog):
             dialog.close()
             QMessageBox.critical(
                 self,
-                "Capture Failed",
-                f"Failed to capture window:\n{e}"
+                _("Capture Failed"),
+                _('Failed to capture window:\n%s') % (e,)
             )
             logger.error(f"Window capture failed: {e}")
 
@@ -354,8 +357,8 @@ class ProfileSettingsDialog(QDialog):
         if not name:
             QMessageBox.warning(
                 self,
-                "Invalid Name",
-                "Profile name cannot be empty."
+                _("Invalid Name"),
+                _("Profile name cannot be empty.")
             )
             return
 
@@ -363,8 +366,8 @@ class ProfileSettingsDialog(QDialog):
         if ':' in name or '[' in name or ']' in name:
             QMessageBox.warning(
                 self,
-                "Invalid Name",
-                "Profile name cannot contain ':', '[', or ']' characters."
+                _("Invalid Name"),
+                _("Profile name cannot contain ':', '[', or ']' characters.")
             )
             return
 

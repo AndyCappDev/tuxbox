@@ -428,6 +428,18 @@ echo "Installing GUI dependencies..."
 
 echo -e "${GREEN}✓${NC} GUI dependencies installed successfully"
 
+# Compile the translation catalogs, so a freshly edited .po takes effect
+echo ""
+if command -v msgfmt &> /dev/null; then
+    for po in tuxbox/locale/*/LC_MESSAGES/tuxbox.po; do
+        [ -f "$po" ] || continue
+        msgfmt -o "${po%.po}.mo" "$po"
+        echo -e "${GREEN}✓${NC} Compiled translation: ${po%.po}.mo"
+    done
+else
+    echo -e "${YELLOW}!${NC} gettext not installed - using the .mo files shipped with TuxBox"
+fi
+
 # Create GUI launcher script
 echo ""
 echo "Creating GUI launcher..."

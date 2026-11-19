@@ -15,6 +15,8 @@ from datetime import datetime
 
 from .haptic import HapticConfig, HapticStrength, HapticSpeed
 
+from tuxbox.i18n import _
+
 logger = logging.getLogger(__name__)
 
 
@@ -265,10 +267,10 @@ def validate_profile_file(filepath: Path) -> Tuple[bool, str]:
         Tuple of (is_valid, error_message)
     """
     if not filepath.exists():
-        return False, f"File not found: {filepath}"
+        return False, _("File not found: %s") % (filepath,)
 
     if not filepath.suffix == '.profile':
-        return False, "File must have .profile extension"
+        return False, _("File must have .profile extension")
 
     try:
         config = configparser.ConfigParser(inline_comment_prefixes=('#',), interpolation=None)
@@ -276,19 +278,19 @@ def validate_profile_file(filepath: Path) -> Tuple[bool, str]:
 
         # Must have [profile] section
         if 'profile' not in config.sections():
-            return False, "Missing [profile] section"
+            return False, _("Missing [profile] section")
 
         # Must have a name
         if 'name' not in config['profile']:
-            return False, "Missing 'name' in [profile] section"
+            return False, _("Missing 'name' in [profile] section")
 
         name = config['profile']['name'].strip()
         if not name:
-            return False, "Profile name cannot be empty"
+            return False, _("Profile name cannot be empty")
 
         # Check for invalid characters in name
         if ':' in name or '[' in name or ']' in name:
-            return False, "Profile name cannot contain ':', '[', or ']' characters"
+            return False, _("Profile name cannot contain ':', '[', or ']' characters")
 
         # Validate mappings if present
         if 'mappings' in config.sections():
@@ -319,9 +321,9 @@ def validate_profile_file(filepath: Path) -> Tuple[bool, str]:
         return True, ""
 
     except configparser.Error as e:
-        return False, f"Invalid INI format: {e}"
+        return False, _("Invalid INI format: %s") % (e,)
     except Exception as e:
-        return False, f"Error reading file: {e}"
+        return False, _("Error reading file: %s") % (e,)
 
 
 def load_profile_from_file(filepath: Path):
@@ -848,7 +850,7 @@ def import_profile_from_file(source: Path) -> Tuple[Optional['Profile'], str]:
 
     profile = load_profile_from_file(source)
     if profile is None:
-        return None, "Failed to load profile"
+        return None, _("Failed to load profile")
 
     return profile, ""
 
@@ -874,7 +876,7 @@ def migrate_legacy_config() -> Tuple[bool, str]:
     new_config_path = config_dir / 'config.conf'
 
     if not legacy_path.exists():
-        return False, "No legacy config file found"
+        return False, _("No legacy config file found")
 
     try:
         # Step 1: Create backup
@@ -886,7 +888,7 @@ def migrate_legacy_config() -> Tuple[bool, str]:
         # Step 2: Load all profiles from legacy config
         profiles = load_profiles_from_legacy_file(str(legacy_path))
         if not profiles:
-            return False, "No profiles found in legacy config"
+            return False, _("No profiles found in legacy config")
 
         logger.info(f"Found {len(profiles)} profiles to migrate")
 
@@ -915,11 +917,11 @@ def migrate_legacy_config() -> Tuple[bool, str]:
         os.rename(str(legacy_path), str(legacy_backup))
         logger.info(f"Renamed legacy config to {legacy_backup}")
 
-        return True, f"Successfully migrated {migrated} profiles. Backup saved to {backup_path}"
+        return True, _("Successfully migrated %(count)s profiles. Backup saved to %(path)s") % {'count': migrated, 'path': backup_path}
 
     except Exception as ex:
         logger.error(f"Migration failed: {ex}")
-        return False, f"Migration failed: {ex}"
+        return False, _("Migration failed: %s") % (ex,)
 
 
 def _write_device_config(filepath: Path, device_config: Dict) -> bool:
