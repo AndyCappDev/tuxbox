@@ -19,6 +19,7 @@ from tuxbox.config_loader import Profile, BUTTON_CODES
 from tuxbox.gui.ui_constants import TABLE_ROW_HEIGHT_MULTIPLIER
 from tuxbox.gui.keymap_util import get_system_display_hints
 from .controller_models import ELITE_CONTROLS, get_model_controls
+from tuxbox.i18n import _, N_
 
 logger = logging.getLogger(__name__)
 
@@ -28,26 +29,26 @@ CONTROL_NAMES = ELITE_CONTROLS
 
 # Friendly names for display
 CONTROL_DISPLAY_NAMES = {
-    'side': 'Side Button',
-    'top': 'Top Button',
-    'tall': 'Tall Button',
-    'short': 'Short Button',
-    'c1': 'C1 Button',
-    'c2': 'C2 Button',
-    'tour': 'Tour Button',
-    'dpad_up': 'D-Pad Up',
-    'dpad_down': 'D-Pad Down',
-    'dpad_left': 'D-Pad Left',
-    'dpad_right': 'D-Pad Right',
-    'scroll_up': 'Scroll Up',
-    'scroll_down': 'Scroll Down',
-    'scroll_click': 'Scroll Click',
-    'knob_cw': 'Knob Clockwise',
-    'knob_ccw': 'Knob Counter-CW',
-    'knob_click': 'Knob Click',
-    'dial_cw': 'Dial Clockwise',
-    'dial_ccw': 'Dial Counter-CW',
-    'dial_click': 'Dial Click',
+    'side': N_('Side Button'),
+    'top': N_('Top Button'),
+    'tall': N_('Tall Button'),
+    'short': N_('Short Button'),
+    'c1': N_('C1 Button'),
+    'c2': N_('C2 Button'),
+    'tour': N_('Tour Button'),
+    'dpad_up': N_('D-Pad Up'),
+    'dpad_down': N_('D-Pad Down'),
+    'dpad_left': N_('D-Pad Left'),
+    'dpad_right': N_('D-Pad Right'),
+    'scroll_up': N_('Scroll Up'),
+    'scroll_down': N_('Scroll Down'),
+    'scroll_click': N_('Scroll Click'),
+    'knob_cw': N_('Knob Clockwise'),
+    'knob_ccw': N_('Knob Counter-CW'),
+    'knob_click': N_('Knob Click'),
+    'dial_cw': N_('Dial Clockwise'),
+    'dial_ccw': N_('Dial Counter-CW'),
+    'dial_click': N_('Dial Click'),
 }
 
 
@@ -85,14 +86,16 @@ class ControlsList(QWidget):
         layout = QVBoxLayout(self)
 
         # Header
-        header = QLabel("Controls Configuration")
+        header = QLabel(_("Controls Configuration"))
         header.setStyleSheet("font-weight: bold; font-size: 14px;")
         layout.addWidget(header)
 
         # Table
         self.table = QTableWidget()
         self.table.setColumnCount(3)
-        self.table.setHorizontalHeaderLabels(["Control", "Current Action", "Comment"])
+        self.table.setHorizontalHeaderLabels(
+            [_("Control"), _("Current Action"), _("Comment")]
+        )
         self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
         self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
@@ -136,7 +139,7 @@ class ControlsList(QWidget):
 
         for row, control_name in enumerate(CONTROL_NAMES):
             # Control name column
-            name_item = QTableWidgetItem(CONTROL_DISPLAY_NAMES.get(control_name, control_name))
+            name_item = QTableWidgetItem(_(CONTROL_DISPLAY_NAMES.get(control_name, control_name)))
             name_item.setData(Qt.UserRole, control_name)  # Store internal name
             name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
             name_item.setTextAlignment(Qt.AlignLeft | Qt.AlignVCenter)
@@ -148,7 +151,7 @@ class ControlsList(QWidget):
             # Debug logging
             if not action_text or action_text.isspace():
                 logger.warning(f"Empty action text for {control_name}, using '(unmapped)'")
-                action_text = "(unmapped)"
+                action_text = _("(unmapped)")
 
             logger.debug(f"Control {control_name}: '{action_text}'")
 
@@ -207,7 +210,7 @@ class ControlsList(QWidget):
                     result = self._parse_action_string_to_readable(base_action, display_hints)
                 else:
                     # No base action configured
-                    result = "(no base action)"
+                    result = _("(no base action)")
 
                 # Check for double-press action on modifier buttons too
                 if control_name in profile.double_press_actions:
@@ -224,7 +227,7 @@ class ControlsList(QWidget):
             codes = BUTTON_CODES[control_name]
             if len(codes) == 0:
                 logger.warning(f"Control {control_name} has no codes")
-                return "(unmapped)"
+                return _("(unmapped)")
 
             # Get the press code (first in tuple)
             press_code = bytes([codes[0]])
@@ -233,13 +236,13 @@ class ControlsList(QWidget):
             # Look up in profile mapping
             if press_code not in profile.mapping:
                 logger.debug(f"Control {control_name}: press_code {press_code.hex()} not in mapping")
-                return "(unmapped)"
+                return _("(unmapped)")
 
             events = profile.mapping[press_code]
             logger.debug(f"Control {control_name}: events={events}")
 
             if not events:
-                return "(unmapped)"
+                return _("(unmapped)")
 
             # Convert events to readable text
             parts = []
@@ -258,9 +261,9 @@ class ControlsList(QWidget):
             if rel_event:
                 event_code, value = rel_event
                 if event_code == e.REL_WHEEL:
-                    rel_readable = f"Scroll {'Up' if value > 0 else 'Down'}"
+                    rel_readable = (_("Scroll Up") if value > 0 else _("Scroll Down"))
                 elif event_code == e.REL_HWHEEL:
-                    rel_readable = f"Scroll {'Right' if value > 0 else 'Left'}"
+                    rel_readable = (_("Scroll Right") if value > 0 else _("Scroll Left"))
                 else:
                     # Fallback for other REL events
                     rel_name = self._get_rel_name(event_code)
@@ -272,7 +275,7 @@ class ControlsList(QWidget):
                 else:
                     result = rel_readable
             else:
-                result = "+".join(parts) if parts else "(unmapped)"
+                result = "+".join(parts) if parts else _("(unmapped)")
 
             # Check for double-press action
             if control_name in profile.double_press_actions:
@@ -298,39 +301,39 @@ class ControlsList(QWidget):
             Readable string like 'Ctrl' or 'Ctrl+C'
         """
         if not action_str or action_str == "none":
-            return "(none)"
+            return _("(none)")
 
         # Handle simple REL events (scroll, no modifiers)
         if action_str.startswith("REL_") and "+" not in action_str:
             if "WHEEL:" in action_str:
                 value = int(action_str.split(":")[1])
-                return f"Scroll {'Up' if value > 0 else 'Down'}"
+                return (_("Scroll Up") if value > 0 else _("Scroll Down"))
             elif "HWHEEL:" in action_str:
                 value = int(action_str.split(":")[1])
-                return f"Scroll {'Right' if value > 0 else 'Left'}"
+                return (_("Scroll Right") if value > 0 else _("Scroll Left"))
 
         # Handle simple mouse button events (no modifiers)
         if action_str == "BTN_LEFT":
-            return "Left Click"
+            return _("Left Click")
         elif action_str == "BTN_RIGHT":
-            return "Right Click"
+            return _("Right Click")
         elif action_str == "BTN_MIDDLE":
-            return "Middle Click"
+            return _("Middle Click")
 
         # Helper to convert mouse action part to readable
         def mouse_part_to_readable(part):
             if part.startswith("REL_WHEEL:"):
                 value = int(part.split(":")[1])
-                return f"Scroll {'Up' if value > 0 else 'Down'}"
+                return (_("Scroll Up") if value > 0 else _("Scroll Down"))
             if part.startswith("REL_HWHEEL:"):
                 value = int(part.split(":")[1])
-                return f"Scroll {'Right' if value > 0 else 'Left'}"
+                return (_("Scroll Right") if value > 0 else _("Scroll Left"))
             if part == "BTN_LEFT":
-                return "Left Click"
+                return _("Left Click")
             if part == "BTN_RIGHT":
-                return "Right Click"
+                return _("Right Click")
             if part == "BTN_MIDDLE":
-                return "Middle Click"
+                return _("Middle Click")
             return None
 
         # Symbol key mapping
@@ -363,8 +366,8 @@ class ControlsList(QWidget):
                     'LEFTALT': 'Alt', 'RIGHTALT': 'Alt',
                     'LEFTSHIFT': 'Shift', 'RIGHTSHIFT': 'Shift',
                     'LEFTMETA': 'Super', 'RIGHTMETA': 'Super',
-                    'SPACE': 'Space', 'ENTER': 'Enter', 'ESC': 'Esc',
-                    'TAB': 'Tab', 'BACKSPACE': 'Backspace', 'CAPSLOCK': 'Caps Lock',
+                    'SPACE': _('Space'), 'ENTER': _('Enter'), 'ESC': 'Esc',
+                    'TAB': _('Tab'), 'BACKSPACE': _('Backspace'), 'CAPSLOCK': _('Caps Lock'),
                 }
 
                 if key_name in key_map:
@@ -408,17 +411,22 @@ class ControlsList(QWidget):
         # Preferred names for codes that have multiple KEY_ constants
         # (e.g., KEY_MUTE and KEY_MIN_INTERESTING both = 113)
         PREFERRED_NAMES = {
-            e.KEY_MUTE: 'Mute',
-            e.KEY_VOLUMEUP: 'Volume Up',
-            e.KEY_VOLUMEDOWN: 'Volume Down',
-            e.KEY_PLAYPAUSE: 'Play/Pause',
-            e.KEY_STOPCD: 'Stop',
-            e.KEY_PREVIOUSSONG: 'Previous',
-            e.KEY_NEXTSONG: 'Next',
+            e.KEY_MUTE: _('Mute'),
+            e.KEY_VOLUMEUP: _('Volume Up'),
+            e.KEY_VOLUMEDOWN: _('Volume Down'),
+            e.KEY_PLAYPAUSE: _('Play/Pause'),
+            e.KEY_STOPCD: _('Stop'),
+            e.KEY_PREVIOUSSONG: _('Previous'),
+            e.KEY_NEXTSONG: _('Next'),
+            e.KEY_ZOOMRESET: _('Zoom Reset'),
+            e.KEY_ZOOMIN: _('Zoom In'),
+            e.KEY_ZOOMOUT: _('Zoom Out'),
+            e.KEY_PAGEUP: _('Page Up'),
+            e.KEY_PAGEDOWN: _('Page Down'),
             # Mouse buttons
-            e.BTN_LEFT: 'Left Click',
-            e.BTN_RIGHT: 'Right Click',
-            e.BTN_MIDDLE: 'Middle Click',
+            e.BTN_LEFT: _('Left Click'),
+            e.BTN_RIGHT: _('Right Click'),
+            e.BTN_MIDDLE: _('Middle Click'),
         }
 
         # Check preferred names first
@@ -453,7 +461,9 @@ class ControlsList(QWidget):
 
                 # Replace underscores with spaces for readability
                 name = name.replace('_', ' ')
-                return name.title()
+                # Key names that are also in the key picker (Up, Home,
+                # Context Menu...) have a translation; the others stay as is.
+                return _(name.title())
         return f"Key{key_code}"
 
     def _get_rel_name(self, rel_code: int) -> str:
@@ -466,7 +476,7 @@ class ControlsList(QWidget):
     def _show_empty_state(self):
         """Show empty state when no profile loaded"""
         self.table.setRowCount(1)
-        item = QTableWidgetItem("No profile selected")
+        item = QTableWidgetItem(_("No profile selected"))
         item.setFlags(item.flags() & ~Qt.ItemIsEditable)
         self.table.setItem(0, 0, item)
         self.table.setSpan(0, 0, 1, 3)

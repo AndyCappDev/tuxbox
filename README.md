@@ -249,8 +249,11 @@ You can also run it from the Application Launcher or pin it to your Application 
 - **Testing** - Test your button mappings in your applications without having to quit the configuration GUI
 - **Easy Key Assignment** - Point-and-click interface for keyboard shortcuts and mouse wheel actions
 - **Check for Updates** - Easily check if a newer version is available (Help → Check for Updates)
+- **Interface Languages** - Use the window in English, French, or any language the community has translated (File → Global Settings → Language)
 
 **See the [Complete GUI User Guide](docs/GUI_USER_GUIDE.md) for detailed instructions, tutorials, and troubleshooting.**
+
+The interface is translated with gettext. To add a language or improve an existing translation, see the [Translation Guide](docs/TRANSLATING.md) — no programming needed.
 
 ## Manual Installation
 

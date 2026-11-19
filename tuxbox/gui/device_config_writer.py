@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-"""Writer for the [device] section of config.conf
+"""Writer for the global sections of config.conf
 
-Global device settings live in config.conf alongside hand-written comments,
-and may include keys this version of TuxBox knows nothing about. So the
-section is edited line by line rather than regenerated: a rewrite from a
-fixed set of keys (the way profile_io._write_device_config builds a fresh
-file during migration) would drop the user's comments and any key it does
-not recognise.
+Global settings live in config.conf alongside hand-written comments, and may
+include keys this version of TuxBox knows nothing about. So a section is edited
+line by line rather than regenerated: a rewrite from a fixed set of keys (the
+way profile_io._write_device_config builds a fresh file during migration) would
+drop the user's comments and any key it does not recognise.
+
+Two sections are written from the GUI:
+
+* ``[device]`` - settings that apply to the driver as a whole (see
+  :func:`save_device_settings`)
+* ``[gui]``    - settings of the configuration window itself, such as its
+  language (see :func:`save_gui_settings`)
 """
 
 import os
@@ -17,13 +23,15 @@ from typing import Dict, Optional, Tuple
 from datetime import datetime
 
 from tuxbox.config_loader import get_config_path
+from tuxbox.i18n import _
 
 logger = logging.getLogger(__name__)
 
 DEVICE_SECTION = 'device'
+GUI_SECTION = 'gui'
 
-# Settings this dialog owns, in the order they are written into a section that
-# does not have them yet. Anything else in [device] is left untouched.
+# Settings each dialog owns, in the order they are written into a section that
+# does not have them yet. Anything else in the section is left untouched.
 DEVICE_KEYS = (
     'controller_model',
     'connection',
@@ -33,6 +41,8 @@ DEVICE_KEYS = (
     'window_poll_interval',
     'ctrl_key',
 )
+
+GUI_KEYS = ('language',)
 
 
 def _is_section_header(line: str, name: str = None) -> bool:
@@ -94,7 +104,7 @@ def _key_line_match_any(line: str) -> bool:
 def _inline_comment(line: str) -> str:
     """Return the trailing inline comment of a value line, including its '#'"""
     # Only the part after the '=' can hold an inline comment for our purposes.
-    _, _, value = line.partition('=')
+    value = line.partition('=')[2]
     idx = value.find('#')
     if idx < 0:
         return ''
@@ -108,13 +118,13 @@ def _format_value(value) -> str:
     return str(value)
 
 
-def _apply_settings(lines, start: int, end: int, settings: Dict) -> int:
+def _apply_settings(lines, start: int, end: int, settings: Dict, keys) -> int:
     """Apply settings within [start, end), returning the new section end
 
     A value of None removes the setting, so the driver falls back to its
     documented default rather than being pinned to it.
     """
-    for key in DEVICE_KEYS:
+    for key in keys:
         if key not in settings:
             continue
 
@@ -161,12 +171,16 @@ def _apply_settings(lines, start: int, end: int, settings: Dict) -> int:
     return end
 
 
-def save_device_settings(settings: Dict, config_path: Optional[str] = None) -> Tuple[bool, str]:
-    """Save global [device] settings, preserving comments and unknown keys
+def _save_section_settings(section: str, keys, settings: Dict, config_path: Optional[str],
+                           at_top: bool) -> Tuple[bool, str]:
+    """Save settings into one config.conf section, preserving the rest
 
     Args:
+        section: Section name to edit
+        keys: Settings this caller owns, and may therefore write
         settings: Setting name -> value. None removes the setting.
         config_path: Config file to edit (default location if None)
+        at_top: Put a newly created section above the existing ones
 
     Returns:
         (success, message)
@@ -175,14 +189,14 @@ def save_device_settings(settings: Dict, config_path: Optional[str] = None) -> T
         config_path = get_config_path()
 
     if not config_path or not os.path.exists(config_path):
-        logger.error("No config file found to save device settings to")
-        return False, "No configuration file was found."
+        logger.error(f"No config file found to save {section} settings to")
+        return False, _("No configuration file was found.")
 
-    unknown = set(settings) - set(DEVICE_KEYS)
+    unknown = set(settings) - set(keys)
     if unknown:
         # A caller bug: silently writing keys the loader ignores would look
         # like the setting had been saved.
-        return False, f"Unsupported device settings: {', '.join(sorted(unknown))}"
+        return False, _("Unsupported settings: %s") % (', '.join(sorted(unknown)),)
 
     backup_path = f"{config_path}.backup.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
@@ -193,25 +207,31 @@ def save_device_settings(settings: Dict, config_path: Optional[str] = None) -> T
         with open(config_path, 'r') as f:
             lines = f.readlines()
 
-        start, end = _find_section(lines, DEVICE_SECTION)
+        start, end = _find_section(lines, section)
 
         if start < 0:
-            # No [device] section yet - add one above the first section so it
-            # stays at the top of the file, where the template puts it.
-            insert_at = next(
-                (i for i, line in enumerate(lines) if _is_section_header(line)),
-                len(lines)
-            )
-            if insert_at > 0 and lines[insert_at - 1].strip():
-                lines.insert(insert_at, "\n")
-                insert_at += 1
-            lines.insert(insert_at, f"[{DEVICE_SECTION}]\n")
+            if at_top:
+                # Add above the first section so it stays at the top of the
+                # file, where the template puts it.
+                insert_at = next(
+                    (i for i, line in enumerate(lines) if _is_section_header(line)),
+                    len(lines)
+                )
+                if insert_at > 0 and lines[insert_at - 1].strip():
+                    lines.insert(insert_at, "\n")
+                    insert_at += 1
+            else:
+                insert_at = len(lines)
+                if lines and lines[-1].strip():
+                    lines.append("\n")
+                    insert_at = len(lines)
+            lines.insert(insert_at, f"[{section}]\n")
             start = insert_at
             end = insert_at + 1
             if end < len(lines) and lines[end].strip():
                 lines.insert(end, "\n")
 
-        _apply_settings(lines, start, end, settings)
+        _apply_settings(lines, start, end, settings, keys)
 
         # Atomic replace, so an interrupted write cannot truncate the config.
         temp_path = f"{config_path}.tmp"
@@ -219,15 +239,45 @@ def save_device_settings(settings: Dict, config_path: Optional[str] = None) -> T
             f.writelines(lines)
         os.replace(temp_path, config_path)
 
-        logger.info(f"Saved device settings: {sorted(settings)}")
-        return True, "Settings saved."
+        logger.info(f"Saved {section} settings: {sorted(settings)}")
+        return True, _("Settings saved.")
 
     except Exception as ex:
-        logger.error(f"Error saving device settings: {ex}", exc_info=True)
+        logger.error(f"Error saving {section} settings: {ex}", exc_info=True)
         if os.path.exists(backup_path):
             try:
                 shutil.copy2(backup_path, config_path)
                 logger.info("Restored config from backup after error")
             except Exception as restore_error:
                 logger.error(f"Failed to restore backup: {restore_error}")
-        return False, f"Could not save settings: {ex}"
+        return False, _("Could not save settings: %s") % (ex,)
+
+
+def save_device_settings(settings: Dict, config_path: Optional[str] = None) -> Tuple[bool, str]:
+    """Save global [device] settings, preserving comments and unknown keys
+
+    Args:
+        settings: Setting name -> value. None removes the setting.
+        config_path: Config file to edit (default location if None)
+
+    Returns:
+        (success, message)
+    """
+    return _save_section_settings(
+        DEVICE_SECTION, DEVICE_KEYS, settings, config_path, at_top=True
+    )
+
+
+def save_gui_settings(settings: Dict, config_path: Optional[str] = None) -> Tuple[bool, str]:
+    """Save [gui] settings, preserving comments and unknown keys
+
+    Args:
+        settings: Setting name -> value. None removes the setting.
+        config_path: Config file to edit (default location if None)
+
+    Returns:
+        (success, message)
+    """
+    return _save_section_settings(
+        GUI_SECTION, GUI_KEYS, settings, config_path, at_top=False
+    )

@@ -1,0 +1,2095 @@
+# French translations for the TuxBox interface.
+# Copyright (C) 2026 TuxBox contributors
+# This file is distributed under the same license as the TuxBox package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TuxBox 3.8.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-19 06:35+0100\n"
+"PO-Revision-Date: 2026-11-18 12:30+0100\n"
+"Last-Translator: TuxBox contributors\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: tuxbox/gui/ble_listener.py:72
+#, python-format
+msgid "Failed to connect: %s"
+msgstr "Échec de la connexion : %s"
+
+#: tuxbox/gui/control_editor.py:115 tuxbox/gui/control_editor.py:178
+msgid "None"
+msgstr "Aucun"
+
+#: tuxbox/gui/control_editor.py:116
+msgid "--- Control Keys ---"
+msgstr "--- Touches de commande ---"
+
+#: tuxbox/gui/control_editor.py:117 tuxbox/gui/control_editor.py:2025
+#: tuxbox/gui/controls_list.py:369
+msgid "Enter"
+msgstr "Entrée"
+
+#: tuxbox/gui/control_editor.py:118
+msgid "Escape"
+msgstr "Échap"
+
+#: tuxbox/gui/control_editor.py:119 tuxbox/gui/controls_list.py:370
+msgid "Tab"
+msgstr "Tabulation"
+
+#: tuxbox/gui/control_editor.py:120 tuxbox/gui/control_editor.py:2023
+#: tuxbox/gui/controls_list.py:369
+msgid "Space"
+msgstr "Espace"
+
+#: tuxbox/gui/control_editor.py:121 tuxbox/gui/controls_list.py:370
+msgid "Backspace"
+msgstr "Retour arrière"
+
+#: tuxbox/gui/control_editor.py:122
+msgid "Delete"
+msgstr "Suppr"
+
+#: tuxbox/gui/control_editor.py:123
+msgid "Insert"
+msgstr "Inser"
+
+#: tuxbox/gui/control_editor.py:124 tuxbox/gui/control_editor.py:2029
+#: tuxbox/gui/controls_list.py:370 tuxbox/gui/device_settings_dialog.py:65
+msgid "Caps Lock"
+msgstr "Verr. maj."
+
+#: tuxbox/gui/control_editor.py:125
+msgid "Context Menu"
+msgstr "Menu contextuel"
+
+#: tuxbox/gui/control_editor.py:126
+msgid "--- Arrow Keys ---"
+msgstr "--- Flèches ---"
+
+#: tuxbox/gui/control_editor.py:127
+msgid "Up"
+msgstr "Haut"
+
+#: tuxbox/gui/control_editor.py:128
+msgid "Down"
+msgstr "Bas"
+
+#: tuxbox/gui/control_editor.py:129
+msgid "Left"
+msgstr "Gauche"
+
+#: tuxbox/gui/control_editor.py:130
+msgid "Right"
+msgstr "Droite"
+
+#: tuxbox/gui/control_editor.py:131
+msgid "--- Navigation ---"
+msgstr "--- Navigation ---"
+
+#: tuxbox/gui/control_editor.py:132
+msgid "Home"
+msgstr "Début"
+
+#: tuxbox/gui/control_editor.py:133
+msgid "End"
+msgstr "Fin"
+
+#: tuxbox/gui/control_editor.py:134 tuxbox/gui/controls_list.py:424
+msgid "Page Up"
+msgstr "Page préc."
+
+#: tuxbox/gui/control_editor.py:135 tuxbox/gui/controls_list.py:425
+msgid "Page Down"
+msgstr "Page suiv."
+
+#: tuxbox/gui/control_editor.py:136
+msgid "--- Zoom Keys ---"
+msgstr "--- Touches de zoom ---"
+
+#: tuxbox/gui/control_editor.py:137 tuxbox/gui/controls_list.py:421
+msgid "Zoom Reset"
+msgstr "Réinitialiser le zoom"
+
+#: tuxbox/gui/control_editor.py:138 tuxbox/gui/controls_list.py:422
+msgid "Zoom In"
+msgstr "Zoom avant"
+
+#: tuxbox/gui/control_editor.py:139 tuxbox/gui/controls_list.py:423
+msgid "Zoom Out"
+msgstr "Zoom arrière"
+
+#: tuxbox/gui/control_editor.py:140
+msgid "--- Function Keys ---"
+msgstr "--- Touches de fonction ---"
+
+#: tuxbox/gui/control_editor.py:144
+msgid "--- Media Keys ---"
+msgstr "--- Touches multimédia ---"
+
+#: tuxbox/gui/control_editor.py:145 tuxbox/gui/controls_list.py:415
+msgid "Volume Up"
+msgstr "Volume +"
+
+#: tuxbox/gui/control_editor.py:146 tuxbox/gui/controls_list.py:416
+msgid "Volume Down"
+msgstr "Volume -"
+
+#: tuxbox/gui/control_editor.py:147 tuxbox/gui/controls_list.py:414
+msgid "Mute"
+msgstr "Muet"
+
+#: tuxbox/gui/control_editor.py:148 tuxbox/gui/controls_list.py:417
+msgid "Play/Pause"
+msgstr "Lecture/Pause"
+
+#: tuxbox/gui/control_editor.py:149 tuxbox/gui/controls_list.py:418
+msgid "Stop"
+msgstr "Arrêt"
+
+#: tuxbox/gui/control_editor.py:150
+msgid "Previous Track"
+msgstr "Piste précédente"
+
+#: tuxbox/gui/control_editor.py:151
+msgid "Next Track"
+msgstr "Piste suivante"
+
+#: tuxbox/gui/control_editor.py:169
+msgid "Scroll Wheel"
+msgstr "Molette de défilement"
+
+#: tuxbox/gui/control_editor.py:170
+msgid "Knob"
+msgstr "Molette"
+
+#: tuxbox/gui/control_editor.py:171
+msgid "Dial"
+msgstr "Bague"
+
+#: tuxbox/gui/control_editor.py:178 tuxbox/gui/control_editor.py:179
+msgid "Keyboard"
+msgstr "Clavier"
+
+#: tuxbox/gui/control_editor.py:178 tuxbox/gui/control_editor.py:179
+msgid "Mouse"
+msgstr "Souris"
+
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1961
+#: tuxbox/gui/control_editor.py:1976 tuxbox/gui/controls_list.py:43
+#: tuxbox/gui/controls_list.py:264 tuxbox/gui/controls_list.py:310
+#: tuxbox/gui/controls_list.py:327 tuxbox/gui/main_window.py:1163
+#: tuxbox/gui/main_window.py:1178
+msgid "Scroll Up"
+msgstr "Défilement haut"
+
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1961
+#: tuxbox/gui/control_editor.py:1976 tuxbox/gui/controls_list.py:44
+#: tuxbox/gui/controls_list.py:264 tuxbox/gui/controls_list.py:310
+#: tuxbox/gui/controls_list.py:327 tuxbox/gui/main_window.py:1163
+#: tuxbox/gui/main_window.py:1178
+msgid "Scroll Down"
+msgstr "Défilement bas"
+
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1964
+#: tuxbox/gui/control_editor.py:1979 tuxbox/gui/controls_list.py:266
+#: tuxbox/gui/controls_list.py:313 tuxbox/gui/controls_list.py:330
+#: tuxbox/gui/main_window.py:1166 tuxbox/gui/main_window.py:1181
+msgid "Scroll Left"
+msgstr "Défilement gauche"
+
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1964
+#: tuxbox/gui/control_editor.py:1979 tuxbox/gui/controls_list.py:266
+#: tuxbox/gui/controls_list.py:313 tuxbox/gui/controls_list.py:330
+#: tuxbox/gui/main_window.py:1166 tuxbox/gui/main_window.py:1181
+msgid "Scroll Right"
+msgstr "Défilement droite"
+
+#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1966
+#: tuxbox/gui/control_editor.py:1981 tuxbox/gui/controls_list.py:317
+#: tuxbox/gui/controls_list.py:332 tuxbox/gui/controls_list.py:427
+#: tuxbox/gui/main_window.py:1168 tuxbox/gui/main_window.py:1183
+msgid "Left Click"
+msgstr "Clic gauche"
+
+#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1968
+#: tuxbox/gui/control_editor.py:1983 tuxbox/gui/controls_list.py:319
+#: tuxbox/gui/controls_list.py:334 tuxbox/gui/controls_list.py:428
+#: tuxbox/gui/main_window.py:1170 tuxbox/gui/main_window.py:1185
+msgid "Right Click"
+msgstr "Clic droit"
+
+#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1970
+#: tuxbox/gui/control_editor.py:1985 tuxbox/gui/controls_list.py:321
+#: tuxbox/gui/controls_list.py:336 tuxbox/gui/controls_list.py:429
+#: tuxbox/gui/main_window.py:1172 tuxbox/gui/main_window.py:1187
+msgid "Middle Click"
+msgstr "Clic central"
+
+#: tuxbox/gui/control_editor.py:213
+msgid "Press a key"
+msgstr "Appuyez sur une touche"
+
+#: tuxbox/gui/control_editor.py:309
+msgid "Configure Modifier Combination"
+msgstr "Configurer la combinaison avec modificateur"
+
+#: tuxbox/gui/control_editor.py:317
+#, python-format
+msgid "Configure combination for modifier: %s"
+msgstr "Configurer la combinaison pour le modificateur : %s"
+
+#: tuxbox/gui/control_editor.py:323
+msgid "Control:"
+msgstr "Commande :"
+
+#: tuxbox/gui/control_editor.py:325
+msgid "(select control)"
+msgstr "(choisir une commande)"
+
+#: tuxbox/gui/control_editor.py:350 tuxbox/gui/control_editor.py:730
+#: tuxbox/gui/control_editor.py:1015
+msgid "Action Type:"
+msgstr "Type d’action :"
+
+#: tuxbox/gui/control_editor.py:362 tuxbox/gui/control_editor.py:741
+#: tuxbox/gui/control_editor.py:1027
+msgid "Keyboard Action"
+msgstr "Action clavier"
+
+#: tuxbox/gui/control_editor.py:370 tuxbox/gui/control_editor.py:748
+#: tuxbox/gui/control_editor.py:1035 tuxbox/gui/control_editor.py:1103
+msgid "Ctrl"
+msgstr "Ctrl"
+
+#: tuxbox/gui/control_editor.py:376 tuxbox/gui/control_editor.py:754
+#: tuxbox/gui/control_editor.py:1041 tuxbox/gui/control_editor.py:1109
+msgid "Alt"
+msgstr "Alt"
+
+#: tuxbox/gui/control_editor.py:382 tuxbox/gui/control_editor.py:760
+#: tuxbox/gui/control_editor.py:1047 tuxbox/gui/control_editor.py:1115
+msgid "Shift"
+msgstr "Maj"
+
+#: tuxbox/gui/control_editor.py:388 tuxbox/gui/control_editor.py:766
+#: tuxbox/gui/control_editor.py:1053 tuxbox/gui/control_editor.py:1121
+msgid "Super"
+msgstr "Super"
+
+#: tuxbox/gui/control_editor.py:398 tuxbox/gui/control_editor.py:777
+#: tuxbox/gui/control_editor.py:1063
+msgid "Key:"
+msgstr "Touche :"
+
+#: tuxbox/gui/control_editor.py:407 tuxbox/gui/control_editor.py:785
+#: tuxbox/gui/control_editor.py:1072
+msgid "or"
+msgstr "ou"
+
+#: tuxbox/gui/control_editor.py:427 tuxbox/gui/control_editor.py:805
+#: tuxbox/gui/control_editor.py:1092
+msgid "Mouse Action"
+msgstr "Action souris"
+
+#: tuxbox/gui/control_editor.py:436 tuxbox/gui/control_editor.py:807
+#: tuxbox/gui/control_editor.py:1131
+msgid "Action:"
+msgstr "Action :"
+
+#: tuxbox/gui/control_editor.py:448 tuxbox/gui/control_editor.py:818
+msgid "Comment:"
+msgstr "Commentaire :"
+
+#: tuxbox/gui/control_editor.py:451
+msgid "Add notes about this combination..."
+msgstr "Ajouter une note sur cette combinaison…"
+
+#: tuxbox/gui/control_editor.py:459 tuxbox/gui/control_editor.py:1143
+#: tuxbox/gui/profile_settings_dialog.py:104
+msgid "Haptic Feedback"
+msgstr "Retour haptique"
+
+#: tuxbox/gui/control_editor.py:464 tuxbox/gui/control_editor.py:1148
+#: tuxbox/gui/profile_settings_dialog.py:118
+msgid "Strength:"
+msgstr "Intensité :"
+
+#: tuxbox/gui/control_editor.py:466 tuxbox/gui/control_editor.py:486
+#: tuxbox/gui/control_editor.py:1150 tuxbox/gui/control_editor.py:1163
+msgid "Use Profile Default"
+msgstr "Valeur du profil"
+
+#: tuxbox/gui/control_editor.py:467 tuxbox/gui/control_editor.py:1151
+#: tuxbox/gui/profile_settings_dialog.py:108
+msgid "Off"
+msgstr "Désactivé"
+
+#: tuxbox/gui/control_editor.py:468 tuxbox/gui/control_editor.py:1152
+#: tuxbox/gui/profile_settings_dialog.py:109
+msgid "Weak"
+msgstr "Faible"
+
+#: tuxbox/gui/control_editor.py:469 tuxbox/gui/control_editor.py:1153
+#: tuxbox/gui/profile_settings_dialog.py:110
+msgid "Strong"
+msgstr "Fort"
+
+#: tuxbox/gui/control_editor.py:484 tuxbox/gui/control_editor.py:1161
+#: tuxbox/gui/profile_settings_dialog.py:132
+msgid "Speed:"
+msgstr "Vitesse :"
+
+#: tuxbox/gui/control_editor.py:487 tuxbox/gui/control_editor.py:1164
+#: tuxbox/gui/profile_settings_dialog.py:122
+msgid "Fast (more detents)"
+msgstr "Rapide (plus de crans)"
+
+#: tuxbox/gui/control_editor.py:488 tuxbox/gui/control_editor.py:1165
+#: tuxbox/gui/profile_settings_dialog.py:123
+msgid "Medium"
+msgstr "Moyenne"
+
+#: tuxbox/gui/control_editor.py:489 tuxbox/gui/control_editor.py:1166
+#: tuxbox/gui/profile_settings_dialog.py:124
+msgid "Slow (fewer detents)"
+msgstr "Lente (moins de crans)"
+
+#: tuxbox/gui/control_editor.py:501
+msgid "Haptic feedback for this modifier+dial combination."
+msgstr "Retour haptique pour cette combinaison modificateur + bague."
+
+#: tuxbox/gui/control_editor.py:711
+msgid "Configure Double-Press Action"
+msgstr "Configurer le double appui"
+
+#: tuxbox/gui/control_editor.py:717
+#, python-format
+msgid "Double-Press Action for: %s"
+msgstr "Double appui pour : %s"
+
+#: tuxbox/gui/control_editor.py:722
+#, python-format
+msgid ""
+"This action triggers when the button is pressed twice within %sms.\n"
+"Single-press actions fire immediately (no delay)."
+msgstr ""
+"Cette action se déclenche quand on appuie deux fois sur le bouton en moins "
+"de %s ms.\n"
+"Les actions d’un appui simple se déclenchent immédiatement (sans délai)."
+
+#: tuxbox/gui/control_editor.py:820
+msgid "Notes for this action..."
+msgstr "Notes pour cette action…"
+
+#: tuxbox/gui/control_editor.py:1004
+msgid "Edit Control"
+msgstr "Modifier la commande"
+
+#: tuxbox/gui/control_editor.py:1009
+msgid "No control selected"
+msgstr "Aucune commande sélectionnée"
+
+#: tuxbox/gui/control_editor.py:1174
+msgid ""
+"Per-dial haptic setting. 'Use Profile Default' uses the profile's global "
+"setting."
+msgstr ""
+"Réglage haptique propre à cette bague. « Valeur du profil » utilise le "
+"réglage global du profil."
+
+#: tuxbox/gui/control_editor.py:1184 tuxbox/gui/control_editor.py:1254
+#: tuxbox/gui/controls_list.py:97
+msgid "Comment"
+msgstr "Commentaire"
+
+#: tuxbox/gui/control_editor.py:1188
+msgid "Add notes or comments about this mapping..."
+msgstr "Ajouter une note ou un commentaire sur cette affectation…"
+
+#: tuxbox/gui/control_editor.py:1207
+msgid "Double-Press:"
+msgstr "Double appui :"
+
+#: tuxbox/gui/control_editor.py:1210 tuxbox/gui/control_editor.py:1956
+#: tuxbox/gui/control_editor.py:2060 tuxbox/gui/controls_list.py:304
+#: tuxbox/gui/profile_settings_dialog.py:324
+#: tuxbox/gui/profile_settings_dialog.py:325
+msgid "(none)"
+msgstr "(aucun)"
+
+#: tuxbox/gui/control_editor.py:1216
+msgid "Configure..."
+msgstr "Configurer…"
+
+#: tuxbox/gui/control_editor.py:1220
+msgid "Clear"
+msgstr "Effacer"
+
+#: tuxbox/gui/control_editor.py:1233
+msgid "Activate on release"
+msgstr "Activer au relâchement"
+
+#: tuxbox/gui/control_editor.py:1235
+msgid ""
+"Fire action when button is released (as a tap) instead of when pressed.\n"
+"Use for buttons with combos or double-press to improve reliability."
+msgstr ""
+"Déclenche l’action au relâchement du bouton (comme un appui bref) plutôt "
+"qu’à l’appui.\n"
+"À utiliser pour les boutons avec combinaisons ou double appui, pour plus de "
+"fiabilité."
+
+#: tuxbox/gui/control_editor.py:1247
+msgid "Modifier Combinations:"
+msgstr "Combinaisons avec modificateur :"
+
+#: tuxbox/gui/control_editor.py:1254 tuxbox/gui/controls_list.py:97
+msgid "Control"
+msgstr "Commande"
+
+#: tuxbox/gui/control_editor.py:1254
+msgid "Action"
+msgstr "Action"
+
+#: tuxbox/gui/control_editor.py:1290
+msgid "Add Combination"
+msgstr "Ajouter une combinaison"
+
+#: tuxbox/gui/control_editor.py:1301 tuxbox/gui/profile_settings_dialog.py:237
+msgid "Apply"
+msgstr "Appliquer"
+
+#: tuxbox/gui/control_editor.py:1332 tuxbox/gui/main_window.py:589
+#, python-format
+msgid "Editing: %s"
+msgstr "Modification : %s"
+
+#: tuxbox/gui/control_editor.py:1922
+msgid "Edit this combination"
+msgstr "Modifier cette combinaison"
+
+#: tuxbox/gui/control_editor.py:1930
+msgid "Delete this combination"
+msgstr "Supprimer cette combinaison"
+
+#: tuxbox/gui/controller_view.py:369
+msgid ""
+"TourBox\n"
+"(SVG not found)"
+msgstr ""
+"TourBox\n"
+"(SVG introuvable)"
+
+#: tuxbox/gui/controls_list.py:32
+msgid "Side Button"
+msgstr "Bouton latéral"
+
+#: tuxbox/gui/controls_list.py:33
+msgid "Top Button"
+msgstr "Bouton supérieur"
+
+#: tuxbox/gui/controls_list.py:34
+msgid "Tall Button"
+msgstr "Bouton long"
+
+#: tuxbox/gui/controls_list.py:35
+msgid "Short Button"
+msgstr "Bouton court"
+
+#: tuxbox/gui/controls_list.py:36
+msgid "C1 Button"
+msgstr "Bouton C1"
+
+#: tuxbox/gui/controls_list.py:37
+msgid "C2 Button"
+msgstr "Bouton C2"
+
+#: tuxbox/gui/controls_list.py:38
+msgid "Tour Button"
+msgstr "Bouton Tour"
+
+#: tuxbox/gui/controls_list.py:39
+msgid "D-Pad Up"
+msgstr "Croix directionnelle haut"
+
+#: tuxbox/gui/controls_list.py:40
+msgid "D-Pad Down"
+msgstr "Croix directionnelle bas"
+
+#: tuxbox/gui/controls_list.py:41
+msgid "D-Pad Left"
+msgstr "Croix directionnelle gauche"
+
+#: tuxbox/gui/controls_list.py:42
+msgid "D-Pad Right"
+msgstr "Croix directionnelle droite"
+
+#: tuxbox/gui/controls_list.py:45
+msgid "Scroll Click"
+msgstr "Clic défilement"
+
+#: tuxbox/gui/controls_list.py:46
+msgid "Knob Clockwise"
+msgstr "Molette horaire"
+
+#: tuxbox/gui/controls_list.py:47
+msgid "Knob Counter-CW"
+msgstr "Molette anti-horaire"
+
+#: tuxbox/gui/controls_list.py:48
+msgid "Knob Click"
+msgstr "Clic molette"
+
+#: tuxbox/gui/controls_list.py:49
+msgid "Dial Clockwise"
+msgstr "Bague horaire"
+
+#: tuxbox/gui/controls_list.py:50
+msgid "Dial Counter-CW"
+msgstr "Bague anti-horaire"
+
+#: tuxbox/gui/controls_list.py:51
+msgid "Dial Click"
+msgstr "Clic bague"
+
+#: tuxbox/gui/controls_list.py:89
+msgid "Controls Configuration"
+msgstr "Configuration des commandes"
+
+#: tuxbox/gui/controls_list.py:97
+msgid "Current Action"
+msgstr "Action actuelle"
+
+#: tuxbox/gui/controls_list.py:154 tuxbox/gui/controls_list.py:230
+#: tuxbox/gui/controls_list.py:239 tuxbox/gui/controls_list.py:245
+#: tuxbox/gui/controls_list.py:278 tuxbox/gui/main_window.py:809
+#: tuxbox/gui/main_window.py:1158
+msgid "(unmapped)"
+msgstr "(non attribué)"
+
+#: tuxbox/gui/controls_list.py:213 tuxbox/gui/main_window.py:801
+msgid "(no base action)"
+msgstr "(aucune action de base)"
+
+#: tuxbox/gui/controls_list.py:419
+msgid "Previous"
+msgstr "Piste précédente"
+
+#: tuxbox/gui/controls_list.py:420
+msgid "Next"
+msgstr "Piste suivante"
+
+#: tuxbox/gui/controls_list.py:479
+msgid "No profile selected"
+msgstr "Aucun profil sélectionné"
+
+#: tuxbox/gui/device_config_writer.py:193
+msgid "No configuration file was found."
+msgstr "Aucun fichier de configuration n’a été trouvé."
+
+#: tuxbox/gui/device_config_writer.py:199
+#, python-format
+msgid "Unsupported settings: %s"
+msgstr "Réglages non pris en charge : %s"
+
+#: tuxbox/gui/device_config_writer.py:243
+msgid "Settings saved."
+msgstr "Réglages enregistrés."
+
+#: tuxbox/gui/device_config_writer.py:253
+#, python-format
+msgid "Could not save settings: %s"
+msgstr "Impossible d’enregistrer les réglages : %s"
+
+#: tuxbox/gui/device_settings_dialog.py:45
+msgid "Automatic"
+msgstr "Automatique"
+
+#: tuxbox/gui/device_settings_dialog.py:46
+msgid "USB only"
+msgstr "USB uniquement"
+
+#: tuxbox/gui/device_settings_dialog.py:47
+msgid "Bluetooth only"
+msgstr "Bluetooth uniquement"
+
+#: tuxbox/gui/device_settings_dialog.py:51
+msgid ""
+"Uses the cable when it is plugged in and falls back to Bluetooth otherwise, "
+"switching to USB as soon as the cable appears."
+msgstr ""
+"Utilise le câble lorsqu’il est branché et bascule sinon sur le Bluetooth, en "
+"revenant à l’USB dès que le câble apparaît."
+
+#: tuxbox/gui/device_settings_dialog.py:53
+msgid ""
+"The Bluetooth radio is never used. Choose this if you always connect by "
+"cable - on a laptop it stops the driver scanning for a device that is never "
+"there."
+msgstr ""
+"La radio Bluetooth n’est jamais utilisée. À choisir si vous vous connectez "
+"toujours par câble : sur un portable, le pilote arrête de chercher un "
+"appareil absent."
+
+#: tuxbox/gui/device_settings_dialog.py:56
+msgid ""
+"The USB ports are never checked. Choose this if you only ever connect over "
+"Bluetooth."
+msgstr ""
+"Les ports USB ne sont jamais vérifiés. À choisir si vous vous connectez "
+"uniquement en Bluetooth."
+
+#: tuxbox/gui/device_settings_dialog.py:63
+msgid "Left Ctrl"
+msgstr "Ctrl gauche"
+
+#: tuxbox/gui/device_settings_dialog.py:64
+msgid "Right Ctrl"
+msgstr "Ctrl droit"
+
+#: tuxbox/gui/device_settings_dialog.py:147
+msgid "Global Settings"
+msgstr "Réglages globaux"
+
+#: tuxbox/gui/device_settings_dialog.py:157
+msgid ""
+"These settings apply across profiles. To change settings for one profile, "
+"use the gear button in the profile list."
+msgstr ""
+"Ces réglages s’appliquent à tous les profils. Pour modifier les réglages "
+"d’un seul profil, utilisez le bouton d’engrenage dans la liste des profils."
+
+#: tuxbox/gui/device_settings_dialog.py:165
+msgid "Language"
+msgstr "Langue"
+
+#: tuxbox/gui/device_settings_dialog.py:170
+msgid "Same as the system"
+msgstr "Comme le système"
+
+#: tuxbox/gui/device_settings_dialog.py:179
+msgid "Interface language:"
+msgstr "Langue de l’interface :"
+
+#: tuxbox/gui/device_settings_dialog.py:182
+msgid ""
+"Applies to this window and its dialogs. It takes effect the next time the "
+"window is opened."
+msgstr ""
+"S’applique à cette fenêtre et à ses boîtes de dialogue. Prend effet à la "
+"prochaine ouverture de la fenêtre."
+
+#: tuxbox/gui/device_settings_dialog.py:189
+msgid "Controller view"
+msgstr "Vue de la manette"
+
+#: tuxbox/gui/device_settings_dialog.py:193
+#, python-format
+msgid "TourBox %s"
+msgstr "TourBox %s"
+
+#: tuxbox/gui/device_settings_dialog.py:197
+msgid "Model:"
+msgstr "Modèle :"
+
+#: tuxbox/gui/device_settings_dialog.py:199
+msgid ""
+"Choose the controller artwork and available controls. Mappings for controls "
+"the model lacks are hidden, not deleted."
+msgstr ""
+"Choisissez l’illustration de la manette et les commandes disponibles. Les "
+"affectations des commandes absentes du modèle sont masquées, pas supprimées."
+
+#: tuxbox/gui/device_settings_dialog.py:205
+msgid "Connection"
+msgstr "Connexion"
+
+#: tuxbox/gui/device_settings_dialog.py:220
+msgid "Connect via:"
+msgstr "Se connecter via :"
+
+#: tuxbox/gui/device_settings_dialog.py:229
+msgid "USB"
+msgstr "USB"
+
+#: tuxbox/gui/device_settings_dialog.py:234
+#, python-format
+msgid "%s (detected automatically)"
+msgstr "%s (détecté automatiquement)"
+
+#: tuxbox/gui/device_settings_dialog.py:235
+msgid "Serial port:"
+msgstr "Port série :"
+
+#: tuxbox/gui/device_settings_dialog.py:238
+msgid ""
+"Leave empty unless your TourBox appears on a non-standard port. The driver "
+"probes all /dev/ttyACM* devices either way."
+msgstr ""
+"Laissez vide sauf si votre TourBox apparaît sur un port non standard. Le "
+"pilote sonde de toute façon tous les périphériques /dev/ttyACM*."
+
+#: tuxbox/gui/device_settings_dialog.py:246
+msgid "Behaviour"
+msgstr "Comportement"
+
+#: tuxbox/gui/device_settings_dialog.py:251
+msgid "Force haptic feedback on"
+msgstr "Forcer le retour haptique"
+
+#: tuxbox/gui/device_settings_dialog.py:253
+msgid "Haptics:"
+msgstr "Retour haptique :"
+
+#: tuxbox/gui/device_settings_dialog.py:256
+msgid ""
+"Sends haptic settings even when a profile leaves them at their defaults."
+msgstr ""
+"Envoie les réglages haptiques même lorsqu’un profil les laisse à leurs "
+"valeurs par défaut."
+
+#: tuxbox/gui/device_settings_dialog.py:267
+msgid "Modifier delay:"
+msgstr "Délai des modificateurs :"
+
+#: tuxbox/gui/device_settings_dialog.py:270
+msgid ""
+"Pause between modifier keys and the key they modify. Raise to 20-50 ms if "
+"apps like GIMP miss key combos. Profiles can override this."
+msgstr ""
+"Pause entre les touches modificatrices et la touche qu’elles modifient. "
+"Passez à 20-50 ms si des applications comme GIMP ne détectent pas certains "
+"raccourcis. Les profils peuvent remplacer cette valeur."
+
+#: tuxbox/gui/device_settings_dialog.py:283
+msgid "Send Ctrl as:"
+msgstr "Envoyer Ctrl comme :"
+
+#: tuxbox/gui/device_settings_dialog.py:286
+msgid ""
+"If you swapped Ctrl and Caps Lock in your keyboard settings, the swap "
+"applies to the TourBox too and its Ctrl shortcuts type Caps Lock. Choose "
+"Right Ctrl or Caps Lock so they work again."
+msgstr ""
+"Si vous avez échangé Ctrl et Verr. maj. dans les réglages de votre clavier, "
+"l’échange s’applique aussi au TourBox et ses raccourcis Ctrl tapent Verr. "
+"maj. Choisissez Ctrl droit ou Verr. maj. pour qu’ils fonctionnent à nouveau."
+
+#: tuxbox/gui/device_settings_dialog.py:302
+msgid "Window check:"
+msgstr "Vérification des fenêtres :"
+
+#: tuxbox/gui/device_settings_dialog.py:305
+msgid ""
+"How often the focused window is checked for automatic profile switching. Not "
+"used on KDE Plasma, which reports window changes as they happen."
+msgstr ""
+"Fréquence de vérification de la fenêtre active pour le changement "
+"automatique de profil. Inutile sous KDE Plasma, qui signale les changements "
+"de fenêtre en temps réel."
+
+#: tuxbox/gui/device_settings_dialog.py:316
+#: tuxbox/gui/import_conflict_dialog.py:94
+#: tuxbox/gui/profile_settings_dialog.py:242
+#: tuxbox/gui/profile_settings_dialog.py:253
+msgid "Cancel"
+msgstr "Annuler"
+
+#: tuxbox/gui/device_settings_dialog.py:320
+msgid "Save"
+msgstr "Enregistrer"
+
+#: tuxbox/gui/device_settings_dialog.py:338
+msgid "Invalid Serial Port"
+msgstr "Port série invalide"
+
+#: tuxbox/gui/device_settings_dialog.py:339
+#, python-format
+msgid ""
+"'%s' does not look like a serial port.\n"
+"\n"
+"Enter a device path such as /dev/ttyACM0, or leave the field empty to let "
+"the driver find the TourBox itself."
+msgstr ""
+"« %s » ne ressemble pas à un port série.\n"
+"\n"
+"Saisissez un chemin de périphérique comme /dev/ttyACM0, ou laissez le champ "
+"vide pour que le pilote trouve le TourBox lui-même."
+
+#: tuxbox/gui/driver_manager.py:147 tuxbox/gui/driver_manager.py:168
+msgid "Driver stopped successfully"
+msgstr "Pilote arrêté"
+
+#: tuxbox/gui/driver_manager.py:150 tuxbox/gui/driver_manager.py:170
+#, python-format
+msgid "Failed to stop driver: %s"
+msgstr "Impossible d’arrêter le pilote : %s"
+
+#: tuxbox/gui/driver_manager.py:154
+msgid "Timeout stopping driver"
+msgstr "Délai dépassé lors de l’arrêt du pilote"
+
+#: tuxbox/gui/driver_manager.py:157
+#, python-format
+msgid "Error stopping driver: %s"
+msgstr "Erreur lors de l’arrêt du pilote : %s"
+
+#: tuxbox/gui/driver_manager.py:162 tuxbox/gui/driver_manager.py:224
+msgid "Driver is not running"
+msgstr "Le pilote n’est pas en cours d’exécution"
+
+#: tuxbox/gui/driver_manager.py:190
+msgid "Driver started successfully"
+msgstr "Pilote démarré"
+
+#: tuxbox/gui/driver_manager.py:193
+#, python-format
+msgid "Failed to start driver: %s"
+msgstr "Impossible de démarrer le pilote : %s"
+
+#: tuxbox/gui/driver_manager.py:197
+msgid "Timeout starting driver"
+msgstr "Délai dépassé lors du démarrage du pilote"
+
+#: tuxbox/gui/driver_manager.py:200
+#, python-format
+msgid "Error starting driver: %s"
+msgstr "Erreur lors du démarrage du pilote : %s"
+
+#: tuxbox/gui/driver_manager.py:203
+msgid ""
+"Cannot start driver: systemctl not available.\n"
+"Please start the driver using your init system's commands."
+msgstr "Impossible de démarrer le pilote : systemctl n’est pas disponible.\nDémarrez le pilote avec les commandes de votre système d’init."
+
+#: tuxbox/gui/driver_manager.py:240
+msgid "Configuration applied"
+msgstr "Configuration appliquée"
+
+#: tuxbox/gui/driver_manager.py:244
+#, python-format
+msgid "Error applying configuration: %s"
+msgstr "Erreur lors de l’application de la configuration : %s"
+
+#: tuxbox/gui/driver_manager.py:272 tuxbox/gui/driver_manager.py:296
+msgid "Driver restarted successfully"
+msgstr "Pilote redémarré"
+
+#: tuxbox/gui/driver_manager.py:275 tuxbox/gui/driver_manager.py:299
+#: tuxbox/gui/main_window.py:1372
+#, python-format
+msgid "Failed to restart driver: %s"
+msgstr "Impossible de redémarrer le pilote : %s"
+
+#: tuxbox/gui/driver_manager.py:279 tuxbox/gui/driver_manager.py:303
+msgid "Timeout restarting driver"
+msgstr "Délai dépassé lors du redémarrage du pilote"
+
+#: tuxbox/gui/driver_manager.py:282 tuxbox/gui/driver_manager.py:306
+#, python-format
+msgid "Error restarting driver: %s"
+msgstr "Erreur lors du redémarrage du pilote : %s"
+
+#: tuxbox/gui/driver_manager.py:310
+msgid ""
+"Cannot restart driver: no restart command configured and systemctl not "
+"available.\n"
+"\n"
+"To configure a custom restart command, add to ~/.config/tuxbox/config.conf:"
+msgstr "Impossible de redémarrer le pilote : aucune commande de redémarrage n’est configurée et systemctl n’est pas disponible.\n\nPour configurer une commande de redémarrage, ajoutez à ~/.config/tuxbox/config.conf :"
+
+#: tuxbox/gui/driver_manager.py:315
+msgid "Examples:"
+msgstr "Exemples :"
+
+#: tuxbox/gui/driver_manager.py:354
+msgid "Configure a restart command in ~/.config/tuxbox/config.conf:"
+msgstr ""
+"Configurez une commande de redémarrage dans ~/.config/tuxbox/config.conf :"
+
+#: tuxbox/gui/import_conflict_dialog.py:34
+msgid "Profile Name Conflict"
+msgstr "Conflit de nom de profil"
+
+#: tuxbox/gui/import_conflict_dialog.py:47
+#, python-format
+msgid ""
+"A profile named <b>%s</b> already exists.\n"
+"\n"
+"What would you like to do?"
+msgstr ""
+"Un profil nommé <b>%s</b> existe déjà.\n"
+"\n"
+"Que voulez-vous faire ?"
+
+#: tuxbox/gui/import_conflict_dialog.py:62
+msgid "Replace existing profile"
+msgstr "Remplacer le profil existant"
+
+#: tuxbox/gui/import_conflict_dialog.py:64
+#, python-format
+msgid "Delete the existing '%s' profile and import the new one"
+msgstr "Supprimer le profil existant « %s » et importer le nouveau"
+
+#: tuxbox/gui/import_conflict_dialog.py:71
+msgid "Import with new name:"
+msgstr "Importer sous un nouveau nom :"
+
+#. Translators: default name for an imported profile whose name is taken.
+#: tuxbox/gui/import_conflict_dialog.py:78
+#, python-format
+msgid "%s_imported"
+msgstr "%s_importé"
+
+#: tuxbox/gui/import_conflict_dialog.py:79
+msgid "Enter new profile name"
+msgstr "Saisissez le nom du nouveau profil"
+
+#: tuxbox/gui/import_conflict_dialog.py:98 tuxbox/gui/profile_manager.py:110
+msgid "Import"
+msgstr "Importer"
+
+#: tuxbox/gui/main_window.py:52 tuxbox/gui/main_window.py:895
+#: tuxbox/gui/main_window.py:1817
+msgid "TuxBox Configuration"
+msgstr "Configuration TuxBox"
+
+#: tuxbox/gui/main_window.py:83
+msgid "Initializing..."
+msgstr "Initialisation…"
+
+#: tuxbox/gui/main_window.py:161
+msgid "&File"
+msgstr "&Fichier"
+
+#: tuxbox/gui/main_window.py:164
+msgid "&Save"
+msgstr "&Enregistrer"
+
+#: tuxbox/gui/main_window.py:166
+msgid "Save profile changes and apply configuration"
+msgstr "Enregistrer les modifications du profil et appliquer la configuration"
+
+#: tuxbox/gui/main_window.py:174
+msgid "&Import Profile..."
+msgstr "&Importer un profil…"
+
+#: tuxbox/gui/main_window.py:175 tuxbox/gui/profile_manager.py:111
+msgid "Import a profile from file"
+msgstr "Importer un profil depuis un fichier"
+
+#: tuxbox/gui/main_window.py:180
+msgid "&Export Profile..."
+msgstr "&Exporter le profil…"
+
+#: tuxbox/gui/main_window.py:181
+msgid "Export current profile to file"
+msgstr "Exporter le profil actuel dans un fichier"
+
+#: tuxbox/gui/main_window.py:188
+msgid "&Global Settings..."
+msgstr "Réglages &globaux…"
+
+#: tuxbox/gui/main_window.py:189
+msgid "Edit settings that apply to the whole driver"
+msgstr "Modifier les réglages qui s’appliquent à tout le pilote"
+
+#: tuxbox/gui/main_window.py:194
+msgid "&Restart Driver"
+msgstr "&Redémarrer le pilote"
+
+#: tuxbox/gui/main_window.py:195
+msgid "Restart the TuxBox driver service and reload profiles"
+msgstr "Redémarrer le service du pilote TuxBox et recharger les profils"
+
+#: tuxbox/gui/main_window.py:202
+msgid "&Quit"
+msgstr "&Quitter"
+
+#: tuxbox/gui/main_window.py:204
+msgid "Quit application"
+msgstr "Quitter l’application"
+
+#: tuxbox/gui/main_window.py:209
+msgid "&Help"
+msgstr "&Aide"
+
+#: tuxbox/gui/main_window.py:212
+msgid "Check for &Updates..."
+msgstr "Rechercher des &mises à jour…"
+
+#: tuxbox/gui/main_window.py:213
+msgid "Check GitHub for a newer version"
+msgstr "Chercher une version plus récente sur GitHub"
+
+#: tuxbox/gui/main_window.py:218
+msgid "&User Guide"
+msgstr "&Guide d’utilisation"
+
+#: tuxbox/gui/main_window.py:219
+msgid "Open the GUI User Guide documentation"
+msgstr "Ouvrir la documentation du guide d’utilisation de l’interface"
+
+#: tuxbox/gui/main_window.py:226
+msgid "&About"
+msgstr "À &propos"
+
+#: tuxbox/gui/main_window.py:227 tuxbox/gui/main_window.py:1436
+msgid "About TuxBox"
+msgstr "À propos de TuxBox"
+
+#: tuxbox/gui/main_window.py:233
+msgid "Main Toolbar"
+msgstr "Barre d’outils principale"
+
+#: tuxbox/gui/main_window.py:272
+msgid "Ready"
+msgstr "Prêt"
+
+#: tuxbox/gui/main_window.py:283
+msgid "No Profiles Found"
+msgstr "Aucun profil trouvé"
+
+#: tuxbox/gui/main_window.py:284
+msgid ""
+"No profiles found in configuration.\n"
+"Please check your configuration at ~/.config/tuxbox/"
+msgstr ""
+"Aucun profil trouvé dans la configuration.\n"
+"Vérifiez votre configuration dans ~/.config/tuxbox/"
+
+#: tuxbox/gui/main_window.py:287
+msgid "No profiles found"
+msgstr "Aucun profil trouvé"
+
+#: tuxbox/gui/main_window.py:296
+#, python-format
+msgid "Loaded %s profile(s)"
+msgstr "%s profil(s) chargé(s)"
+
+#: tuxbox/gui/main_window.py:305
+msgid "Error Loading Profiles"
+msgstr "Erreur de chargement des profils"
+
+#: tuxbox/gui/main_window.py:306
+#, python-format
+msgid ""
+"Failed to load configuration:\n"
+"%s"
+msgstr ""
+"Impossible de charger la configuration :\n"
+"%s"
+
+#: tuxbox/gui/main_window.py:308
+msgid "Error loading profiles"
+msgstr "Erreur lors du chargement des profils"
+
+#: tuxbox/gui/main_window.py:322 tuxbox/gui/main_window.py:1641
+msgid "Unsaved Changes"
+msgstr "Modifications non enregistrées"
+
+#: tuxbox/gui/main_window.py:323
+#, python-format
+msgid ""
+"Profile '%s' has unsaved changes.\n"
+"\n"
+"Do you want to save them before switching profiles?"
+msgstr ""
+"Le profil « %s » a des modifications non enregistrées.\n"
+"\n"
+"Voulez-vous les enregistrer avant de changer de profil ?"
+
+#: tuxbox/gui/main_window.py:363 tuxbox/gui/main_window.py:1040
+#: tuxbox/gui/main_window.py:1057 tuxbox/gui/main_window.py:1143
+#: tuxbox/gui/main_window.py:1752 tuxbox/gui/profile_manager.py:648
+msgid "Save Failed"
+msgstr "Échec de l’enregistrement"
+
+#: tuxbox/gui/main_window.py:364
+msgid "Failed to save changes. Profile switch cancelled."
+msgstr ""
+"Impossible d’enregistrer les modifications. Changement de profil annulé."
+
+#: tuxbox/gui/main_window.py:408 tuxbox/gui/main_window.py:456
+#, python-format
+msgid "Profile: %s"
+msgstr "Profil : %s"
+
+#: tuxbox/gui/main_window.py:428
+#, python-format
+msgid "Profile '%s' settings modified (not saved)"
+msgstr "Réglages du profil « %s » modifiés (non enregistrés)"
+
+#: tuxbox/gui/main_window.py:621
+#, python-format
+msgid "Modified: %s (not saved)"
+msgstr "Modifié : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:649
+#, python-format
+msgid "Comment modified: %s (not saved)"
+msgstr "Commentaire modifié : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:695
+#, python-format
+msgid "Double-press modified: %s (not saved)"
+msgstr "Double appui modifié : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:748
+#, python-format
+msgid "On-release modified: %s (not saved)"
+msgstr "Relâchement modifié : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:821
+#, python-format
+msgid "Modifier configured: %s (not saved)"
+msgstr "Modificateur configuré : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:823
+#, python-format
+msgid "Modifier removed: %s (not saved)"
+msgstr "Modificateur supprimé : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:844
+#, python-format
+msgid "Haptic modified: %s (not saved)"
+msgstr "Retour haptique modifié : %s (non enregistré)"
+
+#: tuxbox/gui/main_window.py:867
+#, python-format
+msgid "Combo haptic modified: %(modifier)s+%(dial)s (not saved)"
+msgstr ""
+"Retour haptique de la combinaison modifié : %(modifier)s+%(dial)s (non "
+"enregistré)"
+
+#: tuxbox/gui/main_window.py:905
+msgid "No Profile"
+msgstr "Aucun profil"
+
+#: tuxbox/gui/main_window.py:905
+msgid "No profile is currently selected."
+msgstr "Aucun profil n’est sélectionné."
+
+#: tuxbox/gui/main_window.py:909
+msgid "No Changes"
+msgstr "Aucune modification"
+
+#: tuxbox/gui/main_window.py:909
+msgid "No changes to save."
+msgstr "Aucune modification à enregistrer."
+
+#: tuxbox/gui/main_window.py:1037
+msgid "Failed to create new profile"
+msgstr "Impossible de créer le nouveau profil"
+
+#: tuxbox/gui/main_window.py:1041
+#, python-format
+msgid ""
+"Failed to create new profile '%s'.\n"
+"\n"
+"Check the logs for details."
+msgstr ""
+"Impossible de créer le nouveau profil « %s ».\n"
+"\n"
+"Consultez les journaux pour plus de détails."
+
+#: tuxbox/gui/main_window.py:1054
+msgid "Failed to save profile metadata"
+msgstr "Impossible d’enregistrer les métadonnées du profil"
+
+#: tuxbox/gui/main_window.py:1058
+#, python-format
+msgid ""
+"Failed to save profile metadata for '%s'.\n"
+"\n"
+"Check the logs for details."
+msgstr ""
+"Impossible d’enregistrer les métadonnées du profil « %s ».\n"
+"\n"
+"Consultez les journaux pour plus de détails."
+
+#: tuxbox/gui/main_window.py:1118
+msgid "Profile saved and configuration applied"
+msgstr "Profil enregistré et configuration appliquée"
+
+#: tuxbox/gui/main_window.py:1121
+msgid "Save Successful"
+msgstr "Enregistrement réussi"
+
+#: tuxbox/gui/main_window.py:1122
+#, python-format
+msgid ""
+"Profile '%s' has been saved.\n"
+"\n"
+"The new configuration has been applied.\n"
+"Switch to your application to test the new mappings."
+msgstr ""
+"Le profil « %s » a été enregistré.\n"
+"\n"
+"La nouvelle configuration a été appliquée.\n"
+"Basculez vers votre application pour tester les nouvelles affectations."
+
+#: tuxbox/gui/main_window.py:1126
+msgid "Profile saved (configuration not applied)"
+msgstr "Profil enregistré (configuration non appliquée)"
+
+#: tuxbox/gui/main_window.py:1130
+msgid "Save Successful (Apply Failed)"
+msgstr "Enregistrement réussi (configuration non appliquée)"
+
+#: tuxbox/gui/main_window.py:1131
+#, python-format
+msgid ""
+"Profile '%(profile)s' has been saved.\n"
+"\n"
+"However, failed to apply the configuration:\n"
+"%(error)s\n"
+"\n"
+"You may need to manually restart the driver:\n"
+"%(instructions)s"
+msgstr ""
+"Le profil « %(profile)s » a été enregistré.\n"
+"\n"
+"Mais l’application de la configuration a échoué :\n"
+"%(error)s\n"
+"\n"
+"Vous devrez peut-être redémarrer le pilote manuellement :\n"
+"%(instructions)s"
+
+#: tuxbox/gui/main_window.py:1140
+msgid "Failed to save profile"
+msgstr "Impossible d’enregistrer le profil"
+
+#: tuxbox/gui/main_window.py:1144
+#, python-format
+msgid ""
+"Failed to save profile '%s'.\n"
+"\n"
+"Check the logs for details."
+msgstr ""
+"Impossible d’enregistrer le profil « %s ».\n"
+"\n"
+"Consultez les journaux pour plus de détails."
+
+#: tuxbox/gui/main_window.py:1256
+msgid "Configuration Migration"
+msgstr "Migration de la configuration"
+
+#: tuxbox/gui/main_window.py:1257
+msgid ""
+"TuxBox now stores profiles in individual files for easier sharing.\n"
+"\n"
+"All your existing profiles and settings will be preserved.\n"
+"A backup of your current configuration will also be created."
+msgstr ""
+"TuxBox stocke désormais les profils dans des fichiers séparés, plus faciles "
+"à partager.\n"
+"\n"
+"Tous vos profils et réglages existants seront conservés.\n"
+"Une sauvegarde de votre configuration actuelle sera également créée."
+
+#: tuxbox/gui/main_window.py:1268
+msgid "Migration Complete"
+msgstr "Migration terminée"
+
+#: tuxbox/gui/main_window.py:1269
+#, python-format
+msgid ""
+"Your profiles have been migrated successfully.\n"
+"\n"
+"%s"
+msgstr ""
+"Vos profils ont été migrés avec succès.\n"
+"\n"
+"%s"
+
+#: tuxbox/gui/main_window.py:1275
+msgid "Migration Failed"
+msgstr "Échec de la migration"
+
+#: tuxbox/gui/main_window.py:1276
+#, python-format
+msgid ""
+"Failed to migrate profiles:\n"
+"\n"
+"%s\n"
+"\n"
+"Your existing configuration has not been modified."
+msgstr ""
+"Impossible de migrer les profils :\n"
+"\n"
+"%s\n"
+"\n"
+"Votre configuration existante n’a pas été modifiée."
+
+#: tuxbox/gui/main_window.py:1303
+msgid "No settings were changed"
+msgstr "Aucun réglage n’a été modifié"
+
+#: tuxbox/gui/main_window.py:1309 tuxbox/gui/main_window.py:1315
+msgid "Settings Not Saved"
+msgstr "Réglages non enregistrés"
+
+#: tuxbox/gui/main_window.py:1319
+msgid "Settings saved"
+msgstr "Réglages enregistrés"
+
+#: tuxbox/gui/main_window.py:1326
+msgid "Language Changed"
+msgstr "Langue modifiée"
+
+#: tuxbox/gui/main_window.py:1327
+msgid ""
+"Interface language saved.\n"
+"\n"
+"Close and reopen this window for it to take effect."
+msgstr ""
+"Langue de l’interface enregistrée.\n"
+"\n"
+"Fermez puis rouvrez cette fenêtre pour l’appliquer."
+
+#: tuxbox/gui/main_window.py:1343
+msgid "Restart Driver?"
+msgstr "Redémarrer le pilote ?"
+
+#: tuxbox/gui/main_window.py:1344
+msgid ""
+"Settings saved.\n"
+"\n"
+"The driver needs to restart before they take effect. Restart it now?"
+msgstr ""
+"Réglages enregistrés.\n"
+"\n"
+"Le pilote doit redémarrer pour qu’ils prennent effet. Le redémarrer "
+"maintenant ?"
+
+#: tuxbox/gui/main_window.py:1356
+msgid "Restarting driver..."
+msgstr "Redémarrage du pilote…"
+
+#: tuxbox/gui/main_window.py:1365
+msgid "Driver restarted and profiles reloaded"
+msgstr "Pilote redémarré et profils rechargés"
+
+#: tuxbox/gui/main_window.py:1368
+msgid "Driver Restarted"
+msgstr "Pilote redémarré"
+
+#: tuxbox/gui/main_window.py:1369
+msgid "The TuxBox driver has been restarted and profiles have been reloaded."
+msgstr "Le pilote TuxBox a été redémarré et les profils ont été rechargés."
+
+#: tuxbox/gui/main_window.py:1375
+msgid "Restart Failed"
+msgstr "Échec du redémarrage"
+
+#: tuxbox/gui/main_window.py:1376
+#, python-format
+msgid ""
+"Failed to restart the driver:\n"
+"\n"
+"%s"
+msgstr ""
+"Impossible de redémarrer le pilote :\n"
+"\n"
+"%s"
+
+#. Translators: HTML, shown in the About box. Keep the markup and the
+#. links intact; %s is the version number.
+#: tuxbox/gui/main_window.py:1423
+#, python-format
+msgid ""
+"\n"
+"<h2>TuxBox</h2>\n"
+"<p>Version %s</p>\n"
+"<p>A Linux driver for TourBox Lite, Neo, Elite and Elite Plus controllers,"
+"<br>\n"
+"with full GUI configuration support.</p>\n"
+"<p><b>Author:</b> Scott Bowman (<a href=\"https://github.com/"
+"AndyCappDev\">AndyCappDev</a>)</p>\n"
+"<p><a href=\"https://github.com/AndyCappDev/tuxbox\">Project Homepage</a></"
+"p>\n"
+"<hr>\n"
+"<p>If you find this software useful, please consider giving it a ⭐ on "
+"GitHub<br>\n"
+"(click the Star button in the top right of the <a href=\"https://github.com/"
+"AndyCappDev/tuxbox\">project page</a>).</p>\n"
+msgstr ""
+"\n"
+"<h2>TuxBox</h2>\n"
+"<p>Version %s</p>\n"
+"<p>Pilote Linux pour les manettes TourBox Lite, Neo, Elite et Elite Plus,"
+"<br>\n"
+"avec une configuration complète par interface graphique.</p>\n"
+"<p><b>Auteur :</b> Scott Bowman (<a href=\"https://github.com/"
+"AndyCappDev\">AndyCappDev</a>)</p>\n"
+"<p><a href=\"https://github.com/AndyCappDev/tuxbox\">Page du projet</a></p>\n"
+"<hr>\n"
+"<p>Si ce logiciel vous est utile, pensez à lui donner une ⭐ sur GitHub<br>\n"
+"(cliquez sur le bouton Star en haut à droite de la <a href=\"https://"
+"github.com/AndyCappDev/tuxbox\">page du projet</a>).</p>\n"
+
+#: tuxbox/gui/main_window.py:1448
+msgid "Checking for updates..."
+msgstr "Recherche de mises à jour…"
+
+#: tuxbox/gui/main_window.py:1463
+#, python-format
+msgid "Update available: %s"
+msgstr "Mise à jour disponible : %s"
+
+#: tuxbox/gui/main_window.py:1470
+msgid "Update Available"
+msgstr "Mise à jour disponible"
+
+#: tuxbox/gui/main_window.py:1473
+#, python-format
+msgid ""
+"A new version is available!\n"
+"\n"
+"Current version: %(current)s\n"
+"Latest version: %(latest)s"
+msgstr ""
+"Une nouvelle version est disponible !\n"
+"\n"
+"Version actuelle : %(current)s\n"
+"Dernière version : %(latest)s"
+
+#: tuxbox/gui/main_window.py:1488
+#, python-format
+msgid ""
+"To update, run these commands:\n"
+"\n"
+"  cd %s\n"
+"  git pull\n"
+"  ./install.sh"
+msgstr ""
+"Pour mettre à jour, exécutez ces commandes :\n"
+"\n"
+"  cd %s\n"
+"  git pull\n"
+"  ./install.sh"
+
+#: tuxbox/gui/main_window.py:1494
+msgid "View on GitHub"
+msgstr "Voir sur GitHub"
+
+#: tuxbox/gui/main_window.py:1495
+msgid "Close"
+msgstr "Fermer"
+
+#: tuxbox/gui/main_window.py:1507
+msgid "You are running the latest version"
+msgstr "Vous utilisez la dernière version"
+
+#: tuxbox/gui/main_window.py:1511
+msgid "No Updates"
+msgstr "Aucune mise à jour"
+
+#: tuxbox/gui/main_window.py:1512
+#, python-format
+msgid "You are running the latest version (%s)."
+msgstr "Vous utilisez la dernière version (%s)."
+
+#: tuxbox/gui/main_window.py:1517
+msgid "Update check failed"
+msgstr "Échec de la recherche de mises à jour"
+
+#: tuxbox/gui/main_window.py:1521
+msgid "Update Check Failed"
+msgstr "Échec de la recherche de mises à jour"
+
+#: tuxbox/gui/main_window.py:1522
+#, python-format
+msgid ""
+"Could not check for updates:\n"
+"\n"
+"%s\n"
+"\n"
+"Please check your internet connection."
+msgstr ""
+"Impossible de rechercher les mises à jour :\n"
+"\n"
+"%s\n"
+"\n"
+"Vérifiez votre connexion Internet."
+
+#: tuxbox/gui/main_window.py:1642
+#, python-format
+msgid ""
+"Profile '%s' has unsaved changes.\n"
+"\n"
+"Do you want to save them before closing?"
+msgstr ""
+"Le profil « %s » a des modifications non enregistrées.\n"
+"\n"
+"Voulez-vous les enregistrer avant de fermer ?"
+
+#: tuxbox/gui/main_window.py:1753
+msgid ""
+"Failed to save changes.\n"
+"\n"
+"Close anyway?"
+msgstr ""
+"Impossible d’enregistrer les modifications.\n"
+"\n"
+"Fermer quand même ?"
+
+#: tuxbox/gui/profile_manager.py:63
+msgid "Profiles"
+msgstr "Profils"
+
+#: tuxbox/gui/profile_manager.py:71
+msgid "Name"
+msgstr "Nom"
+
+#: tuxbox/gui/profile_manager.py:71
+msgid "Window"
+msgstr "Fenêtre"
+
+#: tuxbox/gui/profile_manager.py:71
+msgid "Active"
+msgstr "Actif"
+
+#: tuxbox/gui/profile_manager.py:92
+msgid "Create new profile"
+msgstr "Créer un nouveau profil"
+
+#: tuxbox/gui/profile_manager.py:97
+msgid "Edit profile settings (window matching)"
+msgstr "Modifier les réglages du profil (association de fenêtres)"
+
+#: tuxbox/gui/profile_manager.py:102
+msgid "Delete selected profile"
+msgstr "Supprimer le profil sélectionné"
+
+#: tuxbox/gui/profile_manager.py:115
+msgid "Export"
+msgstr "Exporter"
+
+#: tuxbox/gui/profile_manager.py:116
+msgid "Export selected profile to file"
+msgstr "Exporter le profil sélectionné dans un fichier"
+
+#: tuxbox/gui/profile_manager.py:142 tuxbox/gui/profile_manager.py:223
+#, python-format
+msgid ""
+"Conflict: Multiple active profiles match the same application.\n"
+"Conflicts with: %s\n"
+"Only the first alphabetically will be used."
+msgstr ""
+"Conflit : plusieurs profils actifs correspondent à la même application.\n"
+"En conflit avec : %s\n"
+"Seul le premier par ordre alphabétique sera utilisé."
+
+#: tuxbox/gui/profile_manager.py:146 tuxbox/gui/profile_manager.py:227
+#, python-format
+msgid "<span style=\"color: #ffaa00;\">⚠</span> %s"
+msgstr "<span style=\"color: #ffaa00;\">⚠</span> %s"
+
+#: tuxbox/gui/profile_manager.py:318
+msgid "Profile Updated"
+msgstr "Profil mis à jour"
+
+#: tuxbox/gui/profile_manager.py:319
+#, python-format
+msgid ""
+"Profile renamed from '%(old)s' to '%(new)s'.\n"
+"\n"
+"Remember to save to apply changes."
+msgstr ""
+"Profil renommé de « %(old)s » en « %(new)s ».\n"
+"\n"
+"Pensez à enregistrer pour appliquer les modifications."
+
+#: tuxbox/gui/profile_manager.py:330 tuxbox/gui/profile_settings_dialog.py:51
+msgid "New Profile"
+msgstr "Nouveau profil"
+
+#: tuxbox/gui/profile_manager.py:331
+msgid "Enter a name for the new profile:"
+msgstr "Saisissez un nom pour le nouveau profil :"
+
+#. Translators: default name offered for a new profile; the user can edit it.
+#: tuxbox/gui/profile_manager.py:333
+msgid "new_profile"
+msgstr "nouveau_profil"
+
+#: tuxbox/gui/profile_manager.py:345 tuxbox/gui/profile_settings_dialog.py:360
+#: tuxbox/gui/profile_settings_dialog.py:369
+msgid "Invalid Name"
+msgstr "Nom invalide"
+
+#: tuxbox/gui/profile_manager.py:346 tuxbox/gui/profile_settings_dialog.py:370
+msgid "Profile name cannot contain ':', '[', or ']' characters."
+msgstr ""
+"Le nom du profil ne peut pas contenir les caractères « : », « [ » ou « ] »."
+
+#: tuxbox/gui/profile_manager.py:355
+msgid "Name Exists"
+msgstr "Nom déjà utilisé"
+
+#: tuxbox/gui/profile_manager.py:356
+#, python-format
+msgid ""
+"A profile named '%s' already exists.\n"
+"Please choose a different name."
+msgstr ""
+"Un profil nommé « %s » existe déjà.\n"
+"Choisissez un autre nom."
+
+#: tuxbox/gui/profile_manager.py:363
+msgid "Copy Profile?"
+msgstr "Copier le profil ?"
+
+#: tuxbox/gui/profile_manager.py:364
+#, python-format
+msgid ""
+"Do you want to copy settings from the current profile ('%s')?\n"
+"\n"
+"Click 'Yes' to copy all button mappings.\n"
+"Click 'No' to start with empty mappings."
+msgstr ""
+"Voulez-vous copier les réglages du profil actuel (« %s ») ?\n"
+"\n"
+"Cliquez sur « Oui » pour copier toutes les affectations de boutons.\n"
+"Cliquez sur « Non » pour partir d’affectations vides."
+
+#: tuxbox/gui/profile_manager.py:413
+msgid "Window Matching"
+msgstr "Association de fenêtres"
+
+#: tuxbox/gui/profile_manager.py:414
+#, python-format
+msgid ""
+"Profile '%s' created successfully!\n"
+"\n"
+"Would you like to set up window matching rules now?"
+msgstr ""
+"Le profil « %s » a été créé.\n"
+"\n"
+"Voulez-vous définir maintenant les règles d’association de fenêtres ?"
+
+#: tuxbox/gui/profile_manager.py:431
+msgid "Cannot Delete"
+msgstr "Suppression impossible"
+
+#: tuxbox/gui/profile_manager.py:432
+msgid "The default profile cannot be deleted."
+msgstr "Le profil par défaut ne peut pas être supprimé."
+
+#: tuxbox/gui/profile_manager.py:439
+msgid "Delete Profile"
+msgstr "Supprimer le profil"
+
+#: tuxbox/gui/profile_manager.py:440
+#, python-format
+msgid "Are you sure you want to delete profile '%s'?"
+msgstr "Voulez-vous vraiment supprimer le profil « %s » ?"
+
+#: tuxbox/gui/profile_manager.py:503
+msgid "Profile Deleted"
+msgstr "Profil supprimé"
+
+#: tuxbox/gui/profile_manager.py:504
+#, python-format
+msgid "Profile '%s' has been deleted successfully."
+msgstr "Le profil « %s » a été supprimé."
+
+#: tuxbox/gui/profile_manager.py:511
+msgid "Deletion Failed"
+msgstr "Échec de la suppression"
+
+#: tuxbox/gui/profile_manager.py:512
+#, python-format
+msgid ""
+"Failed to delete profile '%s'.\n"
+"\n"
+"Check the logs for details."
+msgstr ""
+"Impossible de supprimer le profil « %s ».\n"
+"\n"
+"Consultez les journaux pour plus de détails."
+
+#: tuxbox/gui/profile_manager.py:590
+msgid "Default profile is always active"
+msgstr "Le profil par défaut est toujours actif"
+
+#: tuxbox/gui/profile_manager.py:592
+msgid "Enable/disable this profile for automatic window matching"
+msgstr ""
+"Activer ou désactiver ce profil pour l’association automatique de fenêtres"
+
+#: tuxbox/gui/profile_manager.py:649
+#, python-format
+msgid "Failed to save profile '%s'."
+msgstr "Impossible d’enregistrer le profil « %s »."
+
+#: tuxbox/gui/profile_manager.py:671
+msgid "Import Profile"
+msgstr "Importer un profil"
+
+#: tuxbox/gui/profile_manager.py:673 tuxbox/gui/profile_manager.py:768
+msgid "Profile Files (*.profile);;All Files (*)"
+msgstr "Fichiers de profil (*.profile);;Tous les fichiers (*)"
+
+#: tuxbox/gui/profile_manager.py:685 tuxbox/gui/profile_manager.py:707
+#: tuxbox/gui/profile_manager.py:720 tuxbox/gui/profile_manager.py:750
+msgid "Import Failed"
+msgstr "Échec de l’importation"
+
+#: tuxbox/gui/profile_manager.py:686
+#, python-format
+msgid ""
+"Failed to import profile:\n"
+"\n"
+"%s"
+msgstr ""
+"Impossible d’importer le profil :\n"
+"\n"
+"%s"
+
+#: tuxbox/gui/profile_manager.py:708
+#, python-format
+msgid "A profile named '%s' also already exists."
+msgstr "Un profil nommé « %s » existe déjà également."
+
+#: tuxbox/gui/profile_manager.py:721
+#, python-format
+msgid "Failed to replace existing profile '%s'."
+msgstr "Impossible de remplacer le profil existant « %s »."
+
+#: tuxbox/gui/profile_manager.py:741
+msgid "Import Successful"
+msgstr "Importation réussie"
+
+#: tuxbox/gui/profile_manager.py:742
+#, python-format
+msgid "Profile '%s' has been imported successfully."
+msgstr "Le profil « %s » a été importé."
+
+#: tuxbox/gui/profile_manager.py:751
+msgid "Failed to save imported profile."
+msgstr "Impossible d’enregistrer le profil importé."
+
+#: tuxbox/gui/profile_manager.py:766
+msgid "Export Profile"
+msgstr "Exporter le profil"
+
+#: tuxbox/gui/profile_manager.py:782
+msgid "Export Successful"
+msgstr "Exportation réussie"
+
+#: tuxbox/gui/profile_manager.py:783
+#, python-format
+msgid ""
+"Profile '%(profile)s' has been exported to:\n"
+"\n"
+"%(path)s"
+msgstr ""
+"Le profil « %(profile)s » a été exporté vers :\n"
+"\n"
+"%(path)s"
+
+#: tuxbox/gui/profile_manager.py:790
+msgid "Export Failed"
+msgstr "Échec de l’exportation"
+
+#: tuxbox/gui/profile_manager.py:791
+#, python-format
+msgid "Failed to export profile '%s'."
+msgstr "Impossible d’exporter le profil « %s »."
+
+#: tuxbox/gui/profile_settings_dialog.py:53
+#, python-format
+msgid "Edit Profile: %s"
+msgstr "Modifier le profil : %s"
+
+#: tuxbox/gui/profile_settings_dialog.py:58
+msgid "Profile Name"
+msgstr "Nom du profil"
+
+#: tuxbox/gui/profile_settings_dialog.py:65
+#: tuxbox/gui/profile_settings_dialog.py:70
+msgid "Name:"
+msgstr "Nom :"
+
+#: tuxbox/gui/profile_settings_dialog.py:66
+msgid "(default profile cannot be renamed)"
+msgstr "(le profil par défaut ne peut pas être renommé)"
+
+#: tuxbox/gui/profile_settings_dialog.py:75
+msgid "Window Matching Rules"
+msgstr "Règles d’association de fenêtres"
+
+#: tuxbox/gui/profile_settings_dialog.py:80
+msgid ""
+"This profile will activate when the focused window matches either of these "
+"identifiers.\n"
+"Leave both empty to disable auto-activation (default profile will be used "
+"instead)."
+msgstr ""
+"Ce profil s’activera lorsque la fenêtre active correspondra à l’un de ces "
+"identifiants.\n"
+"Laissez les deux champs vides pour désactiver l’activation automatique (le "
+"profil par défaut sera utilisé)."
+
+#: tuxbox/gui/profile_settings_dialog.py:88
+msgid "e.g., firefox, code, org.kde.kate"
+msgstr "p. ex. firefox, code, org.kde.kate"
+
+#: tuxbox/gui/profile_settings_dialog.py:89
+msgid "App ID:"
+msgstr "ID d’application :"
+
+#: tuxbox/gui/profile_settings_dialog.py:92
+msgid "e.g., Firefox, Code"
+msgstr "p. ex. Firefox, Code"
+
+#: tuxbox/gui/profile_settings_dialog.py:93
+msgid "Window Class:"
+msgstr "Classe de fenêtre :"
+
+#: tuxbox/gui/profile_settings_dialog.py:96
+msgid "📷 Capture Active Window"
+msgstr "📷 Capturer la fenêtre active"
+
+#: tuxbox/gui/profile_settings_dialog.py:97
+msgid "Click to capture window info from the currently focused window"
+msgstr ""
+"Cliquez pour récupérer les informations de la fenêtre actuellement active"
+
+#: tuxbox/gui/profile_settings_dialog.py:135
+msgid ""
+"Strength controls vibration intensity. Speed controls how spaced out\n"
+"the detents feel when rotating dials (slower = fewer clicks per turn).\n"
+"Only available on TourBox Elite. Neo models do not have haptic motors."
+msgstr ""
+"L’intensité contrôle la force des vibrations. La vitesse contrôle "
+"l’espacement des crans ressentis en tournant les bagues (plus lent = moins "
+"de clics par tour).\n"
+"Disponible uniquement sur TourBox Elite. Les modèles Neo n’ont pas de moteur "
+"haptique."
+
+#: tuxbox/gui/profile_settings_dialog.py:146
+msgid "Double-Click"
+msgstr "Double-clic"
+
+#: tuxbox/gui/profile_settings_dialog.py:177
+msgid "Timeout:"
+msgstr "Délai :"
+
+#: tuxbox/gui/profile_settings_dialog.py:180
+msgid ""
+"Time window for detecting double-press actions.\n"
+"Shorter = tighter timing, less accidental triggers.\n"
+"Longer = more forgiving, easier to hit."
+msgstr ""
+"Délai de détection des doubles appuis.\n"
+"Plus court = plus exigeant, moins de déclenchements accidentels.\n"
+"Plus long = plus tolérant, plus facile à réussir."
+
+#: tuxbox/gui/profile_settings_dialog.py:191
+msgid "Modifier Key Delay"
+msgstr "Délai des touches modificatrices"
+
+#: tuxbox/gui/profile_settings_dialog.py:198
+msgid "Override global setting"
+msgstr "Remplacer le réglage global"
+
+#: tuxbox/gui/profile_settings_dialog.py:223
+msgid ""
+"Delay between modifier keys (Ctrl/Shift/Alt) and other keys in combos.\n"
+"Some apps (e.g. GIMP) need 20-50ms to recognize key combinations.\n"
+"When unchecked, uses the global setting from config.conf [device] section."
+msgstr ""
+"Délai entre les touches modificatrices (Ctrl/Maj/Alt) et les autres touches "
+"des raccourcis.\n"
+"Certaines applications (p. ex. GIMP) ont besoin de 20-50 ms pour reconnaître "
+"les combinaisons.\n"
+"Décoché, le réglage global de la section [device] de config.conf est utilisé."
+
+#: tuxbox/gui/profile_settings_dialog.py:252
+msgid ""
+"Switch to the window you want to capture...\n"
+"\n"
+"Capturing in 5 seconds"
+msgstr ""
+"Basculez vers la fenêtre à capturer…\n"
+"\n"
+"Capture dans 5 secondes"
+
+#: tuxbox/gui/profile_settings_dialog.py:257
+msgid "Capture Window"
+msgstr "Capturer une fenêtre"
+
+#: tuxbox/gui/profile_settings_dialog.py:272
+msgid "Window Capture Failed"
+msgstr "Échec de la capture de fenêtre"
+
+#: tuxbox/gui/profile_settings_dialog.py:273
+#, python-format
+msgid ""
+"Failed to initialize window monitor:\n"
+"%s\n"
+"\n"
+"Window capture may not be supported on your system."
+msgstr ""
+"Impossible d’initialiser le moniteur de fenêtres :\n"
+"%s\n"
+"\n"
+"La capture de fenêtre n’est peut-être pas prise en charge sur votre système."
+
+#: tuxbox/gui/profile_settings_dialog.py:295
+#, python-format
+msgid ""
+"Switch to the window you want to capture...\n"
+"\n"
+"Capturing in %s seconds"
+msgstr ""
+"Basculez vers la fenêtre à capturer…\n"
+"\n"
+"Capture dans %s secondes"
+
+#: tuxbox/gui/profile_settings_dialog.py:322
+msgid "Window Captured"
+msgstr "Fenêtre capturée"
+
+#: tuxbox/gui/profile_settings_dialog.py:323
+#, python-format
+msgid ""
+"Captured window information:\n"
+"\n"
+"App ID: %(app_id)s\n"
+"Window Class: %(wm_class)s\n"
+"\n"
+"You can edit these values before saving."
+msgstr "Informations de la fenêtre capturée :\n\nID d’application : %(app_id)s\nClasse de fenêtre : %(wm_class)s\n\nVous pouvez modifier ces valeurs avant d’enregistrer."
+
+#: tuxbox/gui/profile_settings_dialog.py:331
+msgid "No Window Detected"
+msgstr "Aucune fenêtre détectée"
+
+#: tuxbox/gui/profile_settings_dialog.py:332
+msgid ""
+"Could not detect active window information.\n"
+"\n"
+"This may happen if:\n"
+"• You're not running a supported compositor\n"
+"• Required tools are not installed\n"
+"• No window was focused"
+msgstr ""
+"Impossible de détecter les informations de la fenêtre active.\n"
+"\n"
+"Cela peut arriver si :\n"
+"• Vous n’utilisez pas un compositeur pris en charge\n"
+"• Les outils nécessaires ne sont pas installés\n"
+"• Aucune fenêtre n’était active"
+
+#: tuxbox/gui/profile_settings_dialog.py:344
+msgid "Capture Failed"
+msgstr "Échec de la capture"
+
+#: tuxbox/gui/profile_settings_dialog.py:345
+#, python-format
+msgid ""
+"Failed to capture window:\n"
+"%s"
+msgstr ""
+"Impossible de capturer la fenêtre :\n"
+"%s"
+
+#: tuxbox/gui/profile_settings_dialog.py:361
+msgid "Profile name cannot be empty."
+msgstr "Le nom du profil ne peut pas être vide."
+
+#: tuxbox/gui/update_checker.py:60
+msgid "Could not parse version from GitHub release"
+msgstr "Impossible de lire le numéro de version publié sur GitHub"
+
+#: tuxbox/gui/update_checker.py:77
+msgid "No releases found on GitHub"
+msgstr "Aucune version publiée sur GitHub"
+
+#: tuxbox/gui/update_checker.py:80
+#, python-format
+msgid "GitHub API error: %s"
+msgstr "Erreur de l’API GitHub : %s"
+
+#: tuxbox/gui/update_checker.py:83
+#, python-format
+msgid "Network error: %s"
+msgstr "Erreur réseau : %s"
+
+#: tuxbox/gui/update_checker.py:86
+msgid "Request timed out"
+msgstr "La requête a expiré"
+
+#: tuxbox/gui/update_checker.py:89
+#, python-format
+msgid "Error checking for updates: %s"
+msgstr "Erreur lors de la recherche de mises à jour : %s"
+
+#: tuxbox/profile_io.py:270
+#, python-format
+msgid "File not found: %s"
+msgstr "Fichier introuvable : %s"
+
+#: tuxbox/profile_io.py:273
+msgid "File must have .profile extension"
+msgstr "Le fichier doit avoir l’extension .profile"
+
+#: tuxbox/profile_io.py:281
+msgid "Missing [profile] section"
+msgstr "Section [profile] manquante"
+
+#: tuxbox/profile_io.py:285
+msgid "Missing 'name' in [profile] section"
+msgstr "Clé « name » manquante dans la section [profile]"
+
+#: tuxbox/profile_io.py:289
+msgid "Profile name cannot be empty"
+msgstr "Le nom du profil ne peut pas être vide"
+
+#: tuxbox/profile_io.py:293
+msgid "Profile name cannot contain ':', '[', or ']' characters"
+msgstr ""
+"Le nom du profil ne peut pas contenir les caractères « : », « [ » ou « ] »"
+
+#: tuxbox/profile_io.py:324
+#, python-format
+msgid "Invalid INI format: %s"
+msgstr "Format INI non valide : %s"
+
+#: tuxbox/profile_io.py:326
+#, python-format
+msgid "Error reading file: %s"
+msgstr "Erreur de lecture du fichier : %s"
+
+#: tuxbox/profile_io.py:853
+msgid "Failed to load profile"
+msgstr "Impossible de charger le profil"
+
+#: tuxbox/profile_io.py:879
+msgid "No legacy config file found"
+msgstr "Aucun ancien fichier de configuration trouvé"
+
+#: tuxbox/profile_io.py:891
+msgid "No profiles found in legacy config"
+msgstr "Aucun profil trouvé dans l’ancienne configuration"
+
+#: tuxbox/profile_io.py:920
+#, python-format
+msgid "Successfully migrated %(count)s profiles. Backup saved to %(path)s"
+msgstr "%(count)s profils migrés. Sauvegarde enregistrée dans %(path)s"
+
+#: tuxbox/profile_io.py:924
+#, python-format
+msgid "Migration failed: %s"
+msgstr "Échec de la migration : %s"

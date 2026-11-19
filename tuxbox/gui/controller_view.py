@@ -13,6 +13,7 @@ from PySide6.QtCore import Signal, Qt, QRectF, QByteArray, QSize, QEvent
 from PySide6.QtGui import QPainter, QPalette
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtSvg import QSvgRenderer
+from tuxbox.i18n import _
 
 from .theme import is_dark_theme, foreground_hex
 from .controller_models import get_model_controls
@@ -365,7 +366,7 @@ class SVGControllerWidget(QWidget):
             painter.drawText(
                 self.rect(),
                 Qt.AlignCenter,
-                "TourBox\n(SVG not found)"
+                _("TourBox\n(SVG not found)")
             )
             return
 

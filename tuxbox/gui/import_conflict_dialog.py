@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QPushButton, QRadioButton, QButtonGroup, QFrame
 )
 from PySide6.QtCore import Qt
+from tuxbox.i18n import _
 
 
 class ImportConflictDialog(QDialog):
@@ -30,7 +31,7 @@ class ImportConflictDialog(QDialog):
         self.result_action = self.CANCEL
         self.new_name = ""
 
-        self.setWindowTitle("Profile Name Conflict")
+        self.setWindowTitle(_("Profile Name Conflict"))
         self.setMinimumWidth(400)
         self.setModal(True)
 
@@ -43,8 +44,7 @@ class ImportConflictDialog(QDialog):
 
         # Warning message
         warning_label = QLabel(
-            f"A profile named <b>{self.existing_name}</b> already exists.\n\n"
-            "What would you like to do?"
+            _('A profile named <b>%s</b> already exists.\n\nWhat would you like to do?') % (self.existing_name,)
         )
         warning_label.setWordWrap(True)
         layout.addWidget(warning_label)
@@ -59,23 +59,24 @@ class ImportConflictDialog(QDialog):
         self.button_group = QButtonGroup(self)
 
         # Option 1: Replace existing
-        self.replace_radio = QRadioButton("Replace existing profile")
+        self.replace_radio = QRadioButton(_("Replace existing profile"))
         self.replace_radio.setToolTip(
-            f"Delete the existing '{self.existing_name}' profile and import the new one"
+            _("Delete the existing '%s' profile and import the new one") % (self.existing_name,)
         )
         self.button_group.addButton(self.replace_radio, self.REPLACE)
         layout.addWidget(self.replace_radio)
 
         # Option 2: Rename
         rename_layout = QHBoxLayout()
-        self.rename_radio = QRadioButton("Import with new name:")
+        self.rename_radio = QRadioButton(_("Import with new name:"))
         self.rename_radio.setChecked(True)  # Default selection
         self.button_group.addButton(self.rename_radio, self.RENAME)
         rename_layout.addWidget(self.rename_radio)
 
         self.name_edit = QLineEdit()
-        self.name_edit.setText(f"{self.existing_name}_imported")
-        self.name_edit.setPlaceholderText("Enter new profile name")
+        # Translators: default name for an imported profile whose name is taken.
+        self.name_edit.setText(_("%s_imported") % (self.existing_name,))
+        self.name_edit.setPlaceholderText(_("Enter new profile name"))
         rename_layout.addWidget(self.name_edit)
         layout.addLayout(rename_layout)
 
@@ -90,11 +91,11 @@ class ImportConflictDialog(QDialog):
         button_layout = QHBoxLayout()
         button_layout.addStretch()
 
-        self.cancel_btn = QPushButton("Cancel")
+        self.cancel_btn = QPushButton(_("Cancel"))
         self.cancel_btn.clicked.connect(self._on_cancel)
         button_layout.addWidget(self.cancel_btn)
 
-        self.ok_btn = QPushButton("Import")
+        self.ok_btn = QPushButton(_("Import"))
         self.ok_btn.setDefault(True)
         self.ok_btn.clicked.connect(self._on_ok)
         button_layout.addWidget(self.ok_btn)

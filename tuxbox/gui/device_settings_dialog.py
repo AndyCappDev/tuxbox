@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Global device settings dialog
+"""Global settings dialog
 
-Edits the [device] section of config.conf - the settings that apply to the
-driver as a whole rather than to one profile. Per-profile settings live in
-ProfileSettingsDialog.
+Edits the settings that apply to the whole application rather than to one
+profile: the [device] section of config.conf (driver behaviour) and the [gui]
+section (the configuration window itself, currently its language). Per-profile
+settings live in ProfileSettingsDialog.
 """
 
 import logging
@@ -17,20 +18,26 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import QSize
 
 from tuxbox.config_loader import (
-    load_device_config, DEFAULT_CONNECTION_MODE, VALID_CONNECTION_MODES,
-    DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS, DEFAULT_CTRL_KEY
+    load_device_config, load_gui_config, DEFAULT_CONNECTION_MODE,
+    VALID_CONNECTION_MODES, DEFAULT_CONTROLLER_MODEL, VALID_CONTROLLER_MODELS,
+    DEFAULT_CTRL_KEY
 )
 from tuxbox.window_monitor import (
     DEFAULT_POLL_INTERVAL, MIN_POLL_INTERVAL, MAX_POLL_INTERVAL
 )
 from tuxbox.gui.theme import muted_label_style
+from tuxbox.i18n import _, N_, available_languages
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_USB_PORT = "/dev/ttyACM0"
 
+# Stored in [gui] language when the interface should follow the system locale.
+AUTOMATIC_LANGUAGE = 'auto'
+
 # Shown in the Model picker. The Elite artwork also fits the Elite Plus and the
 # Neo, which have the same controls, so they are named rather than implied.
+# Product names, so not translated.
 MODEL_LABELS = {
     'elite': "TourBox Elite / Neo",
     'lite': "TourBox Lite",
@@ -40,28 +47,30 @@ MODEL_LABELS = {
 # makes the combo demand more width than the dialog has at large font sizes,
 # which elides the text and squeezes out the "Connect via:" label. The help
 # text below the combo carries the explanation instead.
+# Labels are English source strings marked with N_ and translated when the
+# combo is filled: a module-level constant cannot be translated at import time.
 CONNECTION_CHOICES = (
-    ('auto', "Automatic"),
-    ('usb', "USB only"),
-    ('ble', "Bluetooth only"),
+    ('auto', N_("Automatic")),
+    ('usb', N_("USB only")),
+    ('ble', N_("Bluetooth only")),
 )
 
 CONNECTION_HELP = {
-    'auto': "Uses the cable when it is plugged in and falls back to Bluetooth "
-            "otherwise, switching to USB as soon as the cable appears.",
-    'usb': "The Bluetooth radio is never used. Choose this if you always "
-           "connect by cable - on a laptop it stops the driver scanning for a "
-           "device that is never there.",
-    'ble': "The USB ports are never checked. Choose this if you only ever "
-           "connect over Bluetooth.",
+    'auto': N_("Uses the cable when it is plugged in and falls back to Bluetooth "
+               "otherwise, switching to USB as soon as the cable appears."),
+    'usb': N_("The Bluetooth radio is never used. Choose this if you always "
+              "connect by cable - on a laptop it stops the driver scanning for a "
+              "device that is never there."),
+    'ble': N_("The USB ports are never checked. Choose this if you only ever "
+              "connect over Bluetooth."),
 }
 
 # Which key the driver sends for Ctrl. Kept short for the same reason as
 # CONNECTION_CHOICES.
 CTRL_KEY_CHOICES = (
-    ('left', "Left Ctrl"),
-    ('right', "Right Ctrl"),
-    ('capslock', "Caps Lock"),
+    ('left', N_("Left Ctrl")),
+    ('right', N_("Right Ctrl")),
+    ('capslock', N_("Caps Lock")),
 )
 
 
@@ -129,6 +138,7 @@ class DeviceSettingsDialog(QDialog):
         # setting is written back only if the user changes it, so untouched
         # config files keep their comments and stay minimal.
         self._original = load_device_config()
+        self._original_gui = load_gui_config()
 
         self._init_ui()
 
@@ -142,46 +152,72 @@ class DeviceSettingsDialog(QDialog):
     # --- UI construction ---------------------------------------------------
 
     def _init_ui(self):
-        self.setWindowTitle("Global Settings")
+        self.setWindowTitle(_("Global Settings"))
         layout = QVBoxLayout(self)
 
+        layout.addWidget(self._build_language_group())
         layout.addWidget(self._build_controller_group())
         layout.addWidget(self._build_connection_group())
         layout.addWidget(self._build_usb_group())
         layout.addWidget(self._build_behaviour_group())
 
         note = HelpLabel(
-            "These settings apply across profiles. To change settings "
-            "for one profile, use the gear button in the profile list."
+            _("These settings apply across profiles. To change settings "
+            "for one profile, use the gear button in the profile list.")
         )
         layout.addWidget(note)
 
         layout.addLayout(self._build_buttons())
 
+    def _build_language_group(self) -> QGroupBox:
+        group = QGroupBox(_("Language"))
+        form = QFormLayout(group)
+        form.setVerticalSpacing(8)
+
+        self.language_combo = QComboBox()
+        self.language_combo.addItem(_("Same as the system"), AUTOMATIC_LANGUAGE)
+        # Every language with a compiled catalog, so a new translation only has
+        # to be dropped into tuxbox/locale to appear here.
+        for code, name in available_languages():
+            self.language_combo.addItem(name, code)
+
+        current = self._original_gui.get('language', AUTOMATIC_LANGUAGE)
+        index = self.language_combo.findData(current)
+        self.language_combo.setCurrentIndex(index if index >= 0 else 0)
+        form.addRow(_("Interface language:"), _keep_full_height(self.language_combo))
+
+        form.addRow(HelpLabel(
+            _("Applies to this window and its dialogs. It takes effect the next "
+              "time the window is opened.")
+        ))
+
+        return group
+
     def _build_controller_group(self) -> QGroupBox:
-        group = QGroupBox("Controller view")
+        group = QGroupBox(_("Controller view"))
         form = QFormLayout(group)
         self.model_combo = QComboBox()
         for model in VALID_CONTROLLER_MODELS:
-            self.model_combo.addItem(MODEL_LABELS.get(model, f"TourBox {model.title()}"), model)
+            self.model_combo.addItem(
+                MODEL_LABELS.get(model, _('TourBox %s') % (model.title(),)), model)
         current = self._original.get('controller_model', DEFAULT_CONTROLLER_MODEL)
         index = self.model_combo.findData(current)
         self.model_combo.setCurrentIndex(index if index >= 0 else 0)
-        form.addRow("Model:", _keep_full_height(self.model_combo))
+        form.addRow(_("Model:"), _keep_full_height(self.model_combo))
         form.addRow(HelpLabel(
-            "Choose the controller artwork and available controls. Mappings for "
-            "controls the model lacks are hidden, not deleted."
+            _("Choose the controller artwork and available controls. Mappings for "
+            "controls the model lacks are hidden, not deleted.")
         ))
         return group
 
     def _build_connection_group(self) -> QGroupBox:
-        group = QGroupBox("Connection")
+        group = QGroupBox(_("Connection"))
         form = QFormLayout(group)
         form.setVerticalSpacing(8)
 
         self.connection_combo = QComboBox()
         for mode, label in CONNECTION_CHOICES:
-            self.connection_combo.addItem(label, mode)
+            self.connection_combo.addItem(_(label), mode)
 
         current = self._original.get('connection', DEFAULT_CONNECTION_MODE)
         if current not in VALID_CONNECTION_MODES:
@@ -190,7 +226,7 @@ class DeviceSettingsDialog(QDialog):
         self.connection_combo.setCurrentIndex(index if index >= 0 else 0)
         self.connection_combo.currentIndexChanged.connect(self._update_connection_help)
 
-        form.addRow("Connect via:", _keep_full_height(self.connection_combo))
+        form.addRow(_("Connect via:"), _keep_full_height(self.connection_combo))
 
         self.connection_help = HelpLabel("")
         form.addRow(self.connection_help)
@@ -199,34 +235,34 @@ class DeviceSettingsDialog(QDialog):
         return group
 
     def _build_usb_group(self) -> QGroupBox:
-        group = QGroupBox("USB")
+        group = QGroupBox(_("USB"))
         form = QFormLayout(group)
         form.setVerticalSpacing(8)
 
         self.usb_port_edit = QLineEdit(self._original.get('usb_port', ''))
-        self.usb_port_edit.setPlaceholderText(f"{DEFAULT_USB_PORT} (detected automatically)")
-        form.addRow("Serial port:", _keep_full_height(self.usb_port_edit))
+        self.usb_port_edit.setPlaceholderText(_('%s (detected automatically)') % (DEFAULT_USB_PORT,))
+        form.addRow(_("Serial port:"), _keep_full_height(self.usb_port_edit))
 
         info = HelpLabel(
-            "Leave empty unless your TourBox appears on a non-standard port. "
-            "The driver probes all /dev/ttyACM* devices either way."
+            _("Leave empty unless your TourBox appears on a non-standard port. "
+            "The driver probes all /dev/ttyACM* devices either way.")
         )
         form.addRow(info)
 
         return group
 
     def _build_behaviour_group(self) -> QGroupBox:
-        group = QGroupBox("Behaviour")
+        group = QGroupBox(_("Behaviour"))
         form = QFormLayout(group)
         form.setVerticalSpacing(8)
 
         # Haptics
-        self.force_haptics_check = QCheckBox("Force haptic feedback on")
+        self.force_haptics_check = QCheckBox(_("Force haptic feedback on"))
         self.force_haptics_check.setChecked(bool(self._original.get('force_haptics', False)))
-        form.addRow("Haptics:", _keep_full_height(self.force_haptics_check))
+        form.addRow(_("Haptics:"), _keep_full_height(self.force_haptics_check))
 
         haptics_info = HelpLabel(
-            "Sends haptic settings even when a profile leaves them at their defaults."
+            _("Sends haptic settings even when a profile leaves them at their defaults.")
         )
         form.addRow(haptics_info)
 
@@ -237,28 +273,28 @@ class DeviceSettingsDialog(QDialog):
         self.modifier_delay_spin.setSuffix(" ms")
         self.modifier_delay_spin.setFixedWidth(90)
         self.modifier_delay_spin.setValue(int(self._original.get('modifier_delay', 0)))
-        form.addRow("Modifier delay:", _keep_full_height(self.modifier_delay_spin))
+        form.addRow(_("Modifier delay:"), _keep_full_height(self.modifier_delay_spin))
 
         delay_info = HelpLabel(
-            "Pause between modifier keys and the key they modify. Raise to 20-50 ms "
-            "if apps like GIMP miss key combos. Profiles can override this."
+            _("Pause between modifier keys and the key they modify. Raise to 20-50 ms "
+            "if apps like GIMP miss key combos. Profiles can override this.")
         )
         form.addRow(delay_info)
 
         # Which key is sent for Ctrl
         self.ctrl_key_combo = QComboBox()
         for choice, label in CTRL_KEY_CHOICES:
-            self.ctrl_key_combo.addItem(label, choice)
+            self.ctrl_key_combo.addItem(_(label), choice)
         index = self.ctrl_key_combo.findData(
             self._original.get('ctrl_key', DEFAULT_CTRL_KEY)
         )
         self.ctrl_key_combo.setCurrentIndex(index if index >= 0 else 0)
-        form.addRow("Send Ctrl as:", _keep_full_height(self.ctrl_key_combo))
+        form.addRow(_("Send Ctrl as:"), _keep_full_height(self.ctrl_key_combo))
 
         ctrl_key_info = HelpLabel(
-            "If you swapped Ctrl and Caps Lock in your keyboard settings, the swap "
+            _("If you swapped Ctrl and Caps Lock in your keyboard settings, the swap "
             "applies to the TourBox too and its Ctrl shortcuts type Caps Lock. "
-            "Choose Right Ctrl or Caps Lock so they work again."
+            "Choose Right Ctrl or Caps Lock so they work again.")
         )
         form.addRow(ctrl_key_info)
 
@@ -272,11 +308,11 @@ class DeviceSettingsDialog(QDialog):
         self.poll_interval_spin.setValue(
             float(self._original.get('window_poll_interval', DEFAULT_POLL_INTERVAL))
         )
-        form.addRow("Window check:", _keep_full_height(self.poll_interval_spin))
+        form.addRow(_("Window check:"), _keep_full_height(self.poll_interval_spin))
 
         poll_info = HelpLabel(
-            "How often the focused window is checked for automatic profile switching. "
-            "Not used on KDE Plasma, which reports window changes as they happen."
+            _("How often the focused window is checked for automatic profile switching. "
+            "Not used on KDE Plasma, which reports window changes as they happen.")
         )
         form.addRow(poll_info)
 
@@ -286,11 +322,11 @@ class DeviceSettingsDialog(QDialog):
         buttons = QHBoxLayout()
         buttons.addStretch()
 
-        cancel_button = QPushButton("Cancel")
+        cancel_button = QPushButton(_("Cancel"))
         cancel_button.clicked.connect(self.reject)
         buttons.addWidget(cancel_button)
 
-        save_button = QPushButton("Save")
+        save_button = QPushButton(_("Save"))
         save_button.setDefault(True)
         save_button.clicked.connect(self._on_save)
         buttons.addWidget(save_button)
@@ -299,7 +335,7 @@ class DeviceSettingsDialog(QDialog):
 
     def _update_connection_help(self):
         mode = self.connection_combo.currentData()
-        self.connection_help.setText(CONNECTION_HELP.get(mode, ""))
+        self.connection_help.setText(_(CONNECTION_HELP.get(mode, "")))
 
     # --- Saving ------------------------------------------------------------
 
@@ -308,10 +344,8 @@ class DeviceSettingsDialog(QDialog):
         if port and not port.startswith('/dev/'):
             QMessageBox.warning(
                 self,
-                "Invalid Serial Port",
-                f"'{port}' does not look like a serial port.\n\n"
-                "Enter a device path such as /dev/ttyACM0, or leave the field "
-                "empty to let the driver find the TourBox itself."
+                _("Invalid Serial Port"),
+                _("'%s' does not look like a serial port.\n\nEnter a device path such as /dev/ttyACM0, or leave the field empty to let the driver find the TourBox itself.") % (port,)
             )
             self.usb_port_edit.setFocus()
             return
@@ -361,5 +395,18 @@ class DeviceSettingsDialog(QDialog):
             changes['window_poll_interval'] = (
                 None if interval == DEFAULT_POLL_INTERVAL else interval
             )
+
+        return changes
+
+    def get_language_changes(self) -> Dict:
+        """Return the [gui] settings the user actually changed"""
+        changes = {}
+
+        language = self.language_combo.currentData()
+        original = self._original_gui.get('language', AUTOMATIC_LANGUAGE)
+        if language != original:
+            # 'auto' is the default, so record it as a removal rather than
+            # writing a line that only restates the default.
+            changes['language'] = None if language == AUTOMATIC_LANGUAGE else language
 
         return changes

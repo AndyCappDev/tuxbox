@@ -13,22 +13,35 @@ from PySide6.QtGui import QAction, QKeySequence, QIcon, QDesktopServices, QFontM
 
 # Import from GUI modules
 from .profile_manager import ProfileManager
-from .controls_list import ControlsList
+from .controls_list import CONTROL_DISPLAY_NAMES, ControlsList
 from .controller_view import ControllerView
 from .driver_manager import DriverManager
-from .control_editor import ControlEditor, ROTARY_TO_DIAL
+from .control_editor import DIAL_DISPLAY_NAMES, ControlEditor, ROTARY_TO_DIAL
 from .config_writer import (save_profile, save_profile_metadata, create_new_profile,
                             profile_exists_in_config, cleanup_old_backups,
                             save_modifier_config, save_mapping_comments, save_haptic_config)
 from .keymap_util import get_system_display_hints
+from tuxbox.i18n import _, active_language, setup as setup_i18n
 
 # Import from existing driver code
 from tuxbox.config_loader import (
-    load_profiles, load_device_config, DEFAULT_CONTROLLER_MODEL
+    load_profiles, load_device_config, load_gui_config, DEFAULT_CONTROLLER_MODEL
 )
 from evdev import ecodes as e
 
 logger = logging.getLogger(__name__)
+
+
+def _control_label(control_name: str) -> str:
+    """Translated display name of a control, for the status bar
+
+    The haptic messages name rotary groups ('knob', 'scroll', 'dial') rather
+    than controls, so both tables are consulted.
+    """
+    name = (CONTROL_DISPLAY_NAMES.get(control_name)
+            or DIAL_DISPLAY_NAMES.get(control_name)
+            or control_name)
+    return _(name)
 
 
 class TuxBoxConfigWindow(QMainWindow):
@@ -36,7 +49,7 @@ class TuxBoxConfigWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("TuxBox Configuration")
+        self.setWindowTitle(_("TuxBox Configuration"))
         # Keep the minimum small enough to fit short/scaled displays (e.g. a
         # 1920x1200 panel at 125% scaling leaves only ~926 logical px of height).
         # An oversized minimum makes Qt clamp the layout and clip the bottom of
@@ -67,7 +80,7 @@ class TuxBoxConfigWindow(QMainWindow):
 
         # Ensure status bar is created and visible
         self.statusBar().setVisible(True)
-        self.statusBar().showMessage("Initializing...")
+        self.statusBar().showMessage(_("Initializing..."))
 
         # Create central widget and main layout
         central_widget = QWidget()
@@ -145,12 +158,12 @@ class TuxBoxConfigWindow(QMainWindow):
         menubar = self.menuBar()
 
         # File menu
-        file_menu = menubar.addMenu("&File")
+        file_menu = menubar.addMenu(_("&File"))
 
         # Save action
-        self.save_action = QAction("&Save", self)
+        self.save_action = QAction(_("&Save"), self)
         self.save_action.setShortcut(QKeySequence.Save)
-        self.save_action.setStatusTip("Save profile changes and apply configuration")
+        self.save_action.setStatusTip(_("Save profile changes and apply configuration"))
         self.save_action.triggered.connect(self._on_save)
         self.save_action.setEnabled(False)
         file_menu.addAction(self.save_action)
@@ -158,66 +171,66 @@ class TuxBoxConfigWindow(QMainWindow):
         file_menu.addSeparator()
 
         # Import Profile action
-        import_action = QAction("&Import Profile...", self)
-        import_action.setStatusTip("Import a profile from file")
+        import_action = QAction(_("&Import Profile..."), self)
+        import_action.setStatusTip(_("Import a profile from file"))
         import_action.triggered.connect(self._on_menu_import_profile)
         file_menu.addAction(import_action)
 
         # Export Profile action
-        export_action = QAction("&Export Profile...", self)
-        export_action.setStatusTip("Export current profile to file")
+        export_action = QAction(_("&Export Profile..."), self)
+        export_action.setStatusTip(_("Export current profile to file"))
         export_action.triggered.connect(self._on_menu_export_profile)
         file_menu.addAction(export_action)
 
         file_menu.addSeparator()
 
         # Settings action (global [device] settings)
-        settings_action = QAction("&Global Settings...", self)
-        settings_action.setStatusTip("Edit settings that apply to the whole driver")
+        settings_action = QAction(_("&Global Settings..."), self)
+        settings_action.setStatusTip(_("Edit settings that apply to the whole driver"))
         settings_action.triggered.connect(self._on_menu_settings)
         file_menu.addAction(settings_action)
 
         # Restart Driver action
-        restart_driver_action = QAction("&Restart Driver", self)
-        restart_driver_action.setStatusTip("Restart the TuxBox driver service and reload profiles")
+        restart_driver_action = QAction(_("&Restart Driver"), self)
+        restart_driver_action.setStatusTip(_("Restart the TuxBox driver service and reload profiles"))
         restart_driver_action.triggered.connect(self._on_restart_driver)
         file_menu.addAction(restart_driver_action)
 
         file_menu.addSeparator()
 
         # Quit action
-        quit_action = QAction("&Quit", self)
+        quit_action = QAction(_("&Quit"), self)
         quit_action.setShortcut(QKeySequence.Quit)
-        quit_action.setStatusTip("Quit application")
+        quit_action.setStatusTip(_("Quit application"))
         quit_action.triggered.connect(self.close)
         file_menu.addAction(quit_action)
 
         # Help menu
-        help_menu = menubar.addMenu("&Help")
+        help_menu = menubar.addMenu(_("&Help"))
 
         # Check for Updates action
-        self.check_updates_action = QAction("Check for &Updates...", self)
-        self.check_updates_action.setStatusTip("Check GitHub for a newer version")
+        self.check_updates_action = QAction(_("Check for &Updates..."), self)
+        self.check_updates_action.setStatusTip(_("Check GitHub for a newer version"))
         self.check_updates_action.triggered.connect(self._check_for_updates)
         help_menu.addAction(self.check_updates_action)
 
         # User Guide action
-        user_guide_action = QAction("&User Guide", self)
-        user_guide_action.setStatusTip("Open the GUI User Guide documentation")
+        user_guide_action = QAction(_("&User Guide"), self)
+        user_guide_action.setStatusTip(_("Open the GUI User Guide documentation"))
         user_guide_action.triggered.connect(self._open_user_guide)
         help_menu.addAction(user_guide_action)
 
         help_menu.addSeparator()
 
         # About action
-        about_action = QAction("&About", self)
-        about_action.setStatusTip("About TuxBox")
+        about_action = QAction(_("&About"), self)
+        about_action.setStatusTip(_("About TuxBox"))
         about_action.triggered.connect(self._show_about)
         help_menu.addAction(about_action)
 
     def _create_toolbar(self):
         """Create the toolbar"""
-        toolbar = QToolBar("Main Toolbar")
+        toolbar = QToolBar(_("Main Toolbar"))
         self.addToolBar(toolbar)
 
         # Add save button
@@ -256,7 +269,7 @@ class TuxBoxConfigWindow(QMainWindow):
         self._load_profiles()
 
         # Update status bar
-        self.statusBar().showMessage("Ready")
+        self.statusBar().showMessage(_("Ready"))
         logger.info("Initialization complete")
 
     def _load_profiles(self):
@@ -267,11 +280,11 @@ class TuxBoxConfigWindow(QMainWindow):
             if not profiles:
                 QMessageBox.warning(
                     self,
-                    "No Profiles Found",
-                    "No profiles found in configuration.\n"
-                    "Please check your configuration at ~/.config/tuxbox/"
+                    _("No Profiles Found"),
+                    _("No profiles found in configuration.\n"
+                    "Please check your configuration at ~/.config/tuxbox/")
                 )
-                self.statusBar().showMessage("No profiles found")
+                self.statusBar().showMessage(_("No profiles found"))
                 return
 
             # Track original names of all loaded profiles (for detecting renames)
@@ -280,7 +293,7 @@ class TuxBoxConfigWindow(QMainWindow):
 
             # Load profiles into UI
             self.profile_manager.load_profiles(profiles)
-            self.statusBar().showMessage(f"Loaded {len(profiles)} profile(s)")
+            self.statusBar().showMessage(_('Loaded %s profile(s)') % (len(profiles),))
 
             logger.info(f"Loaded {len(profiles)} profiles from config")
 
@@ -289,10 +302,10 @@ class TuxBoxConfigWindow(QMainWindow):
             logger.error(error_msg, exc_info=True)
             QMessageBox.critical(
                 self,
-                "Error Loading Profiles",
-                f"Failed to load configuration:\n{e}"
+                _("Error Loading Profiles"),
+                _('Failed to load configuration:\n%s') % (e,)
             )
-            self.statusBar().showMessage("Error loading profiles")
+            self.statusBar().showMessage(_("Error loading profiles"))
 
     def _on_profile_selected(self, profile):
         """Handle profile selection
@@ -306,9 +319,8 @@ class TuxBoxConfigWindow(QMainWindow):
         if self.is_modified:
             reply = QMessageBox.question(
                 self,
-                "Unsaved Changes",
-                f"Profile '{self.current_profile.name}' has unsaved changes.\n\n"
-                "Do you want to save them before switching profiles?",
+                _("Unsaved Changes"),
+                _("Profile '%s' has unsaved changes.\n\nDo you want to save them before switching profiles?") % (self.current_profile.name,),
                 QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
                 QMessageBox.Save
             )
@@ -348,8 +360,8 @@ class TuxBoxConfigWindow(QMainWindow):
                 if not success:
                     QMessageBox.critical(
                         self,
-                        "Save Failed",
-                        "Failed to save changes. Profile switch cancelled."
+                        _("Save Failed"),
+                        _("Failed to save changes. Profile switch cancelled.")
                     )
                     # Reselect the current profile
                     self.profile_manager.reselect_current_profile()
@@ -393,7 +405,7 @@ class TuxBoxConfigWindow(QMainWindow):
         # Disable Save button
         self.save_action.setEnabled(False)
 
-        self.statusBar().showMessage(f"Profile: {profile.name}")
+        self.statusBar().showMessage(_('Profile: %s') % (profile.name,))
 
         # Clear any highlighted control from previous profile
         self.controller_view.clear_highlight()
@@ -413,7 +425,7 @@ class TuxBoxConfigWindow(QMainWindow):
         # Enable save button
         self.save_action.setEnabled(True)
 
-        self.statusBar().showMessage(f"Profile '{self.current_profile.name}' settings modified (not saved)")
+        self.statusBar().showMessage(_("Profile '%s' settings modified (not saved)") % (self.current_profile.name,))
 
     def _on_profiles_reset(self, profile):
         """Handle profiles reset (reload from config without unsaved changes check)
@@ -441,7 +453,7 @@ class TuxBoxConfigWindow(QMainWindow):
         # Disable Save button
         self.save_action.setEnabled(False)
 
-        self.statusBar().showMessage(f"Profile: {profile.name}")
+        self.statusBar().showMessage(_('Profile: %s') % (profile.name,))
 
         # Clear any highlighted control
         self.controller_view.clear_highlight()
@@ -574,7 +586,7 @@ class TuxBoxConfigWindow(QMainWindow):
         )
 
         # Update status bar
-        self.statusBar().showMessage(f"Editing: {control_name}")
+        self.statusBar().showMessage(_('Editing: %s') % (_control_label(control_name),))
 
     def _on_action_changed(self, control_name: str, action_str: str):
         """Handle action change from editor
@@ -606,7 +618,7 @@ class TuxBoxConfigWindow(QMainWindow):
                     action_item.setText(readable_action)
                 break
 
-        self.statusBar().showMessage(f"Modified: {control_name} (not saved)")
+        self.statusBar().showMessage(_('Modified: %s (not saved)') % (_control_label(control_name),))
 
     def _on_comment_changed(self, control_name: str, comment: str):
         """Handle comment change from editor
@@ -634,7 +646,7 @@ class TuxBoxConfigWindow(QMainWindow):
                     comment_item.setText(comment)
                 break
 
-        self.statusBar().showMessage(f"Comment modified: {control_name} (not saved)")
+        self.statusBar().showMessage(_('Comment modified: %s (not saved)') % (_control_label(control_name),))
 
     def _on_double_press_action_changed(self, control_name: str, action_str: str):
         """Handle double-press action change from editor
@@ -680,7 +692,7 @@ class TuxBoxConfigWindow(QMainWindow):
                         action_item.setText(base_action)
                 break
 
-        self.statusBar().showMessage(f"Double-press modified: {control_name} (not saved)")
+        self.statusBar().showMessage(_('Double-press modified: %s (not saved)') % (_control_label(control_name),))
 
     def _on_double_press_comment_changed(self, control_name: str, comment: str):
         """Handle double-press comment change from editor
@@ -733,7 +745,7 @@ class TuxBoxConfigWindow(QMainWindow):
         self.is_modified = True
         self._update_window_title()
         self.save_action.setEnabled(True)
-        self.statusBar().showMessage(f"On-release modified: {control_name} (not saved)")
+        self.statusBar().showMessage(_('On-release modified: %s (not saved)') % (_control_label(control_name),))
 
     def _on_modifier_config_changed(self, control_name: str, modifier_config: dict):
         """Handle modifier configuration change from editor
@@ -786,7 +798,7 @@ class TuxBoxConfigWindow(QMainWindow):
                         if base_action:
                             readable_action = self._action_to_readable(base_action, mod_hints)
                         else:
-                            readable_action = "(no base action)"
+                            readable_action = _("(no base action)")
                     else:
                         # Non-modifier - show regular action
                         if control_name in self.modified_mappings:
@@ -794,7 +806,7 @@ class TuxBoxConfigWindow(QMainWindow):
                         elif modifier_config.get('base_action'):
                             readable_action = self._action_to_readable(modifier_config['base_action'], mod_hints)
                         else:
-                            readable_action = "(unmapped)"
+                            readable_action = _("(unmapped)")
 
                     # Append double-press suffix if configured
                     dp_action = self.current_profile.double_press_actions.get(control_name, '')
@@ -806,9 +818,9 @@ class TuxBoxConfigWindow(QMainWindow):
                 break
 
         if modifier_config.get('is_modifier'):
-            self.statusBar().showMessage(f"Modifier configured: {control_name} (not saved)")
+            self.statusBar().showMessage(_('Modifier configured: %s (not saved)') % (_control_label(control_name),))
         else:
-            self.statusBar().showMessage(f"Modifier removed: {control_name} (not saved)")
+            self.statusBar().showMessage(_('Modifier removed: %s (not saved)') % (_control_label(control_name),))
 
     def _on_haptic_changed(self, dial_name: str, haptic_strength, haptic_speed):
         """Handle haptic setting change from editor
@@ -829,7 +841,7 @@ class TuxBoxConfigWindow(QMainWindow):
         # Enable Save button
         self.save_action.setEnabled(True)
 
-        self.statusBar().showMessage(f"Haptic modified: {dial_name} (not saved)")
+        self.statusBar().showMessage(_('Haptic modified: %s (not saved)') % (_control_label(dial_name),))
 
     def _on_combo_haptic_changed(self, modifier_name: str, dial_name: str, haptic_strength, haptic_speed):
         """Handle combo haptic setting change from editor
@@ -851,7 +863,11 @@ class TuxBoxConfigWindow(QMainWindow):
         # Enable Save button
         self.save_action.setEnabled(True)
 
-        self.statusBar().showMessage(f"Combo haptic modified: {modifier_name}+{dial_name} (not saved)")
+        self.statusBar().showMessage(
+            _("Combo haptic modified: %(modifier)s+%(dial)s (not saved)")
+            % {'modifier': _control_label(modifier_name),
+               'dial': _control_label(dial_name)}
+        )
 
     def _on_combo_selected(self, combo_control: str):
         """Handle combo selection from Modifier Combinations table
@@ -876,7 +892,7 @@ class TuxBoxConfigWindow(QMainWindow):
 
     def _update_window_title(self):
         """Update window title to show modified state"""
-        title = "TuxBox Configuration"
+        title = _("TuxBox Configuration")
         if self.current_profile:
             title += f" - {self.current_profile.name}"
         if self.is_modified:
@@ -886,11 +902,11 @@ class TuxBoxConfigWindow(QMainWindow):
     def _on_save(self):
         """Handle Save action - save profile changes to config file"""
         if not self.current_profile:
-            QMessageBox.warning(self, "No Profile", "No profile is currently selected.")
+            QMessageBox.warning(self, _("No Profile"), _("No profile is currently selected."))
             return
 
         if not self.is_modified:
-            QMessageBox.information(self, "No Changes", "No changes to save.")
+            QMessageBox.information(self, _("No Changes"), _("No changes to save."))
             return
 
         logger.info(f"Saving profile: {self.current_profile.name}")
@@ -1018,12 +1034,11 @@ class TuxBoxConfigWindow(QMainWindow):
             logger.info(f"Creating new profile: {self.current_profile.name}")
             success = create_new_profile(self.current_profile)
             if not success:
-                self.statusBar().showMessage("Failed to create new profile")
+                self.statusBar().showMessage(_("Failed to create new profile"))
                 QMessageBox.critical(
                     self,
-                    "Save Failed",
-                    f"Failed to create new profile '{self.current_profile.name}'.\n\n"
-                    "Check the logs for details."
+                    _("Save Failed"),
+                    _("Failed to create new profile '%s'.\n\nCheck the logs for details.") % (self.current_profile.name,)
                 )
                 return
             # Update the original name tracker for the newly created profile
@@ -1036,12 +1051,11 @@ class TuxBoxConfigWindow(QMainWindow):
             # Save profile metadata first (name, window matching)
             metadata_success = save_profile_metadata(self.current_profile, old_name)
             if not metadata_success:
-                self.statusBar().showMessage("Failed to save profile metadata")
+                self.statusBar().showMessage(_("Failed to save profile metadata"))
                 QMessageBox.critical(
                     self,
-                    "Save Failed",
-                    f"Failed to save profile metadata for '{self.current_profile.name}'.\n\n"
-                    "Check the logs for details."
+                    _("Save Failed"),
+                    _("Failed to save profile metadata for '%s'.\n\nCheck the logs for details.") % (self.current_profile.name,)
                 )
                 return
 
@@ -1101,32 +1115,33 @@ class TuxBoxConfigWindow(QMainWindow):
 
             if reload_success:
                 logger.info("Configuration applied successfully")
-                self.statusBar().showMessage("Profile saved and configuration applied")
+                self.statusBar().showMessage(_("Profile saved and configuration applied"))
                 QMessageBox.information(
                     self,
-                    "Save Successful",
-                    f"Profile '{self.current_profile.name}' has been saved.\n\n"
-                    "The new configuration has been applied.\n"
-                    "Switch to your application to test the new mappings."
+                    _("Save Successful"),
+                    _("Profile '%s' has been saved.\n\nThe new configuration has been applied.\nSwitch to your application to test the new mappings.") % (self.current_profile.name,)
                 )
             else:
                 logger.warning(f"Failed to apply configuration: {reload_message}")
-                self.statusBar().showMessage("Profile saved (configuration not applied)")
+                self.statusBar().showMessage(_("Profile saved (configuration not applied)"))
                 restart_instructions = DriverManager.get_restart_instructions()
                 QMessageBox.warning(
                     self,
-                    "Save Successful (Apply Failed)",
-                    f"Profile '{self.current_profile.name}' has been saved.\n\n"
-                    f"However, failed to apply the configuration:\n{reload_message}\n\n"
-                    f"You may need to manually restart the driver:\n{restart_instructions}"
+                    _("Save Successful (Apply Failed)"),
+                    _("Profile '%(profile)s' has been saved.\n\nHowever, failed to apply "
+                      "the configuration:\n%(error)s\n\nYou may need to manually restart "
+                      "the driver:\n%(instructions)s") % {
+                        'profile': self.current_profile.name,
+                        'error': reload_message,
+                        'instructions': restart_instructions,
+                    }
                 )
         else:
-            self.statusBar().showMessage("Failed to save profile")
+            self.statusBar().showMessage(_("Failed to save profile"))
             QMessageBox.critical(
                 self,
-                "Save Failed",
-                f"Failed to save profile '{self.current_profile.name}'.\n\n"
-                "Check the logs for details."
+                _("Save Failed"),
+                _("Failed to save profile '%s'.\n\nCheck the logs for details.") % (self.current_profile.name,)
             )
 
     def _action_to_readable(self, action_str: str, display_hints: dict = None) -> str:
@@ -1140,36 +1155,36 @@ class TuxBoxConfigWindow(QMainWindow):
             Human-readable string like 'Ctrl+C'
         """
         if not action_str or action_str == "none" or action_str == "(none)":
-            return "(unmapped)"
+            return _("(unmapped)")
 
         # Handle simple mouse actions (no modifiers)
         if action_str.startswith("REL_WHEEL:") and "+" not in action_str:
             value = action_str.split(":")[1]
-            return f"Scroll {'Up' if int(value) > 0 else 'Down'}"
+            return (_("Scroll Up") if int(value) > 0 else _("Scroll Down"))
         if action_str.startswith("REL_HWHEEL:") and "+" not in action_str:
             value = action_str.split(":")[1]
-            return f"Scroll {'Right' if int(value) > 0 else 'Left'}"
+            return (_("Scroll Right") if int(value) > 0 else _("Scroll Left"))
         if action_str == "BTN_LEFT":
-            return "Left Click"
+            return _("Left Click")
         if action_str == "BTN_RIGHT":
-            return "Right Click"
+            return _("Right Click")
         if action_str == "BTN_MIDDLE":
-            return "Middle Click"
+            return _("Middle Click")
 
         # Helper to convert mouse action part to readable
         def mouse_part_to_readable(part):
             if part.startswith("REL_WHEEL:"):
                 value = int(part.split(":")[1])
-                return f"Scroll {'Up' if value > 0 else 'Down'}"
+                return (_("Scroll Up") if value > 0 else _("Scroll Down"))
             if part.startswith("REL_HWHEEL:"):
                 value = int(part.split(":")[1])
-                return f"Scroll {'Right' if value > 0 else 'Left'}"
+                return (_("Scroll Right") if value > 0 else _("Scroll Left"))
             if part == "BTN_LEFT":
-                return "Left Click"
+                return _("Left Click")
             if part == "BTN_RIGHT":
-                return "Right Click"
+                return _("Right Click")
             if part == "BTN_MIDDLE":
-                return "Middle Click"
+                return _("Middle Click")
             return None
 
         # Symbol key mapping (US layout fallback)
@@ -1238,10 +1253,10 @@ class TuxBoxConfigWindow(QMainWindow):
         # Inform user that migration will happen
         QMessageBox.information(
             self,
-            "Configuration Migration",
-            "TuxBox now stores profiles in individual files for easier sharing.\n\n"
+            _("Configuration Migration"),
+            _("TuxBox now stores profiles in individual files for easier sharing.\n\n"
             "All your existing profiles and settings will be preserved.\n"
-            "A backup of your current configuration will also be created."
+            "A backup of your current configuration will also be created.")
         )
 
         # Perform migration
@@ -1250,16 +1265,15 @@ class TuxBoxConfigWindow(QMainWindow):
         if success:
             QMessageBox.information(
                 self,
-                "Migration Complete",
-                f"Your profiles have been migrated successfully.\n\n{message}"
+                _("Migration Complete"),
+                _('Your profiles have been migrated successfully.\n\n%s') % (message,)
             )
             logger.info(f"Migration completed: {message}")
         else:
             QMessageBox.warning(
                 self,
-                "Migration Failed",
-                f"Failed to migrate profiles:\n\n{message}\n\n"
-                "Your existing configuration has not been modified."
+                _("Migration Failed"),
+                _('Failed to migrate profiles:\n\n%s\n\nYour existing configuration has not been modified.') % (message,)
             )
             logger.error(f"Migration failed: {message}")
 
@@ -1274,27 +1288,45 @@ class TuxBoxConfigWindow(QMainWindow):
         self.profile_manager._on_export_profile()
 
     def _on_menu_settings(self):
-        """Handle Settings menu action - edit global [device] settings"""
+        """Handle Settings menu action - edit the global settings"""
         from .device_settings_dialog import DeviceSettingsDialog
-        from .device_config_writer import save_device_settings
+        from .device_config_writer import save_device_settings, save_gui_settings
 
         dialog = DeviceSettingsDialog(self)
         if dialog.exec() != QDialog.Accepted:
             return
 
         changes = dialog.get_changes()
-        if not changes:
-            self.statusBar().showMessage("No settings were changed")
+        language_changes = dialog.get_language_changes()
+
+        if not changes and not language_changes:
+            self.statusBar().showMessage(_("No settings were changed"))
             return
 
-        success, message = save_device_settings(changes)
+        if language_changes:
+            success, message = save_gui_settings(language_changes)
+            if not success:
+                QMessageBox.warning(self, _("Settings Not Saved"), message)
+                return
 
-        if not success:
-            QMessageBox.warning(self, "Settings Not Saved", message)
-            return
+        if changes:
+            success, message = save_device_settings(changes)
+            if not success:
+                QMessageBox.warning(self, _("Settings Not Saved"), message)
+                return
 
         cleanup_old_backups()
-        self.statusBar().showMessage("Settings saved")
+        self.statusBar().showMessage(_("Settings saved"))
+
+        if language_changes:
+            # Every label was built with the old language, so the change is
+            # picked up when the window is created again.
+            QMessageBox.information(
+                self,
+                _("Language Changed"),
+                _("Interface language saved.\n\nClose and reopen this window for "
+                  "it to take effect.")
+            )
 
         if 'controller_model' in changes:
             model = changes['controller_model'] or DEFAULT_CONTROLLER_MODEL
@@ -1308,9 +1340,9 @@ class TuxBoxConfigWindow(QMainWindow):
         # unrestarted driver would keep using the old ones with no sign of it.
         answer = QMessageBox.question(
             self,
-            "Restart Driver?",
-            "Settings saved.\n\n"
-            "The driver needs to restart before they take effect. Restart it now?",
+            _("Restart Driver?"),
+            _("Settings saved.\n\n"
+            "The driver needs to restart before they take effect. Restart it now?"),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.Yes
         )
@@ -1321,7 +1353,7 @@ class TuxBoxConfigWindow(QMainWindow):
         """Handle Restart Driver menu action"""
         from PySide6.QtWidgets import QApplication
 
-        self.statusBar().showMessage("Restarting driver...")
+        self.statusBar().showMessage(_("Restarting driver..."))
         QApplication.processEvents()  # Ensure UI updates before blocking call
 
         # Restart the driver service
@@ -1330,18 +1362,18 @@ class TuxBoxConfigWindow(QMainWindow):
         if success:
             # Reload profiles from disk
             self._reload_profiles_from_disk()
-            self.statusBar().showMessage("Driver restarted and profiles reloaded")
+            self.statusBar().showMessage(_("Driver restarted and profiles reloaded"))
             QMessageBox.information(
                 self,
-                "Driver Restarted",
-                "The TuxBox driver has been restarted and profiles have been reloaded."
+                _("Driver Restarted"),
+                _("The TuxBox driver has been restarted and profiles have been reloaded.")
             )
         else:
-            self.statusBar().showMessage(f"Failed to restart driver: {message}")
+            self.statusBar().showMessage(_('Failed to restart driver: %s') % (message,))
             QMessageBox.warning(
                 self,
-                "Restart Failed",
-                f"Failed to restart the driver:\n\n{message}"
+                _("Restart Failed"),
+                _('Failed to restart the driver:\n\n%s') % (message,)
             )
 
     def _reload_profiles_from_disk(self):
@@ -1386,9 +1418,11 @@ class TuxBoxConfigWindow(QMainWindow):
         """Show the About dialog"""
         from . import __version__
 
-        about_text = f"""
+        # Translators: HTML, shown in the About box. Keep the markup and the
+        # links intact; %s is the version number.
+        about_text = _("""
 <h2>TuxBox</h2>
-<p>Version {__version__}</p>
+<p>Version %s</p>
 <p>A Linux driver for TourBox Lite, Neo, Elite and Elite Plus controllers,<br>
 with full GUI configuration support.</p>
 <p><b>Author:</b> Scott Bowman (<a href="https://github.com/AndyCappDev">AndyCappDev</a>)</p>
@@ -1396,10 +1430,10 @@ with full GUI configuration support.</p>
 <hr>
 <p>If you find this software useful, please consider giving it a ⭐ on GitHub<br>
 (click the Star button in the top right of the <a href="https://github.com/AndyCappDev/tuxbox">project page</a>).</p>
-"""
+""") % (__version__,)
 
         msg = QMessageBox(self)
-        msg.setWindowTitle("About TuxBox")
+        msg.setWindowTitle(_("About TuxBox"))
         msg.setTextFormat(Qt.RichText)
         msg.setText(about_text)
         msg.setIcon(QMessageBox.Information)
@@ -1411,7 +1445,7 @@ with full GUI configuration support.</p>
 
         # Disable menu item during check
         self.check_updates_action.setEnabled(False)
-        self.statusBar().showMessage("Checking for updates...")
+        self.statusBar().showMessage(_("Checking for updates..."))
 
         # Create and start update checker thread
         self._update_checker = UpdateChecker(self)
@@ -1426,18 +1460,20 @@ with full GUI configuration support.</p>
         from pathlib import Path
         import webbrowser
 
-        self.statusBar().showMessage(f"Update available: {latest_version}")
+        self.statusBar().showMessage(_('Update available: %s') % (latest_version,))
 
         # Detect install path (3 levels up from main_window.py)
         install_path = Path(__file__).parent.parent.parent
 
         # Create dialog with update info
         msg = QMessageBox(self)
-        msg.setWindowTitle("Update Available")
+        msg.setWindowTitle(_("Update Available"))
         msg.setIcon(QMessageBox.Information)
-        msg.setText(f"A new version is available!\n\n"
-                    f"Current version: {current_version}\n"
-                    f"Latest version: {latest_version}")
+        msg.setText(
+            _("A new version is available!\n\nCurrent version: %(current)s\n"
+              "Latest version: %(latest)s")
+            % {'current': current_version, 'latest': latest_version}
+        )
 
         # Build informative text with release notes and update instructions
         info_text = ""
@@ -1449,17 +1485,14 @@ with full GUI configuration support.</p>
                 notes = notes[:800] + "..."
             info_text = f"{notes}\n\n"
 
-        info_text += (
-            f"To update, run these commands:\n\n"
-            f"  cd {install_path}\n"
-            f"  git pull\n"
-            f"  ./install.sh"
+        info_text += _("To update, run these commands:\n\n  cd %s\n  git pull\n  ./install.sh") % (
+            install_path,
         )
         msg.setInformativeText(info_text)
 
         # Add buttons
-        view_btn = msg.addButton("View on GitHub", QMessageBox.ActionRole)
-        msg.addButton("Close", QMessageBox.RejectRole)
+        view_btn = msg.addButton(_("View on GitHub"), QMessageBox.ActionRole)
+        msg.addButton(_("Close"), QMessageBox.RejectRole)
 
         msg.exec()
 
@@ -1471,23 +1504,22 @@ with full GUI configuration support.</p>
 
     def _on_no_update(self, current_version: str):
         """Handle no update available signal"""
-        self.statusBar().showMessage("You are running the latest version")
+        self.statusBar().showMessage(_("You are running the latest version"))
 
         QMessageBox.information(
             self,
-            "No Updates",
-            f"You are running the latest version ({current_version})."
+            _("No Updates"),
+            _('You are running the latest version (%s).') % (current_version,)
         )
 
     def _on_check_failed(self, error_message: str):
         """Handle update check failed signal"""
-        self.statusBar().showMessage("Update check failed")
+        self.statusBar().showMessage(_("Update check failed"))
 
         QMessageBox.warning(
             self,
-            "Update Check Failed",
-            f"Could not check for updates:\n\n{error_message}\n\n"
-            "Please check your internet connection."
+            _("Update Check Failed"),
+            _('Could not check for updates:\n\n%s\n\nPlease check your internet connection.') % (error_message,)
         )
 
     def keyPressEvent(self, event):
@@ -1606,9 +1638,8 @@ with full GUI configuration support.</p>
         if self.is_modified:
             reply = QMessageBox.question(
                 self,
-                "Unsaved Changes",
-                f"Profile '{self.current_profile.name}' has unsaved changes.\n\n"
-                "Do you want to save them before closing?",
+                _("Unsaved Changes"),
+                _("Profile '%s' has unsaved changes.\n\nDo you want to save them before closing?") % (self.current_profile.name,),
                 QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
                 QMessageBox.Save
             )
@@ -1718,8 +1749,8 @@ with full GUI configuration support.</p>
                 if not success:
                     reply2 = QMessageBox.critical(
                         self,
-                        "Save Failed",
-                        "Failed to save changes.\n\nClose anyway?",
+                        _("Save Failed"),
+                        _("Failed to save changes.\n\nClose anyway?"),
                         QMessageBox.Yes | QMessageBox.No,
                         QMessageBox.No
                     )
@@ -1740,6 +1771,33 @@ with full GUI configuration support.</p>
         event.accept()
 
 
+def _install_qt_translations(app):
+    """Translate the strings Qt itself draws, in the language in use
+
+    Our own labels go through gettext, but some text comes from Qt: the
+    buttons of a standard dialog button box, the file dialog, the line edit
+    context menu. Qt ships its own catalogs (translations/qtbase_<code>.qm).
+
+    Returns:
+        The installed translator, or None when Qt has no catalog for the
+        language (its strings then stay in English)
+    """
+    from PySide6.QtCore import QLibraryInfo, QLocale, QTranslator
+
+    language = active_language()
+    if language == 'en':
+        return None
+
+    translator = QTranslator(app)
+    for path in (QLibraryInfo.path(QLibraryInfo.TranslationsPath),
+                 '/usr/share/qt6/translations', '/usr/share/qt/translations'):
+        if translator.load(QLocale(language), 'qtbase', '_', path):
+            app.installTranslator(translator)
+            return translator
+    logger.debug("No Qt translation catalog for '%s'", language)
+    return None
+
+
 def main():
     """Main entry point for GUI application"""
     # Set up logging
@@ -1750,10 +1808,16 @@ def main():
 
     logger.info("Starting TuxBox Configuration GUI")
 
+    # Before any widget exists: labels look their translation up once, when
+    # they are created.
+    setup_i18n(load_gui_config().get('language'))
+
     # Create Qt application
     app = QApplication(sys.argv)
-    app.setApplicationName("TuxBox Configuration")
+    app.setApplicationName(_("TuxBox Configuration"))
     app.setDesktopFileName("tuxbox-gui.desktop")
+    # Qt's own text (standard dialog buttons, file dialog) has its own catalogs.
+    qt_translator = _install_qt_translations(app)  # noqa: F841  (kept alive)
 
     # Detect and fix bogus font metrics. Some system fonts (e.g., "Courier Prime
     # Code") have wildly incorrect metrics (descent of 500+ pixels) which causes

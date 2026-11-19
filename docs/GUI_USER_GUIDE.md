@@ -1,7 +1,7 @@
 # TuxBox Configuration GUI - User Guide
 
 **Version:** 3.8.1
-**Last Updated:** 2026-11-13
+**Last Updated:** 2026-11-18
 
 ## Table of Contents
 
@@ -1315,8 +1315,23 @@ When omitted (not present in the file), the profile uses the global setting. Thi
 ## Global Settings
 
 **File → Global Settings** edits the settings that apply to the driver as a
-whole, rather than to a single profile. These are stored in the `[device]`
-section of `~/.config/tuxbox/config.conf`.
+whole, rather than to a single profile. Driver settings are stored in the
+`[device]` section of `~/.config/tuxbox/config.conf`; the interface language is
+stored in the `[gui]` section of the same file.
+
+### Language
+
+Choose the language of the Configuration window and its dialogs. **Same as the
+system** (the default) follows the language of your desktop session; the list
+below it names the languages that are installed.
+
+The change takes effect the next time the window is opened, so close and
+reopen it after saving. Button mappings are unaffected: they are stored as key
+names, not as text.
+
+The interface is translated by volunteers. If your language is missing, or you
+spot a mistake, see the [Translation Guide](TRANSLATING.md) for how to add or
+fix one — it does not require touching any code.
 
 ### Controller view
 
@@ -1367,7 +1382,8 @@ port. The driver probes all `/dev/ttyACM*` devices regardless.
 
 Connection, USB and behaviour settings require a driver restart, so the GUI
 offers to restart the driver after saving those changes. Answer **Yes** for
-them to take effect. Changing only the controller artwork applies immediately.
+them to take effect. Changing only the controller artwork applies immediately,
+and a language change applies the next time the window is opened.
 
 Your existing comments in `config.conf` are preserved, and a timestamped
 backup is written before each save.
