@@ -1267,6 +1267,15 @@ class ControlEditor(QWidget):
 
         # Set row height and table max height based on font metrics for proper scaling
         fm = self.combos_table.fontMetrics()
+
+        # Initial Control column width: fit the widest (translated) control name,
+        # so the friendly names are not elided. Still user-resizable.
+        header_fm = self.combos_table.horizontalHeader().fontMetrics()
+        control_width = max(
+            max(fm.horizontalAdvance(_(name)) for name in CONTROL_DISPLAY_NAMES.values()),
+            header_fm.horizontalAdvance(_("Control")),
+        )
+        self.combos_table.setColumnWidth(0, control_width + fm.averageCharWidth() * 3)
         row_height = int(fm.lineSpacing() * TABLE_ROW_HEIGHT_MULTIPLIER)
         self.combos_table.verticalHeader().setDefaultSectionSize(row_height)
         self.combos_table.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
