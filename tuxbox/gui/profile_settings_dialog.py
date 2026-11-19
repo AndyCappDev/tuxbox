@@ -320,7 +320,10 @@ class ProfileSettingsDialog(QDialog):
                 QMessageBox.information(
                     self,
                     _("Window Captured"),
-                    _('Captured window information:\n\nApp ID: %s\nWindow Class: %s\n\nYou can edit these values before saving.') % (window_info.app_id or _('(none)'), window_info.wm_class or _('(none)'))
+                    _('Captured window information:\n\nApp ID: %(app_id)s\nWindow Class: %(wm_class)s\n\nYou can edit these values before saving.') % {
+                        'app_id': window_info.app_id or _('(none)'),
+                        'wm_class': window_info.wm_class or _('(none)'),
+                    }
                 )
             else:
                 QMessageBox.warning(

@@ -990,7 +990,8 @@ class ControlEditor(QWidget):
         for row in range(self.combos_table.rowCount()):
             item = self.combos_table.item(row, 0)
             if item:
-                self.combos_table.setRowHidden(row, item.text() not in available)
+                self.combos_table.setRowHidden(
+                    row, (item.data(Qt.UserRole) or item.text()).strip() not in available)
         current = self.combos_table.currentRow()
         if current >= 0 and self.combos_table.isRowHidden(current):
             self.combos_table.clearSelection()
@@ -1783,7 +1784,7 @@ class ControlEditor(QWidget):
             row = self.combos_table.currentRow()
             control_item = self.combos_table.item(row, 0)
             if control_item:
-                combo_control = control_item.text().strip()
+                combo_control = (control_item.data(Qt.UserRole) or control_item.text()).strip()
                 logger.debug(f"Combo selected: {combo_control}")
                 self.combo_selected.emit(combo_control)
 

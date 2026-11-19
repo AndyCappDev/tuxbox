@@ -104,7 +104,7 @@ def _key_line_match_any(line: str) -> bool:
 def _inline_comment(line: str) -> str:
     """Return the trailing inline comment of a value line, including its '#'"""
     # Only the part after the '=' can hold an inline comment for our purposes.
-    _, _, value = line.partition('=')
+    value = line.partition('=')[2]
     idx = value.find('#')
     if idx < 0:
         return ''

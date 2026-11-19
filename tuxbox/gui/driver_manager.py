@@ -199,7 +199,7 @@ class DriverManager:
                 logger.error(f"Error starting driver: {e}")
                 return False, _("Error starting driver: %s") % (e,)
         else:
-            return False, (
+            return False, _(
                 "Cannot start driver: systemctl not available.\n"
                 "Please start the driver using your init system's commands."
             )
@@ -306,13 +306,14 @@ class DriverManager:
                 return False, _("Error restarting driver: %s") % (e,)
 
         # Neither custom command nor systemctl available
-        return False, (
+        return False, _(
             "Cannot restart driver: no restart command configured and systemctl not available.\n\n"
-            "To configure a custom restart command, add to ~/.config/tuxbox/config.conf:\n\n"
-            "[service]\n"
+            "To configure a custom restart command, add to ~/.config/tuxbox/config.conf:"
+        ) + (
+            "\n\n[service]\n"
             "restart_command = your-restart-command-here\n\n"
-            "Examples:\n"
-            "  OpenRC: rc-service tuxbox restart\n"
+        ) + _("Examples:") + (
+            "\n  OpenRC: rc-service tuxbox restart\n"
             "  Manual: pkill -f 'python.*tuxbox' ; /path/to/start-tuxbox.sh"
         )
 

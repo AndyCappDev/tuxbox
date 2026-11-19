@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TuxBox 3.8.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-18 12:59+0100\n"
+"POT-Creation-Date: 2026-11-19 06:35+0100\n"
 "PO-Revision-Date: 2026-11-18 12:30+0100\n"
 "Last-Translator: TuxBox contributors\n"
 "Language-Team: French\n"
@@ -29,7 +29,7 @@ msgstr "Aucun"
 msgid "--- Control Keys ---"
 msgstr "--- Touches de commande ---"
 
-#: tuxbox/gui/control_editor.py:117 tuxbox/gui/control_editor.py:2024
+#: tuxbox/gui/control_editor.py:117 tuxbox/gui/control_editor.py:2025
 #: tuxbox/gui/controls_list.py:369
 msgid "Enter"
 msgstr "Entrée"
@@ -42,7 +42,7 @@ msgstr "Échap"
 msgid "Tab"
 msgstr "Tabulation"
 
-#: tuxbox/gui/control_editor.py:120 tuxbox/gui/control_editor.py:2022
+#: tuxbox/gui/control_editor.py:120 tuxbox/gui/control_editor.py:2023
 #: tuxbox/gui/controls_list.py:369
 msgid "Space"
 msgstr "Espace"
@@ -59,7 +59,7 @@ msgstr "Suppr"
 msgid "Insert"
 msgstr "Inser"
 
-#: tuxbox/gui/control_editor.py:124 tuxbox/gui/control_editor.py:2028
+#: tuxbox/gui/control_editor.py:124 tuxbox/gui/control_editor.py:2029
 #: tuxbox/gui/controls_list.py:370 tuxbox/gui/device_settings_dialog.py:65
 msgid "Caps Lock"
 msgstr "Verr. maj."
@@ -180,52 +180,52 @@ msgstr "Clavier"
 msgid "Mouse"
 msgstr "Souris"
 
-#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1960
-#: tuxbox/gui/control_editor.py:1975 tuxbox/gui/controls_list.py:43
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1961
+#: tuxbox/gui/control_editor.py:1976 tuxbox/gui/controls_list.py:43
 #: tuxbox/gui/controls_list.py:264 tuxbox/gui/controls_list.py:310
 #: tuxbox/gui/controls_list.py:327 tuxbox/gui/main_window.py:1163
 #: tuxbox/gui/main_window.py:1178
 msgid "Scroll Up"
 msgstr "Défilement haut"
 
-#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1960
-#: tuxbox/gui/control_editor.py:1975 tuxbox/gui/controls_list.py:44
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1961
+#: tuxbox/gui/control_editor.py:1976 tuxbox/gui/controls_list.py:44
 #: tuxbox/gui/controls_list.py:264 tuxbox/gui/controls_list.py:310
 #: tuxbox/gui/controls_list.py:327 tuxbox/gui/main_window.py:1163
 #: tuxbox/gui/main_window.py:1178
 msgid "Scroll Down"
 msgstr "Défilement bas"
 
-#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1963
-#: tuxbox/gui/control_editor.py:1978 tuxbox/gui/controls_list.py:266
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1964
+#: tuxbox/gui/control_editor.py:1979 tuxbox/gui/controls_list.py:266
 #: tuxbox/gui/controls_list.py:313 tuxbox/gui/controls_list.py:330
 #: tuxbox/gui/main_window.py:1166 tuxbox/gui/main_window.py:1181
 msgid "Scroll Left"
 msgstr "Défilement gauche"
 
-#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1963
-#: tuxbox/gui/control_editor.py:1978 tuxbox/gui/controls_list.py:266
+#: tuxbox/gui/control_editor.py:181 tuxbox/gui/control_editor.py:1964
+#: tuxbox/gui/control_editor.py:1979 tuxbox/gui/controls_list.py:266
 #: tuxbox/gui/controls_list.py:313 tuxbox/gui/controls_list.py:330
 #: tuxbox/gui/main_window.py:1166 tuxbox/gui/main_window.py:1181
 msgid "Scroll Right"
 msgstr "Défilement droite"
 
-#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1965
-#: tuxbox/gui/control_editor.py:1980 tuxbox/gui/controls_list.py:317
+#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1966
+#: tuxbox/gui/control_editor.py:1981 tuxbox/gui/controls_list.py:317
 #: tuxbox/gui/controls_list.py:332 tuxbox/gui/controls_list.py:427
 #: tuxbox/gui/main_window.py:1168 tuxbox/gui/main_window.py:1183
 msgid "Left Click"
 msgstr "Clic gauche"
 
-#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1967
-#: tuxbox/gui/control_editor.py:1982 tuxbox/gui/controls_list.py:319
+#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1968
+#: tuxbox/gui/control_editor.py:1983 tuxbox/gui/controls_list.py:319
 #: tuxbox/gui/controls_list.py:334 tuxbox/gui/controls_list.py:428
 #: tuxbox/gui/main_window.py:1170 tuxbox/gui/main_window.py:1185
 msgid "Right Click"
 msgstr "Clic droit"
 
-#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1969
-#: tuxbox/gui/control_editor.py:1984 tuxbox/gui/controls_list.py:321
+#: tuxbox/gui/control_editor.py:182 tuxbox/gui/control_editor.py:1970
+#: tuxbox/gui/control_editor.py:1985 tuxbox/gui/controls_list.py:321
 #: tuxbox/gui/controls_list.py:336 tuxbox/gui/controls_list.py:429
 #: tuxbox/gui/main_window.py:1172 tuxbox/gui/main_window.py:1187
 msgid "Middle Click"
@@ -253,52 +253,52 @@ msgid "(select control)"
 msgstr "(choisir une commande)"
 
 #: tuxbox/gui/control_editor.py:350 tuxbox/gui/control_editor.py:730
-#: tuxbox/gui/control_editor.py:1014
+#: tuxbox/gui/control_editor.py:1015
 msgid "Action Type:"
 msgstr "Type d’action :"
 
 #: tuxbox/gui/control_editor.py:362 tuxbox/gui/control_editor.py:741
-#: tuxbox/gui/control_editor.py:1026
+#: tuxbox/gui/control_editor.py:1027
 msgid "Keyboard Action"
 msgstr "Action clavier"
 
 #: tuxbox/gui/control_editor.py:370 tuxbox/gui/control_editor.py:748
-#: tuxbox/gui/control_editor.py:1034 tuxbox/gui/control_editor.py:1102
+#: tuxbox/gui/control_editor.py:1035 tuxbox/gui/control_editor.py:1103
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #: tuxbox/gui/control_editor.py:376 tuxbox/gui/control_editor.py:754
-#: tuxbox/gui/control_editor.py:1040 tuxbox/gui/control_editor.py:1108
+#: tuxbox/gui/control_editor.py:1041 tuxbox/gui/control_editor.py:1109
 msgid "Alt"
 msgstr "Alt"
 
 #: tuxbox/gui/control_editor.py:382 tuxbox/gui/control_editor.py:760
-#: tuxbox/gui/control_editor.py:1046 tuxbox/gui/control_editor.py:1114
+#: tuxbox/gui/control_editor.py:1047 tuxbox/gui/control_editor.py:1115
 msgid "Shift"
 msgstr "Maj"
 
 #: tuxbox/gui/control_editor.py:388 tuxbox/gui/control_editor.py:766
-#: tuxbox/gui/control_editor.py:1052 tuxbox/gui/control_editor.py:1120
+#: tuxbox/gui/control_editor.py:1053 tuxbox/gui/control_editor.py:1121
 msgid "Super"
 msgstr "Super"
 
 #: tuxbox/gui/control_editor.py:398 tuxbox/gui/control_editor.py:777
-#: tuxbox/gui/control_editor.py:1062
+#: tuxbox/gui/control_editor.py:1063
 msgid "Key:"
 msgstr "Touche :"
 
 #: tuxbox/gui/control_editor.py:407 tuxbox/gui/control_editor.py:785
-#: tuxbox/gui/control_editor.py:1071
+#: tuxbox/gui/control_editor.py:1072
 msgid "or"
 msgstr "ou"
 
 #: tuxbox/gui/control_editor.py:427 tuxbox/gui/control_editor.py:805
-#: tuxbox/gui/control_editor.py:1091
+#: tuxbox/gui/control_editor.py:1092
 msgid "Mouse Action"
 msgstr "Action souris"
 
 #: tuxbox/gui/control_editor.py:436 tuxbox/gui/control_editor.py:807
-#: tuxbox/gui/control_editor.py:1130
+#: tuxbox/gui/control_editor.py:1131
 msgid "Action:"
 msgstr "Action :"
 
@@ -310,52 +310,52 @@ msgstr "Commentaire :"
 msgid "Add notes about this combination..."
 msgstr "Ajouter une note sur cette combinaison…"
 
-#: tuxbox/gui/control_editor.py:459 tuxbox/gui/control_editor.py:1142
+#: tuxbox/gui/control_editor.py:459 tuxbox/gui/control_editor.py:1143
 #: tuxbox/gui/profile_settings_dialog.py:104
 msgid "Haptic Feedback"
 msgstr "Retour haptique"
 
-#: tuxbox/gui/control_editor.py:464 tuxbox/gui/control_editor.py:1147
+#: tuxbox/gui/control_editor.py:464 tuxbox/gui/control_editor.py:1148
 #: tuxbox/gui/profile_settings_dialog.py:118
 msgid "Strength:"
 msgstr "Intensité :"
 
 #: tuxbox/gui/control_editor.py:466 tuxbox/gui/control_editor.py:486
-#: tuxbox/gui/control_editor.py:1149 tuxbox/gui/control_editor.py:1162
+#: tuxbox/gui/control_editor.py:1150 tuxbox/gui/control_editor.py:1163
 msgid "Use Profile Default"
 msgstr "Valeur du profil"
 
-#: tuxbox/gui/control_editor.py:467 tuxbox/gui/control_editor.py:1150
+#: tuxbox/gui/control_editor.py:467 tuxbox/gui/control_editor.py:1151
 #: tuxbox/gui/profile_settings_dialog.py:108
 msgid "Off"
 msgstr "Désactivé"
 
-#: tuxbox/gui/control_editor.py:468 tuxbox/gui/control_editor.py:1151
+#: tuxbox/gui/control_editor.py:468 tuxbox/gui/control_editor.py:1152
 #: tuxbox/gui/profile_settings_dialog.py:109
 msgid "Weak"
 msgstr "Faible"
 
-#: tuxbox/gui/control_editor.py:469 tuxbox/gui/control_editor.py:1152
+#: tuxbox/gui/control_editor.py:469 tuxbox/gui/control_editor.py:1153
 #: tuxbox/gui/profile_settings_dialog.py:110
 msgid "Strong"
 msgstr "Fort"
 
-#: tuxbox/gui/control_editor.py:484 tuxbox/gui/control_editor.py:1160
+#: tuxbox/gui/control_editor.py:484 tuxbox/gui/control_editor.py:1161
 #: tuxbox/gui/profile_settings_dialog.py:132
 msgid "Speed:"
 msgstr "Vitesse :"
 
-#: tuxbox/gui/control_editor.py:487 tuxbox/gui/control_editor.py:1163
+#: tuxbox/gui/control_editor.py:487 tuxbox/gui/control_editor.py:1164
 #: tuxbox/gui/profile_settings_dialog.py:122
 msgid "Fast (more detents)"
 msgstr "Rapide (plus de crans)"
 
-#: tuxbox/gui/control_editor.py:488 tuxbox/gui/control_editor.py:1164
+#: tuxbox/gui/control_editor.py:488 tuxbox/gui/control_editor.py:1165
 #: tuxbox/gui/profile_settings_dialog.py:123
 msgid "Medium"
 msgstr "Moyenne"
 
-#: tuxbox/gui/control_editor.py:489 tuxbox/gui/control_editor.py:1165
+#: tuxbox/gui/control_editor.py:489 tuxbox/gui/control_editor.py:1166
 #: tuxbox/gui/profile_settings_dialog.py:124
 msgid "Slow (fewer detents)"
 msgstr "Lente (moins de crans)"
@@ -387,15 +387,15 @@ msgstr ""
 msgid "Notes for this action..."
 msgstr "Notes pour cette action…"
 
-#: tuxbox/gui/control_editor.py:1003
+#: tuxbox/gui/control_editor.py:1004
 msgid "Edit Control"
 msgstr "Modifier la commande"
 
-#: tuxbox/gui/control_editor.py:1008
+#: tuxbox/gui/control_editor.py:1009
 msgid "No control selected"
 msgstr "Aucune commande sélectionnée"
 
-#: tuxbox/gui/control_editor.py:1173
+#: tuxbox/gui/control_editor.py:1174
 msgid ""
 "Per-dial haptic setting. 'Use Profile Default' uses the profile's global "
 "setting."
@@ -403,38 +403,39 @@ msgstr ""
 "Réglage haptique propre à cette bague. « Valeur du profil » utilise le "
 "réglage global du profil."
 
-#: tuxbox/gui/control_editor.py:1183 tuxbox/gui/control_editor.py:1253
+#: tuxbox/gui/control_editor.py:1184 tuxbox/gui/control_editor.py:1254
 #: tuxbox/gui/controls_list.py:97
 msgid "Comment"
 msgstr "Commentaire"
 
-#: tuxbox/gui/control_editor.py:1187
+#: tuxbox/gui/control_editor.py:1188
 msgid "Add notes or comments about this mapping..."
 msgstr "Ajouter une note ou un commentaire sur cette affectation…"
 
-#: tuxbox/gui/control_editor.py:1206
+#: tuxbox/gui/control_editor.py:1207
 msgid "Double-Press:"
 msgstr "Double appui :"
 
-#: tuxbox/gui/control_editor.py:1209 tuxbox/gui/control_editor.py:1955
-#: tuxbox/gui/control_editor.py:2059 tuxbox/gui/controls_list.py:304
-#: tuxbox/gui/profile_settings_dialog.py:323
+#: tuxbox/gui/control_editor.py:1210 tuxbox/gui/control_editor.py:1956
+#: tuxbox/gui/control_editor.py:2060 tuxbox/gui/controls_list.py:304
+#: tuxbox/gui/profile_settings_dialog.py:324
+#: tuxbox/gui/profile_settings_dialog.py:325
 msgid "(none)"
 msgstr "(aucun)"
 
-#: tuxbox/gui/control_editor.py:1215
+#: tuxbox/gui/control_editor.py:1216
 msgid "Configure..."
 msgstr "Configurer…"
 
-#: tuxbox/gui/control_editor.py:1219
+#: tuxbox/gui/control_editor.py:1220
 msgid "Clear"
 msgstr "Effacer"
 
-#: tuxbox/gui/control_editor.py:1232
+#: tuxbox/gui/control_editor.py:1233
 msgid "Activate on release"
 msgstr "Activer au relâchement"
 
-#: tuxbox/gui/control_editor.py:1234
+#: tuxbox/gui/control_editor.py:1235
 msgid ""
 "Fire action when button is released (as a tap) instead of when pressed.\n"
 "Use for buttons with combos or double-press to improve reliability."
@@ -444,36 +445,36 @@ msgstr ""
 "À utiliser pour les boutons avec combinaisons ou double appui, pour plus de "
 "fiabilité."
 
-#: tuxbox/gui/control_editor.py:1246
+#: tuxbox/gui/control_editor.py:1247
 msgid "Modifier Combinations:"
 msgstr "Combinaisons avec modificateur :"
 
-#: tuxbox/gui/control_editor.py:1253 tuxbox/gui/controls_list.py:97
+#: tuxbox/gui/control_editor.py:1254 tuxbox/gui/controls_list.py:97
 msgid "Control"
 msgstr "Commande"
 
-#: tuxbox/gui/control_editor.py:1253
+#: tuxbox/gui/control_editor.py:1254
 msgid "Action"
 msgstr "Action"
 
-#: tuxbox/gui/control_editor.py:1289
+#: tuxbox/gui/control_editor.py:1290
 msgid "Add Combination"
 msgstr "Ajouter une combinaison"
 
-#: tuxbox/gui/control_editor.py:1300 tuxbox/gui/profile_settings_dialog.py:237
+#: tuxbox/gui/control_editor.py:1301 tuxbox/gui/profile_settings_dialog.py:237
 msgid "Apply"
 msgstr "Appliquer"
 
-#: tuxbox/gui/control_editor.py:1331 tuxbox/gui/main_window.py:589
+#: tuxbox/gui/control_editor.py:1332 tuxbox/gui/main_window.py:589
 #, python-format
 msgid "Editing: %s"
 msgstr "Modification : %s"
 
-#: tuxbox/gui/control_editor.py:1921
+#: tuxbox/gui/control_editor.py:1922
 msgid "Edit this combination"
 msgstr "Modifier cette combinaison"
 
-#: tuxbox/gui/control_editor.py:1929
+#: tuxbox/gui/control_editor.py:1930
 msgid "Delete this combination"
 msgstr "Supprimer cette combinaison"
 
@@ -861,6 +862,12 @@ msgstr "Délai dépassé lors du démarrage du pilote"
 msgid "Error starting driver: %s"
 msgstr "Erreur lors du démarrage du pilote : %s"
 
+#: tuxbox/gui/driver_manager.py:203
+msgid ""
+"Cannot start driver: systemctl not available.\n"
+"Please start the driver using your init system's commands."
+msgstr "Impossible de démarrer le pilote : systemctl n’est pas disponible.\nDémarrez le pilote avec les commandes de votre système d’init."
+
 #: tuxbox/gui/driver_manager.py:240
 msgid "Configuration applied"
 msgstr "Configuration appliquée"
@@ -889,7 +896,19 @@ msgstr "Délai dépassé lors du redémarrage du pilote"
 msgid "Error restarting driver: %s"
 msgstr "Erreur lors du redémarrage du pilote : %s"
 
-#: tuxbox/gui/driver_manager.py:353
+#: tuxbox/gui/driver_manager.py:310
+msgid ""
+"Cannot restart driver: no restart command configured and systemctl not "
+"available.\n"
+"\n"
+"To configure a custom restart command, add to ~/.config/tuxbox/config.conf:"
+msgstr "Impossible de redémarrer le pilote : aucune commande de redémarrage n’est configurée et systemctl n’est pas disponible.\n\nPour configurer une commande de redémarrage, ajoutez à ~/.config/tuxbox/config.conf :"
+
+#: tuxbox/gui/driver_manager.py:315
+msgid "Examples:"
+msgstr "Exemples :"
+
+#: tuxbox/gui/driver_manager.py:354
 msgid "Configure a restart command in ~/.config/tuxbox/config.conf:"
 msgstr ""
 "Configurez une commande de redémarrage dans ~/.config/tuxbox/config.conf :"
@@ -1602,12 +1621,12 @@ msgstr "Saisissez un nom pour le nouveau profil :"
 msgid "new_profile"
 msgstr "nouveau_profil"
 
-#: tuxbox/gui/profile_manager.py:345 tuxbox/gui/profile_settings_dialog.py:357
-#: tuxbox/gui/profile_settings_dialog.py:366
+#: tuxbox/gui/profile_manager.py:345 tuxbox/gui/profile_settings_dialog.py:360
+#: tuxbox/gui/profile_settings_dialog.py:369
 msgid "Invalid Name"
 msgstr "Nom invalide"
 
-#: tuxbox/gui/profile_manager.py:346 tuxbox/gui/profile_settings_dialog.py:367
+#: tuxbox/gui/profile_manager.py:346 tuxbox/gui/profile_settings_dialog.py:370
 msgid "Profile name cannot contain ':', '[', or ']' characters."
 msgstr ""
 "Le nom du profil ne peut pas contenir les caractères « : », « [ » ou « ] »."
@@ -1947,23 +1966,17 @@ msgstr "Fenêtre capturée"
 msgid ""
 "Captured window information:\n"
 "\n"
-"App ID: %s\n"
-"Window Class: %s\n"
+"App ID: %(app_id)s\n"
+"Window Class: %(wm_class)s\n"
 "\n"
 "You can edit these values before saving."
-msgstr ""
-"Informations de la fenêtre capturée :\n"
-"\n"
-"ID d’application : %s\n"
-"Classe de fenêtre : %s\n"
-"\n"
-"Vous pouvez modifier ces valeurs avant d’enregistrer."
+msgstr "Informations de la fenêtre capturée :\n\nID d’application : %(app_id)s\nClasse de fenêtre : %(wm_class)s\n\nVous pouvez modifier ces valeurs avant d’enregistrer."
 
-#: tuxbox/gui/profile_settings_dialog.py:328
+#: tuxbox/gui/profile_settings_dialog.py:331
 msgid "No Window Detected"
 msgstr "Aucune fenêtre détectée"
 
-#: tuxbox/gui/profile_settings_dialog.py:329
+#: tuxbox/gui/profile_settings_dialog.py:332
 msgid ""
 "Could not detect active window information.\n"
 "\n"
@@ -1979,11 +1992,11 @@ msgstr ""
 "• Les outils nécessaires ne sont pas installés\n"
 "• Aucune fenêtre n’était active"
 
-#: tuxbox/gui/profile_settings_dialog.py:341
+#: tuxbox/gui/profile_settings_dialog.py:344
 msgid "Capture Failed"
 msgstr "Échec de la capture"
 
-#: tuxbox/gui/profile_settings_dialog.py:342
+#: tuxbox/gui/profile_settings_dialog.py:345
 #, python-format
 msgid ""
 "Failed to capture window:\n"
@@ -1992,7 +2005,7 @@ msgstr ""
 "Impossible de capturer la fenêtre :\n"
 "%s"
 
-#: tuxbox/gui/profile_settings_dialog.py:358
+#: tuxbox/gui/profile_settings_dialog.py:361
 msgid "Profile name cannot be empty."
 msgstr "Le nom du profil ne peut pas être vide."
 
